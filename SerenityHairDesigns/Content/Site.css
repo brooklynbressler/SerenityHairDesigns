@@ -15,4 +15,33 @@ select,
 textarea {
     max-width: 280px;
 }
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: dimgrey;
+}
+h2 {
+    background-color: black;
+    color: white;
+}
+.LogoStyle {
+    background-color: black;
+    color: white;
+    border: 3px solid #b74f13;
+    
+}
+body {
+    background-image: url('../serenity images/hair_salon_stations.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.FacebookLink {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 18px;
+}
 

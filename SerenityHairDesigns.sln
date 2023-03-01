@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33214.272
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerenityHairDesigns", "SerenityHairDesigns\SerenityHairDesigns.csproj", "{BF775ACA-A8AD-45A9-B42E-FA123C2E1812}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SerenityImages", "SerenityImages", "{D8616AC9-F149-4A42-BC2A-3700140D602C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

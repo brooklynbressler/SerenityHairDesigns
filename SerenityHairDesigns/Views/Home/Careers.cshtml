@@ -1,69 +1,71 @@
 ﻿@* Navigation Content *@
 
 @{
-	ViewBag.Title = "Serenity Hair Salon";
+    ViewBag.Title = "Serenity Hair Salon";
 }
 
 <div class="LogoStyle">
-	<h2>@ViewBag.Title</h2>
+    <h2>@ViewBag.Title</h2>
 </div>
 
-@using (Html.BeginForm()) {
-	<div class="center">
-		<button id="btnHome" name="btnHome" value="submit">Home</button>
-		<button id="btnServices" name="btnServices" value="submit">Services</button>
-		<button id="btnCareers" name="btnCareers" value="submit">Careers</button>
-		<button id="btnAboutUs" name="btnAboutUs" value="submit">About Us</button>
-		<button id="btnContactUs" name="btnContactUs" value="submit">Contact Us</button>
-		<button id="btnPolicies" name="btnPolicies" value="submit">Policies</button>
-	</div>
-	// this will have facebook link once we find the facebook account
-	<div class="FacebookLink">
-		<a href="url">FaceBook!!!</a>
-	</div>
+@using (Html.BeginForm())
+{
+    <div class="center">
+        <button id="btnHome" name="btnHome" value="submit">Home</button>
+        <button id="btnServices" name="btnServices" value="submit">Services</button>
+        <button id="btnCareers" name="btnCareers" value="submit">Careers</button>
+        <button id="btnAboutUs" name="btnAboutUs" value="submit">About Us</button>
+        <button id="btnContactUs" name="btnContactUs" value="submit">Contact Us</button>
+        <button id="btnPolicies" name="btnPolicies" value="submit">Policies</button>
+    </div>
+    // this will have facebook link once we find the facebook account
+    <img src="~/Serenity Images/304807290_498537205610982_5716706797304772411_n.jpg" />
+    <div class="FacebookLink">
+        <a href="url">FaceBook!!!</a>
+    </div>
 
 }
 
 @* Career Page Content *@
 
 <h2 class="Careers-H2">
-	We are seeking new stylists!
+    We are seeking new stylists!
 </h2>
 
 <p class="Careers-Text">
-	We are a family of unique stylists who thrive off of delivering one of a kind experiences to our guests. <br />
-	Our key values are to always be a judgement free zone, be a safer space for our guests and team, be transparent at all times, <br />
-	have FUN in the salon, deliver incredible results, and to provide integrity for our customers, ourselves, our work, and our team. <br />
-	<br />
-	We offer competitive commission, product commission, the freedom to make your own schedule, unlimited vacation time, and no contracts. <br />
-	<br />
-	If you are interested in becoming apart of our amazing team and growing with us, we would love to speak with you!
+    We are a family of unique stylists who thrive off of delivering one of a kind experiences to our guests. <br />
+    Our key values are to always be a judgement free zone, be a safer space for our guests and team, be transparent at all times, <br />
+    have FUN in the salon, deliver incredible results, and to provide integrity for our customers, ourselves, our work, and our team. <br />
+    <br />
+    We offer competitive commission, product commission, the freedom to make your own schedule, unlimited vacation time, and no contracts. <br />
+    <br />
+    If you are interested in becoming apart of our amazing team and growing with us, we would love to speak with you!
 </p>
 
 <h3 class="Careers-H3">Fill Out An Application Today!</h3>
 
 <form class="Careers-Form">
-	<table>
-		<tr>
-			<td align="right">First Name:</td>
-			<td align="left"><input type="text" name="fname" /></td>
-		</tr>
-		<tr>
-			<td align="right">Last Name:</td>
-			<td align="left"><input type="text" name="lname" /></td>
-		</tr>
-		<tr>
-			<td align="right">Phone:</td>
-			<td align="left"><input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" /></td>
-		</tr>
-		<tr>
-			<td align="right">Email:</td>
-			<td align="left"><input type="text" name="email" /></td>
-		</tr>
-		<tr>
-			<td align="right">Resume:</td>
-			<td align="left"><input type="file" name="resume" /></td>
-		</tr>
-	</table>
-	<input type="submit" value="Submit Application" align="center" class="Careers-Form-Submit-Spacing" name="careerSubmit" />
+    <table>
+        <tr>
+            <td align="right">First Name:</td>
+            <td align="left"><input type="text" name="fname" /></td>
+        </tr>
+        <tr>
+            <td align="right">Last Name:</td>
+            <td align="left"><input type="text" name="lname" /></td>
+        </tr>
+        <tr>
+            <td align="right">Phone:</td>
+            <td align="left"><input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" /></td>
+        </tr>
+        <tr>
+            <td align="right">Email:</td>
+            <td align="left"><input type="text" name="email" /></td>
+        </tr>
+        <tr>
+            <td align="right">Resume:</td>
+            <td align="left"><input type="file" name="resume" /></td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit Application" align="center" class="Careers-Form-Submit-Spacing" name="careerSubmit" />
 </form>

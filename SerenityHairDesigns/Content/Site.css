@@ -93,3 +93,11 @@ body {
 input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
 }
+
+img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    bottom: 25px;
+    right: 14px;
+}

@@ -1,0 +1,24 @@
+﻿@{//Home page
+    ViewBag.Title = "Serenity Hair Salon";
+}
+<div class="LogoStyle">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    <div class="center">
+        <button id="btnHome" name="btnHome" value="submit">Home</button>
+        <button id="btnServices" name="btnServices" value="submit">Services</button>
+        <button id="btnCareers" name="btnCareers" value="submit">Careers</button>
+        <button id="btnAboutUs" name="btnAboutUs" value="submit">About Us</button>
+        <button id="btnContactUs" name="btnContactUs" value="submit">Contact Us</button>
+        <button id="btnPolicies" name="btnPolicies" value="submit">Policies</button>
+    </div>
+    // this will have facebook link once we find the facebook account
+    <img src="~/Serenity Images/304807290_498537205610982_5716706797304772411_n.jpg" />
+    <div class="FacebookLink">
+        <a href="https://www.facebook.com/profile.php?id=100011217136707&sk=photos">FaceBook!!!</a>
+    </div>
+
+}

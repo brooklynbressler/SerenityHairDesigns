@@ -19,11 +19,18 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        // GET: Services
+        public ActionResult Services()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Index(FormCollection col) {
 
             if (col["btnCareers"].ToString() == "submit") return RedirectToAction("Careers");
 
+            if (col["btnServices"].ToString() == "submit") return RedirectToAction("Services");
 
             return View();
         }
@@ -33,6 +40,15 @@ namespace SerenityHairDesigns.Controllers
 
             if (col["btnHome"].ToString() == "submit") return RedirectToAction("Index");
 
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Services(FormCollection col)
+        {
+
+            if (col["btnHome"].ToString() == "submit") return RedirectToAction("Index");
 
             return View();
         }

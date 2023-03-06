@@ -94,7 +94,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Serenity Images\304807290_498537205610982_5716706797304772411_n.jpg" />
     <Content Include="Serenity Images\Hair_Salon_Stations.jpg" />
-    <Content Include="Views\Home\services.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +111,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Home\Careers.cshtml" />
+    <Content Include="Views\Home\Services.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

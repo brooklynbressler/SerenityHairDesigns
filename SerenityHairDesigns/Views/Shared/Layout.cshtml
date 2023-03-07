@@ -10,26 +10,34 @@
 </head>
 
 <body>
-    <div class="LogoStyle">
-        <h2>@ViewBag.Title</h2>
+
+
+    <div class="imgContainer">
+        <div>
+            <div class="LogoStyle">
+                <h2>@ViewBag.Title</h2>
+            </div>
+            <div class="center">
+                <a id="btnHome" name="btnHome" href="~/Home/Index">Home</a>
+                <a id="btnServices" name="btnServices" href="~/Home/Services">Services</a>
+                <a id="btnCareers" name="btnCareers" href="~/Home/Careers">Careers</a>
+                <button id="btnAboutUs" name="btnAboutUs" value="submit">About Us</button>
+                <button id="btnContactUs" name="btnContactUs" value="submit">Contact Us</button>
+                <button id="btnPolicies" name="btnPolicies" value="submit">Policies</button>
+            </div>
+            @RenderBody()
+        </div>
     </div>
-    <div class="center">
-        <a id="btnHome" name="btnHome" href="~/Home/Index">Home</a>
-        <a id="btnServices" name="btnServices" href="~/Home/Services">Services</a>
-        <a id="btnCareers" name="btnCareers" href="~/Home/Careers">Careers</a>
-        <button id="btnAboutUs" name="btnAboutUs" value="submit">About Us</button>
-        <button id="btnContactUs" name="btnContactUs" value="submit">Contact Us</button>
-        <button id="btnPolicies" name="btnPolicies" value="submit">Policies</button>
-    </div>
+
+    
     <div class="FacebookLinkPicture">
-    <a href="https://www.facebook.com/profile.php?id=100063641198562"><img src="~/Serenity Images/304807290_498537205610982_5716706797304772411_n.jpg" /></a>
+        <a href="https://www.facebook.com/profile.php?id=100063641198562"><img src="~/Serenity Images/304807290_498537205610982_5716706797304772411_n.jpg" /></a>
     </div>
 
     <div class="FacebookLink">
         <a href="https://www.facebook.com/profile.php?id=100063641198562">FaceBook!!!</a>
     </div>
-    <div>
-        @RenderBody()
-    </div>
 </body>
+
+
 </html>

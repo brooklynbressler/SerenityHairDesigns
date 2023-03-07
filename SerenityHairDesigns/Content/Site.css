@@ -1,6 +1,10 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding-top: unset;
+    padding-bottom: unset;
+    margin-left:auto;
+    margin-right:auto;
+    background-size:cover;
+    
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -34,7 +38,7 @@ h2 {
     
 }
 body {
-    background-image: url('../serenity images/hair_salon_stations.jpg');
+    animation:  animate ease-in-out infinite;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -102,13 +106,29 @@ body {
 input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
 }
-
-img {
-    width: 100px;
-    height: 100px;
+/**/
+.imgContainer {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    bottom: 25px;
-    right: 14px;
+    left: 0;
+    top: 0;
+    animation: animate 60s linear infinite;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+@keyframes animate {
+    0%,100% {
+        background-image: url('../serenity images/hair_salon_stations.jpg');
+       
+    }
+    25%{
+        background-image: url('../serenity images/304807290_498537205610982_5716706797304772411_n.jpg');
+        
+    }
 }
 
 .CutsLabel {

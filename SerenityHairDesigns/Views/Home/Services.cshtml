@@ -1,11 +1,43 @@
-﻿@{//Home page
-    ViewBag.Title = "Serenity Hair Salon";
-}
-
-
+﻿
 @using (Html.BeginForm())
 {
 
+    @* Services Page Content *@
+    <div class="CutsLabel">
+        <label for="Cuts">Choose a Cut:</label>
+        <select name="Cuts" id="Cuts">
+            <option value="cut1">Cut + Blowdry - Medium</option>
+            <option value="cut2">Cut + Blowdry - Long</option>
+            <option value="cut3">Cut + Blowdry - Extra Long or thick Hair</option>
+            <option value="cut4">Cut - All Clipper* </option>
+            <option value="cut5">Cut - Short </option>
+            <option value="cut6">Edge Up* </option>
+        </select>
+    </div>
+
+
+
+    <div class="StyleLabel">
+        <label for="Styles">Choose a Style:</label>
+
+        <select name"Styles" id="Styles">
+            <option value="style1">shampoo/Blowdry/Flat iron-Simple</option>
+            <option value="style2">Shampoo/Blowout</option>
+            <option value="style3">Thermal Style - Add on (Beach waves)</option>
+        </select>
+
+    </div>
+
+    <div class="TreatmentsLabel">
+        <label for="Treatments">Choose a Treatment:</label>
+
+        <select name"Styles" id="Treatments">
+            <option value="Treatment1">Deep Conditioning treatment Add on</option>
+            <option value="Treatment2">Treatment With Blowdry</option>
+            <option value="Treatment3">Malibu Treatment and Blowout</option>
+        </select>
+
+    </div>
 
 
 

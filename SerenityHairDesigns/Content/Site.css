@@ -1,9 +1,10 @@
 ﻿body {
-    padding-top: unset;
-    padding-bottom: unset;
-    margin-left:auto;
-    margin-right:auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-left:0px;
+    margin-right:0px;
     background-size:cover;
+    background-color: black;
     
 }
 
@@ -35,7 +36,7 @@ h2 {
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
-    
+    text-decoration:none;
 }
 body {
     animation:  animate ease-in-out infinite;
@@ -47,6 +48,7 @@ body {
     bottom: 8px;
     right: 16px;
     font-size: 18px;
+    float: 
 }
 .FacebookLinkPicture {
     position: absolute;
@@ -141,10 +143,11 @@ input[name="careerSubmit"] {
 .CutsDropDown {
     background-color: black;
     color: white;
+    margin: 5px;
 }
 .StyleLabel {
     position: absolute;
-    left: 275px;
+    left: 35%;
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
@@ -152,8 +155,9 @@ input[name="careerSubmit"] {
 
 .TreatmentsLabel {
     position: absolute;
-    left: 550px;
+    left: 72%;
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
+    
 }

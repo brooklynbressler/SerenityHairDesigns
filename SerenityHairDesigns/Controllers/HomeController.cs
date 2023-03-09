@@ -25,6 +25,20 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
+        public ActionResult Policies()
+        {
+            return View();
+        }
 
     }
 }

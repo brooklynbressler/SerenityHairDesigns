@@ -108,6 +108,49 @@ body {
 input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
 }
+
+.AboutUs-Text {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: fit-content;
+    margin-left: 17.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+}
+
+.Reviews-H2 {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: fit-content;
+    margin-left: 37.5%;
+    margin-top: 4%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+}
+
+.Review {
+    float: left;
+    margin-left: 47px;
+}
+
+.Review-Text {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 400px;
+    height: 150px;
+    margin-left: 17.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+}
+
+#star-icon {
+    margin-right: 0.5em;
+    color: yellow;
+}
+
 /**/
 .imgContainer {
     width: 100%;

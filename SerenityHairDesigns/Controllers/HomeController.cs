@@ -35,7 +35,7 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
-        public ActionResult Policies()
+        public ActionResult BookNow()
         {
             return View();
         }

@@ -37,6 +37,8 @@ h2 {
     color: white;
     border: 3px solid #b74f13;
     text-decoration:none;
+    margin: 3px;
+    padding: 3px;
 }
 body {
     animation:  animate ease-in-out infinite;
@@ -124,13 +126,12 @@ input[name="careerSubmit"] {
 
 @keyframes animate {
     0%,100% {
-        background-image: url('../serenity images/hair_salon_stations.jpg');
-       
-    }
-    25%{
         background-image: url('../serenity images/304807290_498537205610982_5716706797304772411_n.jpg');
-        
     }
+    25% {
+        background-image: url('../serenity images/salon image(real).jpg');
+    }
+
 }
 
 .CutsLabel {

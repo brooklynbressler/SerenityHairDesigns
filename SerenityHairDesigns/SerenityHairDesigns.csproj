@@ -94,6 +94,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Serenity Images\304807290_498537205610982_5716706797304772411_n.jpg" />
     <Content Include="Serenity Images\Hair_Salon_Stations.jpg" />
+    <Content Include="Serenity Images\logo image.jpg" />
+    <Content Include="Serenity Images\logo image2.jpg" />
+    <Content Include="Serenity Images\salon image%28real%29.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +105,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Database.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +122,7 @@
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\Policies.cshtml" />
+    <Content Include="Views\Home\BookNow.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -124,7 +132,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Database\" />
+    <Folder Include="Views\Image\" />
+    <Folder Include="Views\Rating\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

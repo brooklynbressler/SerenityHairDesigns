@@ -27,6 +27,7 @@ textarea {
     border: 3px solid #b74f13;
     padding: 10px;
     background-color: dimgrey;
+    text-align: center;
 }
 h2 {
     background-color: black;

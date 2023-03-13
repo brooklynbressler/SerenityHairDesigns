@@ -28,6 +28,7 @@ textarea {
     padding: 10px;
     background-color: dimgrey;
     text-align: center;
+    margin-bottom: 20px;
 }
 h2 {
     background-color: black;
@@ -137,6 +138,10 @@ input[name="careerSubmit"] {
     float: left;
     margin-left: 47px;
 }
+.BookNow {
+    float: left;
+    margin-left: 47px;
+}
 
 .Review-Text {
     background-color: black;
@@ -147,6 +152,19 @@ input[name="careerSubmit"] {
     margin-left: 17.5%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
+    margin: 10px;
+}
+
+.BookNow-text {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 400px;
+    height: 150px;
+    margin-left: 17.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+    margin: 10px;
 }
 
 #star-icon {
@@ -204,11 +222,5 @@ input[name="careerSubmit"] {
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
-    
-}
-
-.p1 {
-    left: 50px
-     border:
     
 }

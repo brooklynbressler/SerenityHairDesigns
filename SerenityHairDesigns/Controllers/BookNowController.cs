@@ -29,5 +29,10 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        public ActionResult ScheduleLogin()
+        {
+            return View();
+        }
+
     }
 }

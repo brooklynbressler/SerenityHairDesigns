@@ -103,6 +103,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookNowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\profileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -122,12 +123,12 @@
     <Content Include="Views\Home\Services.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
-    <Content Include="Views\Home\Policies.cshtml" />
     <Content Include="Views\Home\BookNow.cshtml" />
     <Content Include="Views\BookNow\Stylist1.cshtml" />
     <Content Include="Views\BookNow\Stylist2.cshtml" />
     <Content Include="Views\BookNow\Stylist3.cshtml" />
     <Content Include="Views\BookNow\Stylist4.cshtml" />
+    <Content Include="Views\profile\ScheduleLogin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -137,9 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Database\" />
-    <Folder Include="Views\Image\" />
-    <Folder Include="Views\Rating\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <PropertyGroup>

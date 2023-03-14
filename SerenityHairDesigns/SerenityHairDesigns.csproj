@@ -129,6 +129,7 @@
     <Content Include="Views\BookNow\Stylist3.cshtml" />
     <Content Include="Views\BookNow\Stylist4.cshtml" />
     <Content Include="Views\profile\ScheduleLogin.cshtml" />
+    <Content Include="Views\Home\login.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

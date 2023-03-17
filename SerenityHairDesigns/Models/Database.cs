@@ -8,6 +8,8 @@ using System.Net;
 namespace web2.Models {
 	public class Database {
 
+		public string strConnectionString = @"";
+
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 				SqlConnection cn = null;
@@ -414,12 +416,12 @@ namespace web2.Models {
 				SqlCommand cm = new SqlCommand("INSERT_USER", cn);
 				int intReturnValue = -1;
 
-				SetParameter(ref cm, "@uid", u.UID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-				SetParameter(ref cm, "@user_id", u.UserID, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@password", u.Password, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@first_name", u.FirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@last_name", u.LastName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@email", u.Email, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intCustomerID", u.UID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+				SetParameter(ref cm, "@strFirstName", u.FirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strLastName", u.LastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPassword", u.Password, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", u.Password, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmailAddress", u.Email, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 

@@ -1,36 +1,73 @@
-﻿
+﻿@model web2.Models.User
+
 @{
-    ViewBag.Title = "ScheduleLogin";
+	ViewBag.Title = "ScheduleLogin";
 }
 
 <h2>ScheduleLogin</h2>
-<form class="Login-Form">
-    <p>
-        Create Account
-        <br>
-        </p>
-<table>
-    <tr>
-        <td align="left">First Name:</td>
-        <td align="left"><input type="text" name="fname" /></td>
-    </tr>
-    <tr>
-        <td align="left">Last Name:</td>
-        <td align="left"><input type="text" name="lname" /></td>
-    </tr>
-    <tr>
-        <td align="left">Phone:</td>
-        <td align="left"><input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" /></td>
-    </tr>
-    <tr>
-        <td align="left">Email:</td>
-        <td align="left"><input type="text" name="email" /></td>
-    </tr>
-    <tr>
-        <td align="left">Password:</td>
-        <td align="left"><input type="text" name="Password" /></td>
-    </tr>
-</table>
-    <p>or login</p>
-    <button name="btnLogin" href="">Login</button>
-</form>
+
+<div class="Create-Account-Form">
+	<div class="Sign-In-Form">
+		<p>Existing Customer? Sign-In</p>
+		@using (Html.BeginForm(FormMethod.Post)) {
+			<div class="Login-Textboxes">
+				<table>
+					<tr>
+						<td>
+							<p>User ID:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.UserID, new { @autofocus = "autofocus" })</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>Password:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.Password, new { type = "password" })</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		}
+		<button id="btnSignIn" name="btnSubmit" value="signin" class="button-action"><i class="fas fa-sign-in-alt"></i> Sign-In</button>
+		<p id="Create-Account-OR">OR</p>
+	</div>
+
+
+	<p id="Create-Account-Text"> Create Account <br /> </p>
+	<div id="Create-Account-Content">
+		@using (Html.BeginForm(FormMethod.Post)) {
+			<div>
+				<table>
+					<tr>
+						<td align="left">First Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.FirstName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Last Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.LastName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left"><label for="Genders">Gender:</label></td>
+						<td align="left"><div>@Html.DropDownListFor(model => model.Gender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Phone:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.PhoneNumber, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Email:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.Email, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Password:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.Password, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+				</table>
+			</div>
+		}
+	</div>
+	<button id="btnCreateAccount" name="btnCreateAccount" value="signup" class="button-action">Create Account</button>
+</div>

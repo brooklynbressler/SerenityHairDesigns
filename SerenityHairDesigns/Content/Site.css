@@ -247,3 +247,41 @@ input[name="careerSubmit"] {
     border: 3px solid #b74f13;
     
 }
+
+.Create-Account-Form {
+    background-color: black;
+    color: white;
+    width: 500px;
+    height: 500px;
+    text-align: center;
+    margin-left: 34%;
+    margin-top: 4%;
+    padding: 35px 70px 0px 40px;
+}
+
+.Sign-In-Form {
+    margin-left: 50px;
+}
+
+.Login-Textboxes {
+    margin-left: 70px;
+}
+
+#Create-Account-OR {
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#Create-Account-Content {
+    margin-left: 22%;
+}
+
+#Create-Account-Text {
+    margin-left: 55px;
+}
+
+#btnCreateAccount {
+    margin-left: 55px;
+    margin-top: 15px;
+}

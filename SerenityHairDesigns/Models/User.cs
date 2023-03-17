@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 namespace web2.Models
 {
@@ -12,9 +13,13 @@ namespace web2.Models
         public long UID = 0;
         public string FirstName = string.Empty;
         public string LastName = string.Empty;
+        public string Gender = string.Empty;
         public string UserID = string.Empty;
         public string Password = string.Empty;
+        [DataType(DataType.EmailAddress)]
         public string Email = string.Empty;
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber = string.Empty;
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
         public List<Image> Images;
@@ -91,55 +96,49 @@ namespace web2.Models
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        //public sbyte UpdatePrimaryImage()
-        //{
-        //    try
-        //    {
-        //        Models.Database db = new Database();
-        //        long NewUID;
-        //        if (this.UserImage.ImageID == 0)
-        //        {
-        //            NewUID = db.InsertUserImage(this);
-        //            if (NewUID > 0) UserImage.ImageID = NewUID;
-        //        }
-        //        else
-        //        {
-        //            db.UpdateUserImage(this);
-        //        }
-        //        return 0;
-        //    }
-        //    catch (Exception ex) { throw new Exception(ex.Message); }
-        //}
+		//public sbyte UpdatePrimaryImage()
+		//{
+		//    try
+		//    {
+		//        Models.Database db = new Database();
+		//        long NewUID;
+		//        if (this.UserImage.ImageID == 0)
+		//        {
+		//            NewUID = db.InsertUserImage(this);
+		//            if (NewUID > 0) UserImage.ImageID = NewUID;
+		//        }
+		//        else
+		//        {
+		//            db.UpdateUserImage(this);
+		//        }
+		//        return 0;
+		//    }
+		//    catch (Exception ex) { throw new Exception(ex.Message); }
+		//}
 
-        //public User Login()
-        //{
-        //    try
-        //    {
-        //        Database db = new Database();
-        //        return db.Login(this);
-        //    }
-        //    catch (Exception ex) { throw new Exception(ex.Message); }
-        //}
+		public User Login() {
+			try {
+				Database db = new Database();
+				return db.Login(this);
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
-        //public User.ActionTypes Save()
-        //{
-        //    try
-        //    {
-        //        Database db = new Database();
-        //        if (UID == 0)
-        //        { //insert new user
-        //            this.ActionType = db.InsertUser(this);
-        //        }
-        //        else
-        //        {
-        //            this.ActionType = db.UpdateUser(this);
-        //        }
-        //        return this.ActionType;
-        //    }
-        //    catch (Exception ex) { throw new Exception(ex.Message); }
-        //}
+		public User.ActionTypes Save() {
+			try {
+				Database db = new Database();
+				if (UID == 0) { //insert new user
+					this.ActionType = db.InsertUser(this);
+				}
+				else {
+					this.ActionType = db.UpdateUser(this);
+				}
+				return this.ActionType;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
-        public bool RemoveUserSession()
+		public bool RemoveUserSession()
         {
             try
             {

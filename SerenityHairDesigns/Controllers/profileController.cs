@@ -11,43 +11,42 @@ namespace SerenityHairDesigns.Controllers
         // GET: profile
         public ActionResult ScheduleLogin()
         {
-            return View();
+			Models.User u = new Models.User();
+			return View(u);
         }
 
 		[HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {
 			try {
-				web2.Models.User u = new web2.Models.User();
+				Models.User u = new Models.User();
 
-				u.FirstName = col["FirstName"];
-				u.LastName = col["LastName"];
-				u.Email = col["Email"];
-				u.UserID = col["UserID"];
-				u.Password = col["Password"];
-				u.Gender = col["Genders"];
+				u.strFirstName = col["strFirstName"];
+				u.strLastName = col["strLastName"];
+				u.strEmailAddress = col["strEmailAddress"];
+				u.strPassword = col["strPassword"];
+				u.strGender = col["strGender"];
 
 				if (col["btnSubmit"] == "signin") {
-					u.UserID = col["UserID"];
-					u.Password = col["Password"];
+					u.strEmailAddress = col["strEmailAddress"];
+					u.strPassword = col["strPassword"];
 
 					u = u.Login();
-					if (u != null && u.UID > 0) {
+					if (u != null && u.intCustomerID > 0) {
 						u.SaveUserSession();
-						return RedirectToAction("Index");
+						return RedirectToAction("ScheduleNowLoggedIn");
 					}
 					else {
-						u = new web2.Models.User();
-						u.UserID = col["UserID"];
-						u.ActionType = web2.Models.User.ActionTypes.LoginFailed;
+						u = new Models.User();
+						u.ActionType = Models.User.ActionTypes.LoginFailed;
 					}
 				}
 				else if (col["btnSubmit"] == "signup") { //sign up button pressed
-						web2.Models.User.ActionTypes at = web2.Models.User.ActionTypes.NoType;
+					Models.User.ActionTypes at = Models.User.ActionTypes.NoType;
 						at = u.Save();
 						switch (at) {
-							case web2.Models.User.ActionTypes.InsertSuccessful:
+							case Models.User.ActionTypes.InsertSuccessful:
 								u.SaveUserSession();
-								return RedirectToAction("Index");
+								return RedirectToAction("ScheduleNowLoggedIn");
 							//break;
 							default:
 								return View(u);
@@ -57,54 +56,18 @@ namespace SerenityHairDesigns.Controllers
 				return View(u);
 			}
 			catch (Exception) {
-				web2.Models.User u = new web2.Models.User();
+				Models.User u = new Models.User();
 				return View(u);
 			}
 		}
 
-		//[HttpPost]
-		//public ActionResult ScheduleLogin(FormCollection col) {
-		//	try {
-		//		web2.Models.User u = new web2.Models.User();
-
-		//		u.FirstName = col["FirstName"];
-		//		u.LastName = col["LastName"];
-		//		u.Email = col["Email"];
-		//		u.UserID = col["UserID"];
-		//		u.Password = col["Password"];
-		//		u.Gender = col["Genders"];
-
-		//		if (u.FirstName.Length == 0 || u.LastName.Length == 0 || u.Email.Length == 0 || u.UserID.Length == 0 || u.Password.Length == 0) {
-		//			u.ActionType = web2.Models.User.ActionTypes.RequiredFieldsMissing;
-		//			return View(u);
-		//		}
-		//		else {
-		//			if (col["btnSubmit"] == "signup") { //sign up button pressed
-		//				web2.Models.User.ActionTypes at = web2.Models.User.ActionTypes.NoType;
-		//				at = u.Save();
-		//				switch (at) {
-		//					case web2.Models.User.ActionTypes.InsertSuccessful:
-		//						u.SaveUserSession();
-		//						return RedirectToAction("Index");
-		//					//break;
-		//					default:
-		//						return View(u);
-		//						//break;
-		//				}
-		//			}
-		//			else {
-		//				return View(u);
-		//			}
-		//		}
-		//	}
-		//	catch (Exception) {
-		//		web2.Models.User u = new web2.Models.User();
-		//		return View(u);
-		//	}
-		//}
+		public ActionResult ScheduleNowLoggedIn() {
+			Models.User u = new Models.User();
+			return View(u);
+		}
 
 		public ActionResult SignOut() {
-			web2.Models.User u = new web2.Models.User();
+			Models.User u = new Models.User();
 			u.RemoveUserSession();
 			return RedirectToAction("Index", "Home");
 		}

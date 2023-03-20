@@ -4,11 +4,12 @@ using System.Data.SqlClient;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Net;
+using SerenityHairDesigns.Models;
 
-namespace web2.Models {
+namespace SerenityHairDesigns.Models {
 	public class Database {
 
-		public string strConnectionString = @"";
+		public string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
@@ -306,7 +307,7 @@ namespace web2.Models {
 				SqlCommand cm = new SqlCommand("INSERT_USER_IMAGE", cn);
 
 				SetParameter(ref cm, "@user_image_id", null, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-				SetParameter(ref cm, "@uid", u.UID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@uid", u.intCustomerID, SqlDbType.BigInt);
 				if (u.UserImage.Primary)
 					SetParameter(ref cm, "@primary_image", "Y", SqlDbType.Char);
 				else
@@ -416,12 +417,12 @@ namespace web2.Models {
 				SqlCommand cm = new SqlCommand("INSERT_USER", cn);
 				int intReturnValue = -1;
 
-				SetParameter(ref cm, "@intCustomerID", u.UID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-				SetParameter(ref cm, "@strFirstName", u.FirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strLastName", u.LastName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strPassword", u.Password, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strPhoneNumber", u.Password, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strEmailAddress", u.Email, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intCustomerID", u.intCustomerID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+				SetParameter(ref cm, "@strFirstName", u.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strLastName", u.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPassword", u.strPassword, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", u.strPhoneNumber, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmailAddress", u.strEmailAddress, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
@@ -432,7 +433,7 @@ namespace web2.Models {
 
 				switch (intReturnValue) {
 					case 1: // new user created
-						u.UID = (long)cm.Parameters["@uid"].Value;
+						u.intCustomerID = (long)cm.Parameters["@intCustomerID"].Value;
 						return User.ActionTypes.InsertSuccessful;
 					case -1:
 						return User.ActionTypes.DuplicateEmail;
@@ -449,14 +450,14 @@ namespace web2.Models {
 			try {
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlDataAdapter da = new SqlDataAdapter("LOGIN", cn);
+				SqlDataAdapter da = new SqlDataAdapter("LOGIN_USER", cn);
 				DataSet ds;
 				User newUser = null;
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-				SetParameter(ref da, "@user_id", u.UserID, SqlDbType.NVarChar);
-				SetParameter(ref da, "@password", u.Password, SqlDbType.NVarChar);
+				SetParameter(ref da, "@strEmailAddress", u.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref da, "@strPassword", u.strPassword, SqlDbType.NVarChar);
 
 				try {
 					ds = new DataSet();
@@ -464,12 +465,12 @@ namespace web2.Models {
 					if (ds.Tables[0].Rows.Count > 0) {
 						newUser = new User();
 						DataRow dr = ds.Tables[0].Rows[0];
-						newUser.UID = (long)dr["UID"];
-						newUser.UserID = u.UserID;
-						newUser.Password = u.Password;
-						newUser.FirstName = (string)dr["FirstName"];
-						newUser.LastName = (string)dr["LastName"];
-						newUser.Email = (string)dr["Email"];
+						newUser.intCustomerID = (long)dr["intCustomerID"];
+						newUser.strFirstName = (string)dr["strFirstName"];
+						newUser.strLastName = (string)dr["strLastName"];
+						newUser.strPassword = u.strPassword;
+						newUser.strPhoneNumber = (string)dr["strPhoneNumber"];
+						newUser.strEmailAddress = (string)dr["strEmailAddress"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
@@ -488,12 +489,11 @@ namespace web2.Models {
 				SqlCommand cm = new SqlCommand("UPDATE_USER", cn);
 				int intReturnValue = -1;
 
-				SetParameter(ref cm, "@uid", u.UID, SqlDbType.BigInt);
-				SetParameter(ref cm, "@user_id", u.UserID, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@password", u.Password, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@first_name", u.FirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@last_name", u.LastName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@email", u.Email, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intCustomerID", u.intCustomerID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@password", u.strPassword, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@first_name", u.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@last_name", u.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@email", u.strEmailAddress, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
@@ -516,7 +516,7 @@ namespace web2.Models {
 			try {
 				if (SQLConn == null) SQLConn = new SqlConnection();
 				if (SQLConn.State != ConnectionState.Open) {
-					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
+					SQLConn.ConnectionString = strConnectionString;
 					SQLConn.Open();
 				}
 				return true;

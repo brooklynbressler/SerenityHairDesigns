@@ -1,8 +1,12 @@
-﻿using System;
+﻿using SerenityHairDesigns.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNetCore.Http;
+
+
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -15,9 +19,23 @@ namespace SerenityHairDesigns.Controllers
         }
 
         // GET: Careers
-        public ActionResult Careers() {
+        public ActionResult Careers() { 
+
+
+            return View(new Resume());
+        }
+
+
+        [HttpPost]
+        public ActionResult Careers(Resume model, IFormFile File )
+        {
+            EmailSender sender = new EmailSender();
+
+			sender.SendEmail(model, File);
+
             return View();
         }
+
 
         // GET: Services
         public ActionResult Services()
@@ -44,5 +62,8 @@ namespace SerenityHairDesigns.Controllers
         {
             return View();
         }
-    }
+
+
+
+	}
 }

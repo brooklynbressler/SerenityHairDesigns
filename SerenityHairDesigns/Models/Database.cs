@@ -8,7 +8,7 @@ using System.Net;
 namespace web2.Models {
 	public class Database {
 
-		public string strConnectionString = @"";
+		public string strConnectionString = "Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
@@ -516,7 +516,7 @@ namespace web2.Models {
 			try {
 				if (SQLConn == null) SQLConn = new SqlConnection();
 				if (SQLConn.State != ConnectionState.Open) {
-					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
+					SQLConn.ConnectionString = strConnectionString;
 					SQLConn.Open();
 				}
 				return true;

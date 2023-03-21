@@ -1,57 +1,89 @@
 ﻿
 @{
-    ViewBag.Title = "ContactUs";
+	ViewBag.Title = "ContactUs";
 }
 
 <h2>ContactUs</h2>
-   <div class="center">
-        <p>
-            <label>Location:</label> <label>    4134-4160 Alexandria Pike, Cold Spring, KY 41076</label>
-        </p>
+<div class="center">
+	<p>
+		<label>Location:</label> <label>    4134-4160 Alexandria Pike, Cold Spring, KY 41076</label>
+	</p>
 
-        <p>
-            <label>Phone:</label> <label>       (859) 441-6700</label>
-        </p>
+	<p>
+		<label>Phone:</label> <label>       (859) 441-6700</label>
+	</p>
 
-        <p>
-            <label>Hours:</label>   
-                <select name"Styles" id="Styles">
-                    <option value="Day1">
-                        Monday
-                        9:00 AM - 9:00 PM
-                    </option>
-                    <option value="Day2">
-                        Tuesday
-                        9:00 AM - 9:00 PM
-                    </option>
-                    <option value="Day3">
-                        Wednesday
-                        9:00 AM - 9:00 PM
-                    </option>
-                    <option value="Day4">
-                        Thursday
-                        9:00 AM - 9:00 PM
-                    </option>
-                    <option value="Day5">
-                         Friday
-                         9:00 AM - 9:00 PM
-                    </option>
-                    <option value="Day6">
-                        Saturday
-                        9:00 AM - 5:00 PM
-                    </option>
-                    <option value="Day7">
-                        Sunday
-                        CLOSED
-                    </option>
-                </select>
-        </p>
+	<p>
+		<label>Hours:</label>
+		<select name"Styles" id="Styles">
+			<option value="Day1">
+				Monday
+				9:00 AM - 9:00 PM
+			</option>
+			<option value="Day2">
+				Tuesday
+				9:00 AM - 9:00 PM
+			</option>
+			<option value="Day3">
+				Wednesday
+				9:00 AM - 9:00 PM
+			</option>
+			<option value="Day4">
+				Thursday
+				9:00 AM - 9:00 PM
+			</option>
+			<option value="Day5">
+				Friday
+				9:00 AM - 9:00 PM
+			</option>
+			<option value="Day6">
+				Saturday
+				9:00 AM - 5:00 PM
+			</option>
+			<option value="Day7">
+				Sunday
+				CLOSED
+			</option>
+		</select>
+	</p>
 
-        <p> would you like to post a review?<br>
-            <label>Name:</label>    <input type="text"><br>
-            <label>Email:</label>   <input type="text"><br>
-            <label>Message:</label> <input type="text"><br>
-            <button value="submit">PostReview</button>
-        </p>
+	<p>
+		would you like to post a review?<br>
+		<label>Name:</label>    <input type="text"><br>
+		<label>Email:</label>   <input type="text"><br>
+		<label>Message:</label> <input type="text"><br>
+			<div class="stars">
+			  <input type="radio" id="star1" name="rating" value="1" />
+			  <label for="star1" onclick="updateRating(1)">&#9733;</label>
+			  <input type="radio" id="star2" name="rating" value="2" />
+			  <label for="star2" onclick="updateRating(2)">&#9733;</label>
+			  <input type="radio" id="star3" name="rating" value="3" />
+			  <label for="star3" onclick="updateRating(3)">&#9733;</label>
+			  <input type="radio" id="star4" name="rating" value="4" />
+			  <label for="star4" onclick="updateRating(4)">&#9733;</label>
+			  <input type="radio" id="star5" name="rating" value="5" />
+			  <label for="star5" onclick="updateRating(5)">&#9733;</label>
+			</div>
+		<button value="submit">PostReview</button>
+	</p>
 
-   </div>
+</div>
+
+<script>
+
+	function updateRating(rating) {
+		var stars = document.getElementsByName("rating");
+		var i;
+		for (i = 0; i < stars.length; i++) {
+			if (i < rating) {
+				stars[i].checked = true;
+				stars[i].nextElementSibling.classList.add("selected");
+			} else {
+				stars[i].checked = false;
+				stars[i].nextElementSibling.classList.remove("selected");
+			}
+		}
+	}
+
+</script>
+

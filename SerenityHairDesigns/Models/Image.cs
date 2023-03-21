@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace web2.Models
+namespace SerenityHairDesigns.Models
 {
     public class Image
     {

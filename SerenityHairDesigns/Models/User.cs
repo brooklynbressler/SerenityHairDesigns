@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using SerenityHairDesigns.Models;
 
-namespace web2.Models
-{
+namespace SerenityHairDesigns.Models {
 
-    public class User
+	public class User
     {
-        public long UID = 0;
-        public string FirstName = string.Empty;
-        public string LastName = string.Empty;
-        public string Gender = string.Empty;
-        public string UserID = string.Empty;
-        public string Password = string.Empty;
-        [DataType(DataType.EmailAddress)]
-        public string Email = string.Empty;
-        [DataType(DataType.PhoneNumber)]
-        public string PhoneNumber = string.Empty;
+        public long intCustomerID = 0;
+        public string strFirstName = string.Empty;
+        public string strLastName = string.Empty;
+        public string strGender = string.Empty;
+        public string strPassword = string.Empty;
+
+        //[DataType(DataType.EmailAddress)]
+        public string strEmailAddress = string.Empty;
+
+        //[DataType(DataType.PhoneNumber)]
+        public string strPhoneNumber = string.Empty;
+
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
         public List<Image> Images;
@@ -60,7 +61,7 @@ namespace web2.Models
         {
             get
             {
-                if (UID > 0) return true;
+                if (intCustomerID > 0) return true;
                 return false;
             }
         }
@@ -127,7 +128,7 @@ namespace web2.Models
 		public User.ActionTypes Save() {
 			try {
 				Database db = new Database();
-				if (UID == 0) { //insert new user
+				if (intCustomerID == 0) { //insert new user
 					this.ActionType = db.InsertUser(this);
 				}
 				else {

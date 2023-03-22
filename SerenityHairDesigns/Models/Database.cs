@@ -9,7 +9,7 @@ using SerenityHairDesigns.Models;
 namespace SerenityHairDesigns.Models {
 	public class Database {
 
-
+		string strConnectionString = "Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 				SqlConnection cn = null;
@@ -515,7 +515,7 @@ namespace SerenityHairDesigns.Models {
 			try {
 				if (SQLConn == null) SQLConn = new SqlConnection();
 				if (SQLConn.State != ConnectionState.Open) {
-					//SQLConn.ConnectionString = strConnectionString;
+					SQLConn.ConnectionString = strConnectionString;
 					SQLConn.Open();
 				}
 				return true;

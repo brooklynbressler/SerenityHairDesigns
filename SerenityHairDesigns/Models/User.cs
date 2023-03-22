@@ -10,6 +10,7 @@ namespace SerenityHairDesigns.Models {
 	public class User
     {
         public long intCustomerID = 0;
+        public long intEmployeeID = 0;
         public string strFirstName = string.Empty;
         public string strLastName = string.Empty;
         public string strGender = string.Empty;
@@ -125,7 +126,17 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public User.ActionTypes Save() {
+        public User LoginEmployee()
+        {
+            try
+            {
+                Database db = new Database();
+                return db.LoginEmployee(this);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public User.ActionTypes Save() {
 			try {
 				Database db = new Database();
 				if (intCustomerID == 0) { //insert new user
@@ -139,7 +150,25 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public bool RemoveUserSession()
+        public User.ActionTypes SaveEmployee()
+        {
+            try
+            {
+                Database db = new Database();
+                if (intEmployeeID == 0)
+                { //insert new user
+                    this.ActionType = db.InsertEmployee(this);
+                }
+                else
+                {
+                    this.ActionType = db.UpdateUser(this);
+                }
+                return this.ActionType;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public bool RemoveUserSession()
         {
             try
             {

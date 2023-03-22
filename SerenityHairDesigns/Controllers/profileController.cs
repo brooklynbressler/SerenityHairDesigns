@@ -15,7 +15,13 @@ namespace SerenityHairDesigns.Controllers
 			return View(u);
         }
 
-		[HttpPost]
+        public ActionResult Employeelogin()
+        {
+            Models.User u = new Models.User();
+            return View();
+        }
+
+        [HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {
 			try {
 				Models.User u = new Models.User();
@@ -61,12 +67,72 @@ namespace SerenityHairDesigns.Controllers
 			}
 		}
 
-		public ActionResult ScheduleNowLoggedIn() {
+        [HttpPost]
+        public ActionResult Employeelogin(FormCollection col)
+        {
+            try
+            {
+                Models.User u = new Models.User();
+
+                u.strFirstName = col["strFirstName"];
+                u.strLastName = col["strLastName"];
+                u.strEmailAddress = col["strEmailAddress"];
+                u.strPassword = col["strPassword"];
+                u.strGender = col["strGender"];
+
+                if (col["btnSubmit"] == "signin")
+                {
+                    u.strEmailAddress = col["strEmailAddress"];
+                    u.strPassword = col["strPassword"];
+
+                    u = u.LoginEmployee();
+                    if (u != null && u.intEmployeeID > 0)
+                    {
+                        u.SaveUserSession();
+                        return RedirectToAction("EmployeeLoggedIn");
+                    }
+                    else
+                    {
+                        u = new Models.User();
+                        u.ActionType = Models.User.ActionTypes.LoginFailed;
+                    }
+                }
+                else if (col["btnSubmit"] == "signup")
+                { //sign up button pressed
+                    Models.User.ActionTypes at = Models.User.ActionTypes.NoType;
+                    at = u.SaveEmployee();
+                    switch (at)
+                    {
+                        case Models.User.ActionTypes.InsertSuccessful:
+                            u.SaveUserSession();
+                            return RedirectToAction("EmployeeLoggedIn");
+                        //break;
+                        default:
+                            return View(u);
+                            //break;
+                    }
+                }
+                return View(u);
+            }
+            catch (Exception)
+            {
+                Models.User u = new Models.User();
+                return View(u);
+            }
+        }
+
+        public ActionResult ScheduleNowLoggedIn() {
 			Models.User u = new Models.User();
 			return View(u);
 		}
 
-		public ActionResult SignOut() {
+        public ActionResult EmployeeLoggedIn()
+        {
+            Models.User u = new Models.User();
+            return View(u);
+        }
+
+        public ActionResult SignOut() {
 			Models.User u = new Models.User();
 			u.RemoveUserSession();
 			return RedirectToAction("Index", "Home");

@@ -445,7 +445,46 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public User Login(User u) {
+        public User.ActionTypes InsertEmployee(User u)
+        {
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+                SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE", cn);
+                int intReturnValue = -1;
+				
+                SetParameter(ref cm, "@intEmployeeID", u.intEmployeeID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+                SetParameter(ref cm, "@strFirstName", u.strFirstName, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@strLastName", u.strLastName, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@strPassword", u.strPassword, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@strPhoneNumber", u.strPhoneNumber, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@strEmailAddress", u.strEmailAddress, SqlDbType.NVarChar);
+
+                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+                cm.ExecuteReader();
+
+                intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
+                CloseDBConnection(ref cn);
+
+                switch (intReturnValue)
+                {
+                    case 1: // new user created
+                        u.intCustomerID = (long)cm.Parameters["@intEmployeeID"].Value;
+                        return User.ActionTypes.InsertSuccessful;
+                    case -1:
+                        return User.ActionTypes.DuplicateEmail;
+                    case -2:
+                        return User.ActionTypes.DuplicateUserID;
+                    default:
+                        return User.ActionTypes.Unknown;
+                }
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public User Login(User u) {
 			try {
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
@@ -481,7 +520,48 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public User.ActionTypes UpdateUser(User u) {
+        public User LoginEmployee(User u)
+        {
+            try
+            {
+                SqlConnection cn = new SqlConnection();
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+                SqlDataAdapter da = new SqlDataAdapter("LOGIN_EMPLOYEE", cn);
+                DataSet ds;
+                User newUser = null;
+
+                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                SetParameter(ref da, "@strEmailAddress", u.strEmailAddress, SqlDbType.NVarChar);
+                SetParameter(ref da, "@strPassword", u.strPassword, SqlDbType.NVarChar);
+
+                try
+                {
+                    ds = new DataSet();
+                    da.Fill(ds);
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        newUser = new User();
+                        DataRow dr = ds.Tables[0].Rows[0];
+                        newUser.intEmployeeID = (long)dr["intEmployeeID"];
+                        newUser.strFirstName = (string)dr["strFirstName"];
+                        newUser.strLastName = (string)dr["strLastName"];
+                        newUser.strPassword = u.strPassword;
+                        newUser.strPhoneNumber = (string)dr["strPersonalNumber"];
+                        newUser.strEmailAddress = (string)dr["strEmailAddress"];
+                    }
+                }
+                catch (Exception ex) { throw new Exception(ex.Message); }
+                finally
+                {
+                    CloseDBConnection(ref cn);
+                }
+                return newUser; //alls well in the world
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public User.ActionTypes UpdateUser(User u) {
 			try {
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
@@ -515,8 +595,9 @@ namespace SerenityHairDesigns.Models {
 			try {
 				if (SQLConn == null) SQLConn = new SqlConnection();
 				if (SQLConn.State != ConnectionState.Open) {
-					//SQLConn.ConnectionString = strConnectionString;
-					SQLConn.Open();
+					SQLConn.ConnectionString = @"Data Source = BRIANSPCDESKTOP\SQLEXPRESS; Initial Catalog = SerenityHairDesigns; Integrated Security = True";
+
+                    SQLConn.Open();
 				}
 				return true;
 			}

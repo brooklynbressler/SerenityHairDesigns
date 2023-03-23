@@ -1,1 +1,36 @@
-﻿
+﻿@model SerenityHairDesigns.Models.User
+@{
+	ViewBag.Title = "Employeelogin";
+}
+
+<h2>EmployeeLogin</h2>
+
+
+<div class="Create-Account-Form-Emp">
+	<div class="Sign-In-Form-Emp">
+		<p>Existing Employee? Sign-In</p>
+		@using (Html.BeginForm(FormMethod.Post)) {
+			<div class="Login-Textboxes">
+				<table>
+					<tr>
+						<td>
+							<p>Email Address:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>Password:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<button id="btnSignIn" name="btnSubmit" value="signin" class="button-action"><i class="fas fa-sign-in-alt"></i> Sign-In</button>
+		}
+	</div>
+</div>

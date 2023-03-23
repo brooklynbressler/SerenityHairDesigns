@@ -4,20 +4,13 @@
 ﻿@model SerenityHairDesigns.Models.Employee
 >>>>>>> 583da4e39fa848f85b762172027fcc6caeec59c0
 @{
-<<<<<<< HEAD
     ViewBag.Title = "Employeelogin";
-=======
-	ViewBag.Title = "Employeelogin";
->>>>>>> 732f1eda7f29684724a20d5cddf8498798375923
 }
 
 <h2>EmployeeLogin</h2>
-
-
-<<<<<<< HEAD
 <div class="Create-Account-Form">
     <div class="Sign-In-Form">
-        <p>Existing Customer? Sign-In</p>
+        <p>Existing Employee? Sign-In</p>
         @using (Html.BeginForm(FormMethod.Post))
         {
             <div class="Login-Textboxes">
@@ -82,33 +75,3 @@
         }
     </div>
 </div>
-=======
-<div class="Create-Account-Form-Emp">
-	<div class="Sign-In-Form-Emp">
-		<p>Existing Employee? Sign-In</p>
-		@using (Html.BeginForm(FormMethod.Post)) {
-			<div class="Login-Textboxes">
-				<table>
-					<tr>
-						<td>
-							<p>Email Address:</p>
-						</td>
-						<td>
-							<div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<p>Password:</p>
-						</td>
-						<td>
-							<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<button id="btnSignIn" name="btnSubmit" value="signin" class="button-action"><i class="fas fa-sign-in-alt"></i> Sign-In</button>
-		}
-	</div>
-</div>
->>>>>>> 732f1eda7f29684724a20d5cddf8498798375923

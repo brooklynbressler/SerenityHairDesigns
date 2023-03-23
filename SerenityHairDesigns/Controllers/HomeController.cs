@@ -13,7 +13,7 @@ namespace SerenityHairDesigns.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            Models.Customer u = new Models.Customer();
+            Models.Employee u = new Models.Employee();
             return View();
         }
 
@@ -29,7 +29,7 @@ namespace SerenityHairDesigns.Controllers
                     e = e.LoginEmployee();
                     if (e != null && e.intEmployeeID > 0) {
                         e.SaveEmployeeSession();
-                        return RedirectToAction("ScheduleNowLoggedIn", "profile");
+                        return RedirectToAction("EmployeeLoggedIn", "Profile");
                     }
                     else {
                         e = new Models.Employee();
@@ -39,7 +39,7 @@ namespace SerenityHairDesigns.Controllers
                 return View(e);
             }
             catch (Exception) {
-                Models.Customer u = new Models.Customer();
+                Models.Employee u = new Models.Employee();
                 return View(u);
             }
         }

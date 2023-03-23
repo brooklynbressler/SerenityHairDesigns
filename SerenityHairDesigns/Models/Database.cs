@@ -547,7 +547,7 @@ namespace SerenityHairDesigns.Models {
                         newEmp.strFirstName = (string)dr["strFirstName"];
                         newEmp.strLastName = (string)dr["strLastName"];
                         newEmp.strPassword = e.strPassword;
-                        newEmp.strPhoneNumber = (string)dr["strPersonalNumber"];
+                        newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
                         newEmp.strEmailAddress = (string)dr["strEmailAddress"];
                     }
                 }

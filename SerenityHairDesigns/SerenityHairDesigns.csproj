@@ -196,16 +196,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookNowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\profileController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Resume.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

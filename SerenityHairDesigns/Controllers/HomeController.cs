@@ -1,12 +1,10 @@
-﻿using SerenityHairDesigns.Models;
+﻿using Microsoft.AspNetCore.Http;
+using SerenityHairDesigns.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNetCore.Http;
-
-
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -15,8 +13,41 @@ namespace SerenityHairDesigns.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            Models.Employee u = new Models.Employee();
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(System.Web.Mvc.FormCollection col) {
+            try {
+                Models.Employee e = new Models.Employee();
+
+                if (col["btnSubmit"] == "signin") {
+                    e.strEmailAddress = col["strEmailAddress"];
+                    e.strPassword = col["strPassword"];
+
+                    e = e.LoginEmployee();
+                    if (e != null && e.intEmployeeID > 0) {
+                        e.SaveEmployeeSession();
+                        return RedirectToAction("EmployeeLoggedIn", "Profile");
+                    }
+                    else {
+                        e = new Models.Employee();
+                        e.ActionType = Models.Employee.ActionTypes.LoginFailed;
+                    }
+                }
+                return View(e);
+            }
+            catch (Exception) {
+                Models.Employee u = new Models.Employee();
+                return View(u);
+            }
+        }
+
+        //public ActionResult EmployeeLoggedIn() {
+        //    Models.User u = new Models.User();
+        //    return View(u);
+        //}
 
         // GET: Careers
         public ActionResult Careers() { 
@@ -73,10 +104,7 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
-        public ActionResult login()
-        {
-            return View();
-        }
+
 
 
 

@@ -196,7 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookNowController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\profileController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,11 +204,16 @@
     <Compile Include="Models\ContactUs.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Resume.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\Reviews.cs" />
     <Compile Include="Models\User.cs" />
+=======
+    <Compile Include="Models\Customer.cs" />
+>>>>>>> ae188dac05ecc1a723efa1b023390622dc38567e
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +231,10 @@
     <Content Include="Views\BookNow\Stylist3.cshtml" />
     <Content Include="Views\BookNow\Stylist4.cshtml" />
     <Content Include="Views\profile\ScheduleLogin.cshtml" />
-    <Content Include="Views\Home\login.cshtml" />
+    <Content Include="Views\profile\Employeelogin.cshtml" />
     <Content Include="Views\profile\ScheduleNowLoggedIn.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Views\profile\EmployeeLoggedIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

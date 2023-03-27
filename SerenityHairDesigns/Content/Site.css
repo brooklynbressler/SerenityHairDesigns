@@ -156,9 +156,54 @@ input[name="careerSubmit"] {
     float: left;
     margin-left: 47px;
 }
+
+.Book-Now-Btn {
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
 .BookNow {
     float: left;
-    margin-left: 47px;
+}
+
+.Book-Now-1 {
+    float: left;
+    margin-left: 490px;
+    margin-bottom: 30px;
+}
+
+.Book-Now-2 {
+    float: left;
+    margin-left: 490px;
+}
+
+img {
+    width: 400px;
+    height: 300px;
+}
+
+.img-kelley {
+    margin: 0px 0px 0px 20px;
+}
+
+.img-rhonda {
+    margin: 0px 0px 0px 19px;
+}
+
+.img-barb {
+    margin: 0px 0px 0px 19px;
+}
+
+.img-carrie {
+    margin: 0px 0px 0px 19px;
 }
 
 .StylistReview {
@@ -259,8 +304,23 @@ input[name="careerSubmit"] {
     padding: 35px 70px 0px 40px;
 }
 
+.Create-Account-Form-Emp {
+    background-color: black;
+    color: white;
+    width: 500px;
+    height: 350px;
+    text-align: center;
+    margin-left: 34%;
+    margin-top: 4%;
+    padding: 35px 70px 0px 40px;
+}
+
 .Sign-In-Form {
-    margin-left: 50px;
+    margin: 0px 0px 0px 50px;
+}
+
+.Sign-In-Form-Emp {
+    margin: 70px 0px 0px 45px;
 }
 
 .Login-Textboxes {

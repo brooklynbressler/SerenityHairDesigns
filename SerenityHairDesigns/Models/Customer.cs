@@ -7,7 +7,7 @@ using SerenityHairDesigns.Models;
 
 namespace SerenityHairDesigns.Models {
 
-	public class User
+	public class Customer
     {
         public long intCustomerID = 0;
         public string strFirstName = string.Empty;
@@ -57,7 +57,7 @@ namespace SerenityHairDesigns.Models {
         //}
 
 
-        public bool IsAuthenticated
+        public bool IsCustomerAuthenticated
         {
             get
             {
@@ -117,29 +117,29 @@ namespace SerenityHairDesigns.Models {
 		//    catch (Exception ex) { throw new Exception(ex.Message); }
 		//}
 
-		public User Login() {
+		public Customer LoginCustomer() {
 			try {
 				Database db = new Database();
-				return db.Login(this);
+				return db.LoginCustomer(this);
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public User.ActionTypes Save() {
+        public Customer.ActionTypes SaveCustomer() {
 			try {
 				Database db = new Database();
 				if (intCustomerID == 0) { //insert new user
-					this.ActionType = db.InsertUser(this);
+					this.ActionType = db.InsertCustomer(this);
 				}
 				else {
-					this.ActionType = db.UpdateUser(this);
+					this.ActionType = db.UpdateCustomer(this);
 				}
 				return this.ActionType;
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public bool RemoveUserSession()
+        public bool RemoveCustomerSession()
         {
             try
             {
@@ -149,22 +149,22 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public User GetUserSession()
+        public Customer GetCustomerSession()
         {
             try
             {
-                User u = new User();
+                Customer u = new Customer();
                 if (HttpContext.Current.Session["CurrentUser"] == null)
                 {
                     return u;
                 }
-                u = (User)HttpContext.Current.Session["CurrentUser"];
+                u = (Customer)HttpContext.Current.Session["CurrentUser"];
                 return u;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public bool SaveUserSession()
+        public bool SaveCustomerSession()
         {
             try
             {

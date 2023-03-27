@@ -6,19 +6,25 @@ using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Controllers
 {
-    public class profileController : Controller
+    public class ProfileController : Controller
     {
         // GET: profile
         public ActionResult ScheduleLogin()
         {
-			Models.User u = new Models.User();
+			Models.Customer u = new Models.Customer();
 			return View(u);
         }
 
-		[HttpPost]
+        public ActionResult Employeelogin()
+        {
+            Models.Customer u = new Models.Customer();
+            return View();
+        }
+
+        [HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {
 			try {
-				Models.User u = new Models.User();
+				Models.Customer u = new Models.Customer();
 
 				u.strFirstName = col["strFirstName"];
 				u.strLastName = col["strLastName"];
@@ -30,22 +36,22 @@ namespace SerenityHairDesigns.Controllers
 					u.strEmailAddress = col["strEmailAddress"];
 					u.strPassword = col["strPassword"];
 
-					u = u.Login();
+					u = u.LoginCustomer();
 					if (u != null && u.intCustomerID > 0) {
-						u.SaveUserSession();
+						u.SaveCustomerSession();
 						return RedirectToAction("ScheduleNowLoggedIn");
 					}
 					else {
-						u = new Models.User();
-						u.ActionType = Models.User.ActionTypes.LoginFailed;
+						u = new Models.Customer();
+						u.ActionType = Models.Customer.ActionTypes.LoginFailed;
 					}
 				}
 				else if (col["btnSubmit"] == "signup") { //sign up button pressed
-					Models.User.ActionTypes at = Models.User.ActionTypes.NoType;
-						at = u.Save();
+					Models.Customer.ActionTypes at = Models.Customer.ActionTypes.NoType;
+						at = u.SaveCustomer();
 						switch (at) {
-							case Models.User.ActionTypes.InsertSuccessful:
-								u.SaveUserSession();
+							case Models.Customer.ActionTypes.InsertSuccessful:
+								u.SaveCustomerSession();
 								return RedirectToAction("ScheduleNowLoggedIn");
 							//break;
 							default:
@@ -56,19 +62,79 @@ namespace SerenityHairDesigns.Controllers
 				return View(u);
 			}
 			catch (Exception) {
-				Models.User u = new Models.User();
+				Models.Customer u = new Models.Customer();
 				return View(u);
 			}
 		}
 
-		public ActionResult ScheduleNowLoggedIn() {
-			Models.User u = new Models.User();
+        [HttpPost]
+        public ActionResult Employeelogin(FormCollection col)
+        {
+            try
+            {
+                Models.Employee e = new Models.Employee();
+
+                e.strFirstName = col["strFirstName"];
+                e.strLastName = col["strLastName"];
+                e.strEmailAddress = col["strEmailAddress"];
+                e.strPassword = col["strPassword"];
+                e.strGender = col["strGender"];
+
+                if (col["btnSubmit"] == "signin")
+                {
+                    e.strEmailAddress = col["strEmailAddress"];
+                    e.strPassword = col["strPassword"];
+
+                    e = e.LoginEmployee();
+                    if (e != null && e.intEmployeeID > 0)
+                    {
+                        e.SaveEmployeeSession();
+                        return RedirectToAction("EmployeeLoggedIn");
+                    }
+                    else
+                    {
+                        e = new Models.Employee();
+                        e.ActionType = Models.Employee.ActionTypes.LoginFailed;
+                    }
+                }
+                else if (col["btnSubmit"] == "signup")
+                { //sign up button pressed
+                    Models.Employee.ActionTypes at = Models.Employee.ActionTypes.NoType;
+                    at = e.SaveEmployee();
+                    switch (at)
+                    {
+                        case Models.Employee.ActionTypes.InsertSuccessful:
+                            e.SaveEmployeeSession();
+                            return RedirectToAction("EmployeeLoggedIn");
+                        //break;
+                        default:
+                            return View(e);
+                            //break;
+                    }
+                }
+                return View(e);
+            }
+            catch (Exception)
+            {
+                Models.Customer u = new Models.Customer();
+                return View(u);
+            }
+        }
+
+        public ActionResult ScheduleNowLoggedIn() {
+			Models.Customer u = new Models.Customer();
 			return View(u);
 		}
 
-		public ActionResult SignOut() {
-			Models.User u = new Models.User();
-			u.RemoveUserSession();
+        public ActionResult EmployeeLoggedIn()
+        {
+            Models.Customer u = new Models.Customer();
+            return View(u);
+        }
+
+        public ActionResult SignOut() {
+			Models.Customer u = new Models.Customer();
+			u.RemoveCustomerSession();
 			return RedirectToAction("Index", "Home");
 		}
 	}

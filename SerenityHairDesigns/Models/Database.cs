@@ -445,6 +445,75 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public ContactUs.ActionTypes InsertReview(ContactUs model)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_REVIEW", cn);
+
+				SetParameter(ref cm, "@strName", model.strName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmail", model.strEmail, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strMessage", model.strMessage, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intRating", model.intRating, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return ContactUs.ActionTypes.InsertSuccessful;
+				
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public List<AboutUs> GetReviews()
+		{
+
+			List<AboutUs> objReviews = new List<AboutUs>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT strName, strEmailAddress, strReview, intRating FROM TReviews";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							objReviews.Add(new AboutUs()
+							{
+								strName = reader.GetString(0)
+								,
+								strMessage = reader.GetString(1)
+								,
+								strEmail = reader.GetString(2)
+								,
+								intRating = reader.GetInt32(3)
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{ 
+			}
+			return objReviews;
+		}
+
 		public User Login(User u) {
 			try {
 				SqlConnection cn = new SqlConnection();

@@ -45,11 +45,26 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult AboutUs()
         {
-            return View();
+            List<AboutUs> lstReviews = new List<AboutUs>();
+            Database db = new Database();
+
+            lstReviews = db.GetReviews();
+
+            return View(lstReviews);
         }
 
         public ActionResult ContactUs()
         {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult ContactUs(ContactUs model)
+        {
+            Database db = new Database();
+
+            db.InsertReview(model);
+
             return View();
         }
 

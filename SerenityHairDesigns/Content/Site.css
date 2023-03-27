@@ -302,3 +302,8 @@ input[name="careerSubmit"] {
 .stars input[type="radio"]:checked ~ label {
     color: gold;
 }
+
+textarea{
+    min-height: 100px;
+
+}

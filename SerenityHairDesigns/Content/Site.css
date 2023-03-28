@@ -357,10 +357,3 @@ img {
 .stars input[type="radio"]:checked ~ label {
     color: gold;
 }
-
-.Home-Text {
-    background-color: black;
-    font: 60px julius sans one;
-    color: white;
-    text-align: center;
-}

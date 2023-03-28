@@ -1,81 +1,75 @@
-﻿
+﻿@model SerenityHairDesigns.Models.ContactUs
 @{
-	ViewBag.Title = "ContactUs";
+
 }
 
+
 <h2>ContactUs</h2>
-<div class="center">
-	<p>
-		<label>Location:</label> <label>    4134-4160 Alexandria Pike, Cold Spring, KY 41076</label>
-	</p>
+<form action="ContactUs" method="post">
 
-	<p>
-		<label>Phone:</label> <label>       (859) 441-6700</label>
-	</p>
+	<div class="center">
+		<p>
+			<label>Location:</label> <label>4134-4160 Alexandria Pike, Cold Spring, KY 41076</label>
+		</p>
 
-	<p>
-		<label>Hours:</label>
-		<select name"Styles" id="Styles">
-			<option value="Day1">
-				Monday
-				9:00 AM - 9:00 PM
-			</option>
-			<option value="Day2">
-				Tuesday
-				9:00 AM - 9:00 PM
-			</option>
-			<option value="Day3">
-				Wednesday
-				9:00 AM - 9:00 PM
-			</option>
-			<option value="Day4">
-				Thursday
-				9:00 AM - 9:00 PM
-			</option>
-			<option value="Day5">
-				Friday
-				9:00 AM - 9:00 PM
-			</option>
-			<option value="Day6">
-				Saturday
-				9:00 AM - 5:00 PM
-			</option>
-			<option value="Day7">
-				Sunday
-				CLOSED
-			</option>
-		</select>
-	</p>
+		<p>
+			<label>Phone:</label> <label>(859) 441-6700</label>
+		</p>
 
-	<p>
-		would you like to post a review?<br>
-		<label>Name:</label>    <input type="text"><br>
-		<label>Email:</label>   <input type="text"><br>
-		<label>Message:</label> <input type="text"><br>
+		<p>
+			<label>Hours:</label>
+		</p>
+
+		<p>
+			<label>Mon-Fri:</label> <label>9:00 AM - 9:00 PM</label>
+		</p>
+
+		<p>
+			<label>Sat:</label> <label>9:00 - 5:00 PM</label>
+		</p>
+
+		<p>
+			<label>Sunday:</label> <label>CLOSED</label>
+		</p>
+
+		<p>
+			<br>
+			<br>
+			Would you like to post a review?<br>
+			<br>
+
+			<label>Name:</label> <input type="text" name="strName"><br>
+			<br>
+			<label>Email:</label> <input type="text" name="strEmail"><br>
+			<br>
+			<label>Message:</label> <textarea rows="4" cols="50" name="strMessage"></textarea>
+
 			<div class="stars">
-			  <input type="radio" id="star1" name="rating" value="1" />
-			  <label for="star1" onclick="updateRating(1)">&#9733;</label>
-			  <input type="radio" id="star2" name="rating" value="2" />
-			  <label for="star2" onclick="updateRating(2)">&#9733;</label>
-			  <input type="radio" id="star3" name="rating" value="3" />
-			  <label for="star3" onclick="updateRating(3)">&#9733;</label>
-			  <input type="radio" id="star4" name="rating" value="4" />
-			  <label for="star4" onclick="updateRating(4)">&#9733;</label>
-			  <input type="radio" id="star5" name="rating" value="5" />
-			  <label for="star5" onclick="updateRating(5)">&#9733;</label>
+				<input type="radio" id="star1" name="intRating" value="1" />
+				<label for="star1" onclick="updateRating(1)">&#9733;</label>
+				<input type="radio" id="star2" name="intRating" value="2" />
+				<label for="star2" onclick="updateRating(2)">&#9733;</label>
+				<input type="radio" id="star3" name="intRating" value="3" />
+				<label for="star3" onclick="updateRating(3)">&#9733;</label>
+				<input type="radio" id="star4" name="intRating" value="4" />
+				<label for="star4" onclick="updateRating(4)">&#9733;</label>
+				<input type="radio" id="star5" name="intRating" value="5" />
+				<label for="star5" onclick="updateRating(5)">&#9733;</label>
 			</div>
-		<button value="submit">PostReview</button>
-	</p>
+			<br>
+			<button value="submit">Post Review</button>
+		</p>
 
-</div>
+	</div>
+</form>
 
 <script>
 
-	function updateRating(rating) {
-		var stars = document.getElementsByName("rating");
+	function updateRating(intRating) {
+		var stars = document.getElementsByName("intRating");
 		var i;
 		for (i = 0; i < stars.length; i++) {
-			if (i < rating) {
+			if (i < intRating) {
 				stars[i].checked = true;
 				stars[i].nextElementSibling.classList.add("selected");
 			} else {

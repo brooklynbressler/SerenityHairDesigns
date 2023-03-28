@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+﻿
+﻿@model SerenityHairDesigns.Models.AboutUs 
+=======
 
 <<<<<<< HEAD
 ﻿@model SerenityHairDesigns.Models.Employee
@@ -5,11 +9,12 @@
 ﻿@model SerenityHairDesigns.Models.Customer
 >>>>>>> 583da4e39fa848f85b762172027fcc6caeec59c0
 
+>>>>>>> ae188dac05ecc1a723efa1b023390622dc38567e
 <!DOCTYPE html>
 
 @* About Us Page Content *@
 
-<html>
+<html> 
 <head>
 	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
 </head>
@@ -77,5 +82,27 @@
 			</p>
 		</div>
 	</div>
+
+
+	@*@foreach (var item in Model)
+		{
+			<div class="Review">
+				<p class="Review-Text">
+					@item.strName
+					<br>
+					<br>
+
+					@item.strReview
+					<br>
+					@for (int i = 0; i < @item.intRating; i++)
+					{
+						<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+					}
+					<br />
+					<br />
+				</p>
+			</div>
+		}*@
+
 </body>
 </html>

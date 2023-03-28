@@ -208,12 +208,8 @@
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Resume.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\Reviews.cs" />
-    <Compile Include="Models\User.cs" />
-=======
     <Compile Include="Models\Customer.cs" />
->>>>>>> ae188dac05ecc1a723efa1b023390622dc38567e
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

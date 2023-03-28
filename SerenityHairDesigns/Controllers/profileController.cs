@@ -74,11 +74,8 @@ namespace SerenityHairDesigns.Controllers
             {
                 Models.Employee e = new Models.Employee();
 
-                e.strFirstName = col["strFirstName"];
-                e.strLastName = col["strLastName"];
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strPassword = col["strPassword"];
-                e.strGender = col["strGender"];
 
                 if (col["btnSubmit"] == "signin")
                 {
@@ -97,27 +94,12 @@ namespace SerenityHairDesigns.Controllers
                         e.ActionType = Models.Employee.ActionTypes.LoginFailed;
                     }
                 }
-                else if (col["btnSubmit"] == "signup")
-                { //sign up button pressed
-                    Models.Employee.ActionTypes at = Models.Employee.ActionTypes.NoType;
-                    at = e.SaveEmployee();
-                    switch (at)
-                    {
-                        case Models.Employee.ActionTypes.InsertSuccessful:
-                            e.SaveEmployeeSession();
-                            return RedirectToAction("EmployeeLoggedIn");
-                        //break;
-                        default:
-                            return View(e);
-                            //break;
-                    }
-                }
                 return View(e);
             }
             catch (Exception)
             {
-                Models.Customer u = new Models.Customer();
-                return View(u);
+                Models.Employee e = new Models.Employee();
+                return View(e);
             }
         }
 

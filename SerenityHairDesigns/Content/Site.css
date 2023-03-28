@@ -47,22 +47,17 @@ h2 {
     width: 100%;
     margin-bottom: 10px;
 }
+
 body {
     animation:  animate ease-in-out infinite;
     background-size: cover;
     background-repeat: no-repeat;
 }
-.FacebookLink {
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-    font-size: 18px; 
-}
+
 .FacebookLinkPicture {
-    position: absolute;
+    position: fixed;
     bottom: 8px;
     right: 0px;
-    font-size: 18px;
 }
 
 .Careers-H2 {
@@ -259,7 +254,7 @@ img {
         background-image: url('../serenity images/304807290_498537205610982_5716706797304772411_n.jpg');
     }
     25% {
-        background-image: url('../serenity images/salon image(real).jpg');
+        background-image: url('../Content/SerenityLayoutBackground.jpg');
     }
 
 }
@@ -361,4 +356,15 @@ img {
 .stars label:hover,
 .stars input[type="radio"]:checked ~ label {
     color: gold;
+}
+
+.Stylist-Logged_in {
+    background-color: black;
+    color: white;
+    width: 400px;
+    height: 150px;
+    margin-left: 17.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+    margin: 10px;
 }

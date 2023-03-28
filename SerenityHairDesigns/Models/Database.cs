@@ -6,12 +6,22 @@ using System.Collections.Generic;
 using System.Net;
 using SerenityHairDesigns.Models;
 
-namespace SerenityHairDesigns.Models {
-	public class Database {
+namespace SerenityHairDesigns.Models
+{
+	public class Database
+	{
 
+<<<<<<< HEAD
 		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
+=======
+		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		public bool InsertReport(long UID, long IDToReport, int ProblemID)
+		{
+			try
+			{
+>>>>>>> c79c1e4359233549966415e33fe9639591a6e5a6
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_REPORTS", cn);
@@ -120,8 +130,10 @@ namespace SerenityHairDesigns.Models {
 
 
 
-		public bool DeleteEvent(long ID) {
-			try {
+		public bool DeleteEvent(long ID)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("DELETE_EVENT", cn);
@@ -142,8 +154,10 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public bool DeleteEventImage(long ID) {
-			try {
+		public bool DeleteEventImage(long ID)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("DELETE_EVENT_IMAGE", cn);
@@ -299,8 +313,84 @@ namespace SerenityHairDesigns.Models {
 		//}
 
 
-		public long InsertCustomerImage(Customer c) {
-			try {
+		public List<AboutUs> GetReviews()
+		{
+
+			List<AboutUs> objReviews = new List<AboutUs>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT strName, strEmailAddress, strReview, intRating FROM TReviews";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							objReviews.Add(new AboutUs()
+							{
+								strName = reader.GetString(0)
+								,
+								strMessage = reader.GetString(1)
+								,
+								strEmail = reader.GetString(2)
+								,
+								intRating = reader.GetInt32(3)
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return objReviews;
+		}
+
+
+
+
+		public ContactUs.ActionTypes InsertReview(ContactUs model)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_REVIEW", cn);
+
+				SetParameter(ref cm, "@strName", model.strName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmail", model.strEmail, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strMessage", model.strMessage, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intRating", model.intRating, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return ContactUs.ActionTypes.InsertSuccessful;
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+
+
+		public long InsertCustomerImage(Customer c)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_USER_IMAGE", cn);
@@ -323,8 +413,10 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public long UpdateCustomerImage(Customer c) {
-			try {
+		public long UpdateCustomerImage(Customer c)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("UPDATE_USER_IMAGE", cn);
@@ -347,8 +439,10 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public List<Image> GetUserImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false) {
-			try {
+		public List<Image> GetUserImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false)
+		{
+			try
+			{
 				DataSet ds = new DataSet();
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
@@ -361,16 +455,20 @@ namespace SerenityHairDesigns.Models {
 				if (UserImageID > 0) SetParameter(ref da, "@user_image_id", UserImageID, SqlDbType.BigInt);
 				if (PrimaryOnly) SetParameter(ref da, "@primary_only", "Y", SqlDbType.Char);
 
-				try {
+				try
+				{
 					da.Fill(ds);
 				}
-				catch (Exception ex2) {
+				catch (Exception ex2)
+				{
 					throw new Exception(ex2.Message);
 				}
 				finally { CloseDBConnection(ref cn); }
 
-				if (ds.Tables[0].Rows.Count != 0) {
-					foreach (DataRow dr in ds.Tables[0].Rows) {
+				if (ds.Tables[0].Rows.Count != 0)
+				{
+					foreach (DataRow dr in ds.Tables[0].Rows)
+					{
 						Image i = new Image();
 						i.ImageID = (long)dr["UserImageID"];
 						i.ImageData = (byte[])dr["Image"];
@@ -388,8 +486,10 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public bool DeleteUserImage(long ID) {
-			try {
+		public bool DeleteUserImage(long ID)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("DELETE_USER_IMAGE", cn);
@@ -409,8 +509,10 @@ namespace SerenityHairDesigns.Models {
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
-		public Customer.ActionTypes InsertCustomer(Customer c) {
-			try {
+		public Customer.ActionTypes InsertCustomer(Customer c)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_CUSTOMER", cn);
@@ -430,7 +532,8 @@ namespace SerenityHairDesigns.Models {
 				intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
 				CloseDBConnection(ref cn);
 
-				switch (intReturnValue) {
+				switch (intReturnValue)
+				{
 					case 1: // new user created
 						c.intCustomerID = (long)cm.Parameters["@intCustomerID"].Value;
 						return Customer.ActionTypes.InsertSuccessful;
@@ -445,47 +548,49 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-        public Employee.ActionTypes InsertEmployee(Employee e)
-        {
-            try
-            {
-                SqlConnection cn = null;
-                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-                SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE", cn);
-                int intReturnValue = -1;
-				
-                SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-                SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
-                SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
-                SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
-                SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
-                SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
+		public Employee.ActionTypes InsertEmployee(Employee e)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE", cn);
+				int intReturnValue = -1;
 
-                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 
-                cm.ExecuteReader();
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
-                intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
-                CloseDBConnection(ref cn);
+				cm.ExecuteReader();
 
-                switch (intReturnValue)
-                {
-                    case 1: // new user created
-                        e.intEmployeeID = (long)cm.Parameters["@intEmployeeID"].Value;
-                        return Employee.ActionTypes.InsertSuccessful;
-                    case -1:
-                        return Employee.ActionTypes.DuplicateEmail;
-                    case -2:
-                        return Employee.ActionTypes.DuplicateUserID;
-                    default:
-                        return Employee.ActionTypes.Unknown;
-                }
-            }
-            catch (Exception ex) { throw new Exception(ex.Message); }
-        }
+				intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
+				CloseDBConnection(ref cn);
 
-        public Customer LoginCustomer(Customer c) {
-			try {
+				switch (intReturnValue)
+				{
+					case 1: // new user created
+						e.intEmployeeID = (long)cm.Parameters["@intEmployeeID"].Value;
+						return Employee.ActionTypes.InsertSuccessful;
+					case -1:
+						return Employee.ActionTypes.DuplicateEmail;
+					case -2:
+						return Employee.ActionTypes.DuplicateUserID;
+					default:
+						return Employee.ActionTypes.Unknown;
+				}
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public Customer LoginCustomer(Customer c)
+		{
+			try
+			{
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlDataAdapter da = new SqlDataAdapter("LOGIN_CUSTOMER", cn);
@@ -497,10 +602,12 @@ namespace SerenityHairDesigns.Models {
 				SetParameter(ref da, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
 				SetParameter(ref da, "@strPassword", c.strPassword, SqlDbType.NVarChar);
 
-				try {
+				try
+				{
 					ds = new DataSet();
 					da.Fill(ds);
-					if (ds.Tables[0].Rows.Count > 0) {
+					if (ds.Tables[0].Rows.Count > 0)
+					{
 						newUser = new Customer();
 						DataRow dr = ds.Tables[0].Rows[0];
 						newUser.intCustomerID = (long)dr["intCustomerID"];
@@ -512,7 +619,8 @@ namespace SerenityHairDesigns.Models {
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
-				finally {
+				finally
+				{
 					CloseDBConnection(ref cn);
 				}
 				return newUser; //alls well in the world
@@ -520,46 +628,46 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-        public Employee LoginEmployee(Employee e)
-        {
-            try
-            {
-                SqlConnection cn = new SqlConnection();
-                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-                SqlDataAdapter da = new SqlDataAdapter("LOGIN_EMPLOYEE", cn);
-                DataSet ds;
-                Employee newEmp = null;
+		public Employee LoginEmployee(Employee e)
+		{
+			try
+			{
+				SqlConnection cn = new SqlConnection();
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlDataAdapter da = new SqlDataAdapter("LOGIN_EMPLOYEE", cn);
+				DataSet ds;
+				Employee newEmp = null;
 
-                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-                SetParameter(ref da, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
-                SetParameter(ref da, "@strPassword", e.strPassword, SqlDbType.NVarChar);
+				SetParameter(ref da, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref da, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 
-                try
-                {
-                    ds = new DataSet();
-                    da.Fill(ds);
-                    if (ds.Tables[0].Rows.Count > 0)
-                    {
-                        newEmp = new Employee();
-                        DataRow dr = ds.Tables[0].Rows[0];
-                        newEmp.intEmployeeID = (long)dr["intEmployeeID"];
-                        newEmp.strFirstName = (string)dr["strFirstName"];
-                        newEmp.strLastName = (string)dr["strLastName"];
-                        newEmp.strPassword = e.strPassword;
-                        newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
-                        newEmp.strEmailAddress = (string)dr["strEmailAddress"];
-                    }
-                }
-                catch (Exception ex) { throw new Exception(ex.Message); }
-                finally
-                {
-                    CloseDBConnection(ref cn);
-                }
-                return newEmp; //alls well in the world
-            }
-            catch (Exception ex) { throw new Exception(ex.Message); }
-        }
+				try
+				{
+					ds = new DataSet();
+					da.Fill(ds);
+					if (ds.Tables[0].Rows.Count > 0)
+					{
+						newEmp = new Employee();
+						DataRow dr = ds.Tables[0].Rows[0];
+						newEmp.intEmployeeID = (long)dr["intEmployeeID"];
+						newEmp.strFirstName = (string)dr["strFirstName"];
+						newEmp.strLastName = (string)dr["strLastName"];
+						newEmp.strPassword = e.strPassword;
+						newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
+						newEmp.strEmailAddress = (string)dr["strEmailAddress"];
+					}
+				}
+				catch (Exception ex) { throw new Exception(ex.Message); }
+				finally
+				{
+					CloseDBConnection(ref cn);
+				}
+				return newEmp; //alls well in the world
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
         public Customer.ActionTypes UpdateCustomer(Customer c) {
 			try {
@@ -581,7 +689,8 @@ namespace SerenityHairDesigns.Models {
 				intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
 				CloseDBConnection(ref cn);
 
-				switch (intReturnValue) {
+				switch (intReturnValue)
+				{
 					case 1: //new updated
 						return Customer.ActionTypes.UpdateSuccessful;
 					default:
@@ -591,8 +700,10 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public Employee.ActionTypes UpdateEmployee(Employee e) {
-			try {
+		public Employee.ActionTypes UpdateEmployee(Employee e)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("UPDATE_EMPLOYEE", cn);
@@ -611,7 +722,8 @@ namespace SerenityHairDesigns.Models {
 				intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
 				CloseDBConnection(ref cn);
 
-				switch (intReturnValue) {
+				switch (intReturnValue)
+				{
 					case 1: //new updated
 						return Employee.ActionTypes.UpdateSuccessful;
 					default:
@@ -621,14 +733,17 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		private bool GetDBConnection(ref SqlConnection SQLConn) {
-			try {
+		private bool GetDBConnection(ref SqlConnection SQLConn)
+		{
+			try
+			{
 				if (SQLConn == null) SQLConn = new SqlConnection();
-				if (SQLConn.State != ConnectionState.Open) {
+				if (SQLConn.State != ConnectionState.Open)
+				{
 
 					SQLConn.ConnectionString = strConnectionString;
 
-                    SQLConn.Open();
+					SQLConn.Open();
 
 
 
@@ -638,9 +753,12 @@ namespace SerenityHairDesigns.Models {
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		private bool CloseDBConnection(ref SqlConnection SQLConn) {
-			try {
-				if (SQLConn.State != ConnectionState.Closed) {
+		private bool CloseDBConnection(ref SqlConnection SQLConn)
+		{
+			try
+			{
+				if (SQLConn.State != ConnectionState.Closed)
+				{
 					SQLConn.Close();
 					SQLConn.Dispose();
 					SQLConn = null;
@@ -653,8 +771,10 @@ namespace SerenityHairDesigns.Models {
 		private int SetParameter(ref SqlCommand cm, string ParameterName, Object Value
 			, SqlDbType ParameterType, int FieldSize = -1
 			, ParameterDirection Direction = ParameterDirection.Input
-			, Byte Precision = 0, Byte Scale = 0) {
-			try {
+			, Byte Precision = 0, Byte Scale = 0)
+		{
+			try
+			{
 				cm.CommandType = CommandType.StoredProcedure;
 				if (FieldSize == -1)
 					cm.Parameters.Add(ParameterName, ParameterType);
@@ -675,8 +795,10 @@ namespace SerenityHairDesigns.Models {
 		private int SetParameter(ref SqlDataAdapter cm, string ParameterName, Object Value
 			, SqlDbType ParameterType, int FieldSize = -1
 			, ParameterDirection Direction = ParameterDirection.Input
-			, Byte Precision = 0, Byte Scale = 0) {
-			try {
+			, Byte Precision = 0, Byte Scale = 0)
+		{
+			try
+			{
 				cm.SelectCommand.CommandType = CommandType.StoredProcedure;
 				if (FieldSize == -1)
 					cm.SelectCommand.Parameters.Add(ParameterName, ParameterType);

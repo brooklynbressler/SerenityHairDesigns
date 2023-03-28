@@ -26,7 +26,7 @@ namespace SerenityHairDesigns.Controllers
 
 
         [HttpPost]
-        public ActionResult Careers(Resume model, IFormFile File )
+        public ActionResult Careers(Resume model, HttpPostedFileBase File )
         {
             EmailSender sender = new EmailSender();
 

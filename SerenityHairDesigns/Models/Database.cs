@@ -11,17 +11,11 @@ namespace SerenityHairDesigns.Models
 	public class Database
 	{
 
-<<<<<<< HEAD
+
 		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
-=======
-		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
-		public bool InsertReport(long UID, long IDToReport, int ProblemID)
-		{
-			try
-			{
->>>>>>> c79c1e4359233549966415e33fe9639591a6e5a6
+
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_REPORTS", cn);

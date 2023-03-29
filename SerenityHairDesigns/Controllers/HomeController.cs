@@ -49,7 +49,11 @@ namespace SerenityHairDesigns.Controllers
 
             lstReviews = db.GetReviews();
 
-            return View(lstReviews);
+            List<AboutUs> sortedList = lstReviews.OrderByDescending(x => x.intRating).ToList();
+
+            ViewBag.lstReviews = sortedList;
+
+            return View();
         }
 
         public ActionResult ContactUs()

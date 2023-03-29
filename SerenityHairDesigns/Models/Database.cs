@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 	{
 
 
-		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -329,9 +329,9 @@ namespace SerenityHairDesigns.Models
 							{
 								strName = reader.GetString(0)
 								,
-								strMessage = reader.GetString(1)
+								strEmail = reader.GetString(1)
 								,
-								strEmail = reader.GetString(2)
+								strReview = reader.GetString(2)
 								,
 								intRating = reader.GetInt32(3)
 

@@ -1,5 +1,5 @@
 
-﻿@model SerenityHairDesigns.Models.Customer
+﻿@model SerenityHairDesigns.Models.AboutUs
 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
 <head>
 	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
 </head>
-
+ 
 <body>
 	<h2 class="Careers-H2">
 		About Serenity Hair Designs
@@ -75,7 +75,7 @@
 	</div>
 
 
-	@*@foreach (var item in Model)
+	@foreach (var item in ViewBag.lstReviews)
 		{
 			<div class="Review">
 				<p class="Review-Text">
@@ -93,7 +93,7 @@
 					<br />
 				</p>
 			</div>
-		}*@
+		}
 
 </body>
 </html>

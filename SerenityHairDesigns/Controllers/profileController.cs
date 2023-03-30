@@ -85,8 +85,18 @@ namespace SerenityHairDesigns.Controllers
                     e = e.LoginEmployee();
                     if (e != null && e.intEmployeeID > 0)
                     {
-                        e.SaveEmployeeSession();
-                        return RedirectToAction("EmployeeLoggedIn");
+						e.SelectEmployeeRole();
+
+						if (e.strRole == "Employee") 
+						{
+							e.SaveEmployeeSession();
+							return RedirectToAction("EmployeeLoggedIn");
+						}
+						else {
+							e.SaveEmployeeSession();
+							return RedirectToAction("AdminLoggedIn");
+						}
+                        
                     }
                     else
                     {
@@ -104,19 +114,28 @@ namespace SerenityHairDesigns.Controllers
         }
 
         public ActionResult ScheduleNowLoggedIn() {
-			Models.Customer u = new Models.Customer();
-			return View(u);
+			Models.Customer c = new Models.Customer();
+			return View(c);
 		}
 
         public ActionResult EmployeeLoggedIn()
         {
-            Models.Customer u = new Models.Customer();
-            return View(u);
+            Models.Employee e = new Models.Employee();
+            return View(e);
         }
 
-        public ActionResult SignOut() {
-			Models.Customer u = new Models.Customer();
-			u.RemoveCustomerSession();
+		public ActionResult AdminLoggedIn() {
+			Models.Employee e = new Models.Employee();
+			return View(e);
+		}
+
+		public ActionResult SignOut() {
+			Models.Customer c = new Models.Customer();
+			c.RemoveCustomerSession();
+
+			Models.Employee e = new Models.Employee();
+			e.RemoveEmployeeSession();
+
 			return RedirectToAction("Index", "Home");
 		}
 	}

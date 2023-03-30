@@ -13,6 +13,7 @@ namespace SerenityHairDesigns.Models {
         public string strLastName = string.Empty;
         public string strGender = string.Empty;
         public string strPassword = string.Empty;
+        public string strRole = string.Empty;
 
         //[DataType(DataType.EmailAddress)]
         public string strEmailAddress = string.Empty;
@@ -28,6 +29,14 @@ namespace SerenityHairDesigns.Models {
             try {
                 Database db = new Database();
                 return db.LoginEmployee(this);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public Employee SelectEmployeeRole() {
+            try {
+                Database db = new Database();
+                return db.SelectEmployeeRole(this);
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

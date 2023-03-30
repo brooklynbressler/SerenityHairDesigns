@@ -663,7 +663,36 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-        public Customer.ActionTypes UpdateCustomer(Customer c) {
+		public Employee SelectEmployeeRole(Employee e) {
+			try {
+				SqlConnection cn = new SqlConnection();
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE_ROLE", cn);
+				DataSet ds;
+
+				da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+				SetParameter(ref da, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref da, "@strPassword", e.strPassword, SqlDbType.NVarChar);
+
+				try {
+					ds = new DataSet();
+					da.Fill(ds);
+					if (ds.Tables[0].Rows.Count > 0) {
+						DataRow dr = ds.Tables[0].Rows[0];
+						e.strRole = (string)dr["strRoleName"];						
+					}
+				}
+				catch (Exception ex) { throw new Exception(ex.Message); }
+				finally {
+					CloseDBConnection(ref cn);
+				}
+				return e; //alls well in the world
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public Customer.ActionTypes UpdateCustomer(Customer c) {
 			try {
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");

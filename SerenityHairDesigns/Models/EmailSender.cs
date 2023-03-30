@@ -8,6 +8,9 @@ using SerenityHairDesigns.Models;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+
+using System.Net.Mime;
 
 namespace SerenityHairDesigns
 {
@@ -19,7 +22,7 @@ namespace SerenityHairDesigns
 		public int intPort = 587;
 		public string strHost = "smtp.gmail.com";
 
-		public void SendEmail(Resume Resume, IFormFile File)
+		public void SendEmail(Resume Resume,HttpPostedFileBase File)
 		{
 			try
 			{
@@ -29,10 +32,10 @@ namespace SerenityHairDesigns
 				objMailMessage.To.Add("tywetterich@gmail.com");
 				objMailMessage.Subject = "Resume";
 
-				//var stream = File.OpenReadStream();
-				//string FileName = File.FileName;
-				//var attachment1 = new Attachment(stream, FileName);
-				//objMailMessage.Attachments.Add(attachment1);
+				var stream = File.InputStream;
+				string FileName = File.FileName;
+				var attachment1 = new Attachment(stream, FileName);
+				objMailMessage.Attachments.Add(attachment1);
 
 				objMailMessage.Body = "This is an application submitted from someone on the website. Here is their info and resume." +
 					" <br/> <br/> First Name: "	+ Resume.strFirstName

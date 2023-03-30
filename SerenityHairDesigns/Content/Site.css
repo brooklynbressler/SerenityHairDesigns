@@ -357,3 +357,14 @@ img {
 .stars input[type="radio"]:checked ~ label {
     color: gold;
 }
+
+.Stylist-Logged_in {
+    background-color: black;
+    color: white;
+    width: 400px;
+    height: 150px;
+    margin-left: 17.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+    margin: 10px;
+}

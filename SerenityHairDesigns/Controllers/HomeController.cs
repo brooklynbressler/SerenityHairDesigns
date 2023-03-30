@@ -26,7 +26,7 @@ namespace SerenityHairDesigns.Controllers
 
 
         [HttpPost]
-        public ActionResult Careers(Resume model, IFormFile File )
+        public ActionResult Careers(Resume model, HttpPostedFileBase File )
         {
             EmailSender sender = new EmailSender();
 
@@ -49,7 +49,11 @@ namespace SerenityHairDesigns.Controllers
 
             lstReviews = db.GetReviews();
 
-            return View(lstReviews);
+            List<AboutUs> sortedList = lstReviews.OrderByDescending(x => x.intRating).ToList();
+
+            ViewBag.lstReviews = sortedList;
+
+            return View();
         }
 
         public ActionResult ContactUs()

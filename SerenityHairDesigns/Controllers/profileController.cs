@@ -29,6 +29,7 @@ namespace SerenityHairDesigns.Controllers
 				u.strFirstName = col["strFirstName"];
 				u.strLastName = col["strLastName"];
 				u.strEmailAddress = col["strEmailAddress"];
+				u.strPhoneNumber = col["strPhoneNumber"];
 				u.strPassword = col["strPassword"];
 				u.strGender = col["strGender"];
 

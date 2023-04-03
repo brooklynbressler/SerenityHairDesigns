@@ -511,20 +511,46 @@ namespace SerenityHairDesigns.Models
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_CUSTOMER", cn);
 				int intReturnValue = -1;
+				int intGenderID;
 
-				SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
+				if (c.strGender == "Female")
+				{
+					intGenderID = 1;
+					SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+					SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@intGenderID", intGenderID, SqlDbType.Int);
+					SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
 
-				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+					SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
-				cm.ExecuteReader();
+					cm.ExecuteReader();
 
-				intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
-				CloseDBConnection(ref cn);
+					intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
+					CloseDBConnection(ref cn);
+
+				}
+				if (c.strGender == "Male")
+				{
+					intGenderID = 2;
+					SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+					SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@intGenderID", intGenderID, SqlDbType.Int);
+					SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
+					SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
+
+					SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+					cm.ExecuteReader();
+
+					intReturnValue = (int)cm.Parameters["ReturnValue"].Value;
+					CloseDBConnection(ref cn);
+
+				}
 
 				switch (intReturnValue)
 				{

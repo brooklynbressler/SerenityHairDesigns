@@ -21,6 +21,30 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        public ActionResult ScheduleNowLoggedIn()
+        {
+            Models.Customer c = new Models.Customer();
+            return View(c);
+        }
+
+        public ActionResult EmployeeLoggedIn()
+        {
+            Models.Employee e = new Models.Employee();
+            return View(e);
+        }
+
+        public ActionResult AdminLoggedIn()
+        {
+            Models.Employee e = new Models.Employee();
+            return View(e);
+        }
+
+        public ActionResult ManageEmployees()
+        {
+            Models.Employee u = new Models.Employee();
+            return View(u);
+        }
+
         [HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {
 			try {
@@ -40,8 +64,8 @@ namespace SerenityHairDesigns.Controllers
 					u = u.LoginCustomer();
 					if (u != null && u.intCustomerID > 0) {
 						u.SaveCustomerSession();
-						return RedirectToAction("ScheduleNowLoggedIn");
-					}
+                        return RedirectToAction("ScheduleNowLoggedIn");
+                    }
 					else {
 						u = new Models.Customer();
 						u.ActionType = Models.Customer.ActionTypes.LoginFailed;
@@ -114,23 +138,45 @@ namespace SerenityHairDesigns.Controllers
             }
         }
 
-        public ActionResult ScheduleNowLoggedIn() {
-			Models.Customer c = new Models.Customer();
-			return View(c);
-		}
-
-        public ActionResult EmployeeLoggedIn()
+        [HttpPost]
+        public ActionResult ManageEmployees(FormCollection col)
         {
-            Models.Employee e = new Models.Employee();
-            return View(e);
+            try
+            {
+            Models.Employee u = new Models.Employee();
+            u.strFirstName = col["strFirstName"];
+            u.strLastName = col["strLastName"];
+            u.strEmailAddress = col["strEmailAddress"];
+            u.strPhoneNumber = col["strPhoneNumber"];
+            u.strPassword = col["strPassword"];
+            if (col["btnSubmit"] == "Create Employee")
+                { //Create button pressed
+                    Models.Employee.ActionTypes at = Models.Employee.ActionTypes.NoType;
+                    at = u.SaveEmployee();
+                    switch (at)
+                    {
+                        case Models.Employee.ActionTypes.InsertSuccessful:
+                            u.SaveEmployeeSession();
+                            return RedirectToAction("ManageEmployees");
+                        //break;
+                        default:
+                            return View(u);
+                            //break;
+                    }
+                }
+                return View(u);
+            }
+                catch (Exception)
+                {
+                    Models.Employee u = new Models.Employee();
+                    return View(u);
+                }
         }
 
-		public ActionResult AdminLoggedIn() {
-			Models.Employee e = new Models.Employee();
-			return View(e);
-		}
 
-		public ActionResult SignOut() {
+
+
+            public ActionResult SignOut() {
 			Models.Customer c = new Models.Customer();
 			c.RemoveCustomerSession();
 
@@ -139,5 +185,7 @@ namespace SerenityHairDesigns.Controllers
 
 			return RedirectToAction("Index", "Home");
 		}
+
+
 	}
 }

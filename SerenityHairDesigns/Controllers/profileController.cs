@@ -125,6 +125,11 @@ namespace SerenityHairDesigns.Controllers
             return View(e);
         }
 
+		public ActionResult EmployeeInfo()
+		{
+			return View();
+		}
+
 		public ActionResult AdminLoggedIn() {
 			Models.Employee e = new Models.Employee();
 			return View(e);

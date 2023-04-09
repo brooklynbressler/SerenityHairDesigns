@@ -10,9 +10,6 @@ namespace SerenityHairDesigns.Models {
 	public class Customer
     {
 
-
-
-
         public long intCustomerID = 0;
         public string strFirstName = string.Empty;
         public string strLastName = string.Empty;

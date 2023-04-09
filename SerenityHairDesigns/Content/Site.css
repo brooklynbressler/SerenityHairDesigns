@@ -260,6 +260,7 @@ img {
 }
 
 .CutsLabel {
+  
     position: absolute;
     left: 0px;
     background-color: black;
@@ -267,9 +268,11 @@ img {
     border: 3px solid #b74f13;
 }
 .CutsDropDown {
+
     background-color: black;
     color: white;
     margin: 5px;
+
 }
 .StyleLabel {
     position: absolute;
@@ -367,4 +370,14 @@ img {
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
     margin: 10px;
+}
+.select { 
+    font-size: 500px;
+}
+.label {
+    font-size: 500px;
+}
+
+.option {
+    font-size: 50px
 }

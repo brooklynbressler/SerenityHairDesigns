@@ -1,7 +1,6 @@
-﻿using System;
+﻿using SerenityHairDesigns.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Controllers
@@ -11,44 +10,67 @@ namespace SerenityHairDesigns.Controllers
         // GET: profile
         public ActionResult ScheduleLogin()
         {
-			Models.Customer u = new Models.Customer();
+            Customer u = new Customer();
 			return View(u);
         }
 
         public ActionResult Employeelogin()
         {
-            Models.Customer u = new Models.Customer();
+            Customer u = new Customer();
             return View();
         }
 
         public ActionResult ScheduleNowLoggedIn()
         {
-            Models.Customer c = new Models.Customer();
+            Customer c = new Customer();
             return View(c);
         }
 
         public ActionResult EmployeeLoggedIn()
         {
-            Models.Employee e = new Models.Employee();
+            Employee e = new Employee();
             return View(e);
+        }
+
+        [HttpPost]
+        public JsonResult GetEmployeeById(int id)
+        {
+            Database db = new Database();
+            var employees = db.GetEmployees();
+            var employee = employees.Find((e) => e.EmployeeId == id);
+            return Json(employee);
         }
 
         public ActionResult AdminLoggedIn()
         {
-            Models.Employee e = new Models.Employee();
+            Employee e = new Employee();
             return View(e);
         }
 
         public ActionResult ManageEmployees()
         {
-            Models.Employee u = new Models.Employee();
-            return View(u);
+           Database db = new Database();
+            var employeesSelectList = new List<SelectListItem>();
+            var lstEmployees = db.GetEmployees();
+            foreach (var item in lstEmployees)
+            {
+                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.EmployeeId}" });
+            }
+            ViewBag.lstEmployees = lstEmployees;
+            var model = new Employee
+            {
+                EmployeeList = employeesSelectList
+            };
+
+
+            return View(model);
+
         }
 
         [HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {
 			try {
-				Models.Customer u = new Models.Customer();
+                Customer u = new Customer();
 
 				u.strFirstName = col["strFirstName"];
 				u.strLastName = col["strLastName"];
@@ -67,15 +89,15 @@ namespace SerenityHairDesigns.Controllers
                         return RedirectToAction("ScheduleNowLoggedIn");
                     }
 					else {
-						u = new Models.Customer();
-						u.ActionType = Models.Customer.ActionTypes.LoginFailed;
+						u = new Customer();
+						u.ActionType = Customer.ActionTypes.LoginFailed;
 					}
 				}
 				else if (col["btnSubmit"] == "signup") { //sign up button pressed
-					Models.Customer.ActionTypes at = Models.Customer.ActionTypes.NoType;
+                    Customer.ActionTypes at = Customer.ActionTypes.NoType;
 						at = u.SaveCustomer();
 						switch (at) {
-							case Models.Customer.ActionTypes.InsertSuccessful:
+							case Customer.ActionTypes.InsertSuccessful:
 								u.SaveCustomerSession();
 								return RedirectToAction("ScheduleNowLoggedIn");
 							//break;
@@ -87,7 +109,7 @@ namespace SerenityHairDesigns.Controllers
 				return View(u);
 			}
 			catch (Exception) {
-				Models.Customer u = new Models.Customer();
+                Customer u = new Customer();
 				return View(u);
 			}
 		}
@@ -97,7 +119,7 @@ namespace SerenityHairDesigns.Controllers
         {
             try
             {
-                Models.Employee e = new Models.Employee();
+                Employee e = new Employee();
 
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strPassword = col["strPassword"];
@@ -125,15 +147,15 @@ namespace SerenityHairDesigns.Controllers
                     }
                     else
                     {
-                        e = new Models.Employee();
-                        e.ActionType = Models.Employee.ActionTypes.LoginFailed;
+                        e = new Employee();
+                        e.ActionType = Employee.ActionTypes.LoginFailed;
                     }
                 }
                 return View(e);
             }
             catch (Exception)
             {
-                Models.Employee e = new Models.Employee();
+                Employee e = new Employee();
                 return View(e);
             }
         }
@@ -141,21 +163,25 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult ManageEmployees(FormCollection col)
         {
+            var fuckingSelectedItemMaybe = col["SelectedEmployee"];
+
             try
             {
-            Models.Employee u = new Models.Employee();
-            u.strFirstName = col["strFirstName"];
-            u.strLastName = col["strLastName"];
-            u.strEmailAddress = col["strEmailAddress"];
-            u.strPhoneNumber = col["strPhoneNumber"];
-            u.strPassword = col["strPassword"];
-            if (col["btnSubmit"] == "Create Employee")
+                Employee u = new Employee
+                {
+                    strFirstName = col["strFirstName"],
+                    strLastName = col["strLastName"],
+                    strEmailAddress = col["strEmailAddress"],
+                    strPhoneNumber = col["strPhoneNumber"],
+                    strPassword = col["strPassword"]
+                };
+                if (col["btnSubmit"] == "Create Employee")
                 { //Create button pressed
-                    Models.Employee.ActionTypes at = Models.Employee.ActionTypes.NoType;
+                    Employee.ActionTypes at = Employee.ActionTypes.NoType;
                     at = u.SaveEmployee();
                     switch (at)
                     {
-                        case Models.Employee.ActionTypes.InsertSuccessful:
+                        case Employee.ActionTypes.InsertSuccessful:
                             u.SaveEmployeeSession();
                             return RedirectToAction("ManageEmployees");
                         //break;
@@ -164,23 +190,39 @@ namespace SerenityHairDesigns.Controllers
                             //break;
                     }
                 }
-                return View(u);
+                if (col["Employees"] == "intEmployeeID")
+                {
+                    Employee objEmployee = new Employee();
+                    Database db = new Database();
+                    //make method that pulls id from the drop down
+                    //objEmployee = db.GetEmployees();
+
+                    ViewBag.objEmployee = objEmployee;
+
+                    return View();
+                }
+                return View();
             }
+            
+
                 catch (Exception)
                 {
-                    Models.Employee u = new Models.Employee();
+                Employee u = new Employee();
                     return View(u);
                 }
+            
         }
 
+        
 
 
 
-            public ActionResult SignOut() {
-			Models.Customer c = new Models.Customer();
+
+        public ActionResult SignOut() {
+            Customer c = new Customer();
 			c.RemoveCustomerSession();
 
-			Models.Employee e = new Models.Employee();
+            Employee e = new Employee();
 			e.RemoveEmployeeSession();
 
 			return RedirectToAction("Index", "Home");

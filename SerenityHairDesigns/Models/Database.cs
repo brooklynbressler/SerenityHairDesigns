@@ -351,10 +351,60 @@ namespace SerenityHairDesigns.Models
 			return objReviews;
 		}
 
+        public List<Employee> GetEmployees()
+        {
+
+            List<Employee> objReviews = new List<Employee>();
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+                string query = "SELECT intEmployeeID ,strFirstName, strLastName, strPassword, strPhoneNumber, strEmailAddress FROM TEmployees" ;
+
+                SqlCommand cmd = new SqlCommand(query, cn);
+
+                using (IDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(0))
+                            objReviews.Add(new Employee()
+                            {
+								intEmployeeID = reader.GetInt64(0)
+								,
+                                strFirstName = reader.GetString(1)
+                                ,
+                                strLastName = reader.GetString(2)
+                                ,
+                                strPassword = reader.GetString(3)
+								,
+                                strPhoneNumber = reader.GetString(4)
+                                ,
+                                strEmailAddress = reader.GetString(5)
+								
+
+                            });
+
+                    }
+                    reader.Close();
+
+                }
+
+                CloseDBConnection(ref cn);
+
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+            {
+
+            }
+            return objReviews;
+        }
 
 
 
-		public ContactUs.ActionTypes InsertReview(ContactUs model)
+
+        public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
 			{

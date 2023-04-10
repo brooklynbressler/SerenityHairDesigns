@@ -11,89 +11,108 @@
 </head>
  
 <body>
-	<h2 class="Careers-H2">
-		About Serenity Hair Designs
-	</h2>
+    <h2 class="Careers-H2">
+        About Serenity Hair Designs
+    </h2>
 
-	<p class="AboutUs-Text">
-		At Serenity Hair Designs, we take pride in ensuring every customer walks out happier than they came in! <br />
-		<br />
-		We are located at the lower part of 4150 Alexandria Pike, Cold Spring, KY 41076 across from fire department in the Sunoco gas station plaza with plenty of parking in the back. <br />
-		<br />
-		You can reach us through Facebook Messenger under Rhonda Ausdenmoore or Cathy Guthier, or leave us a message at the shop at (859) 441-6700. <br />
-		<br />
-		Feel free to stop by, but please reach out first to make sure we are there!
-	</p>
+    <p class="AboutUs-Text">
+        At Serenity Hair Designs, we take pride in ensuring every customer walks out happier than they came in! <br />
+        <br />
+        We are located at the lower part of 4150 Alexandria Pike, Cold Spring, KY 41076 across from fire department in the Sunoco gas station plaza with plenty of parking in the back. <br />
+        <br />
+        You can reach us through Facebook Messenger under Rhonda Ausdenmoore or Cathy Guthier, or leave us a message at the shop at (859) 441-6700. <br />
+        <br />
+        Feel free to stop by, but please reach out first to make sure we are there!
+    </p>
 
-	<h2 class="Reviews-H2">
-		Reviews From Our Amazing Customers
-	</h2>
+    <h2 class="Reviews-H2">
+        Reviews From Our Amazing Customers
+    </h2>
 
-	<div class="Review">
-		<div class="Review">
-			<p class="Review-Text">
-				Kelsey Rider <br />
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<br />
-				<br />
-				I have not had a haircut this satisfying since my stylist from Mitchell’s moved out of state. Carrie is amazing! Love love love my haircut! I will definitely be back!
-			</p>
-		</div>
+    <div class="Review">
+        <div class="Review">
+            <p class="Review-Text">
+                Kelsey Rider <br />
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <br />
+                <br />
+                I have not had a haircut this satisfying since my stylist from Mitchell’s moved out of state. Carrie is amazing! Love love love my haircut! I will definitely be back!
+            </p>
+        </div>
 
-		<div class="Review">
-			<p class="Review-Text">
-				Kathleen Grimme <br />
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<br />
-				<br />
-				Carrie is excellent. Good hair dresser. Knows what I always want.
-			</p>
-		</div>
+        <div class="Review">
+            <p class="Review-Text">
+                Kathleen Grimme <br />
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <br />
+                <br />
+                Carrie is excellent. Good hair dresser. Knows what I always want.
+            </p>
+        </div>
 
-		<div class="Review">
-			<p class="Review-Text">
-				Susan Krammes-McCarthy <br />
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-				<br />
-				<br />
-				I drive from Springfield Township, Ohio to have Carrie Geiman color, highlight, cut and style my hair. She's great. She does a fabulous job every time!!! <br />
-				So glad I met her. Definitely worth the drive!
-			</p>
-		</div>
-	</div>
+        <div class="Review">
+            <p class="Review-Text">
+                Susan Krammes-McCarthy <br />
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                <br />
+                <br />
+                I drive from Springfield Township, Ohio to have Carrie Geiman color, highlight, cut and style my hair. She's great. She does a fabulous job every time!!! <br />
+                So glad I met her. Definitely worth the drive!
+            </p>
+        </div>
+    </div>
 
 
-	@foreach (var item in ViewBag.lstReviews)
-		{
-			<div class="Review">
-				<p class="Review-Text">
-					@item.strName
-					<br>
-					<br>
+    @foreach (var item in ViewBag.lstReviews)
+    {
+        <div class="Review">
+            <p class="Review-Text">
+                @item.strName
+                <br>
+                <br>
 
-					@item.strReview
-					<br>
-					@for (int i = 0; i < @item.intRating; i++)
-					{
-						<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-					}
-					<br />
-					<br />
-				</p>
-			</div>
-		}
+                @item.strReview
+                <br>
+                @for (int i = 0; i < @item.intRating; i++)
+                {
+                    <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                }
+                <br />
+                <br />
+            </p>
+        </div>
+    }
+    @foreach (var item in ViewBag.lstReviews)
+    {
+        <div class="Review">
+            <p class="Review-Text">
+                @item.strName
+                <br>
+                <br>
+
+                @item.strReview
+                <br>
+                @for (int i = 0; i < @item.intRating; i++)
+                {
+                    <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                }
+                <br />
+                <br />
+            </p>
+        </div>
+    }
 
 </body>
 </html>

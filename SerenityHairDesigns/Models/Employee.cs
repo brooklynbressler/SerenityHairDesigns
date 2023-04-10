@@ -4,6 +4,7 @@ using System.Web;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using SerenityHairDesigns.Models;
+using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
 	public class Employee {
@@ -24,8 +25,11 @@ namespace SerenityHairDesigns.Models {
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
         public List<Image> Images;
+        public IEnumerable<SelectListItem> EmployeeList { get; set; }
+        public Employee SelectedEmployee { get; set; }
+        public int EmployeeId { get; set; }
 
-		public Employee LoginEmployee() {
+        public Employee LoginEmployee() {
             try {
                 Database db = new Database();
                 return db.LoginEmployee(this);

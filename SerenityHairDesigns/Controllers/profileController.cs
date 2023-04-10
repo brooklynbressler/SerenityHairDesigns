@@ -213,13 +213,6 @@ namespace SerenityHairDesigns.Controllers
             
         }
 
-		public ActionResult AdminLoggedIn() {
-			Models.Employee e = new Models.Employee();
-			return View(e);
-		}
-
-
-
         public ActionResult SignOut() {
             Customer c = new Customer();
 			c.RemoveCustomerSession();

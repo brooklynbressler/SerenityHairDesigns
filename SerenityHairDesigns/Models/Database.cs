@@ -371,8 +371,7 @@ namespace SerenityHairDesigns.Models
                         if (!reader.IsDBNull(0))
                             objReviews.Add(new Employee()
                             {
-								intEmployeeID = reader.GetInt64(0)
-								,
+								
                                 strFirstName = reader.GetString(1)
                                 ,
                                 strLastName = reader.GetString(2)
@@ -644,7 +643,7 @@ namespace SerenityHairDesigns.Models
 				switch (intReturnValue)
 				{
 					case 1: // new user created
-						e.intEmployeeID = (long)cm.Parameters["@intEmployeeID"].Value;
+						e.intEmployeeID = (int)cm.Parameters["@intEmployeeID"].Value;
 						return Employee.ActionTypes.InsertSuccessful;
 					case -1:
 						return Employee.ActionTypes.DuplicateEmail;
@@ -721,7 +720,7 @@ namespace SerenityHairDesigns.Models
 					{
 						newEmp = new Employee();
 						DataRow dr = ds.Tables[0].Rows[0];
-						newEmp.intEmployeeID = (long)dr["intEmployeeID"];
+						newEmp.intEmployeeID = (int)dr["intEmployeeID"];
 						newEmp.strFirstName = (string)dr["strFirstName"];
 						newEmp.strLastName = (string)dr["strLastName"];
 						newEmp.strPassword = e.strPassword;
@@ -808,9 +807,11 @@ namespace SerenityHairDesigns.Models
 				SqlCommand cm = new SqlCommand("UPDATE_EMPLOYEE", cn);
 				int intReturnValue = -1;
 
-				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+                SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
+                SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strpassword", e.strPassword, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
+				
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 

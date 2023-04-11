@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.IO;
-using System.ComponentModel.DataAnnotations;
-using SerenityHairDesigns.Models;
 using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
 	public class Employee {
 
-        public long intEmployeeID = 0;
+        public int intEmployeeID { get; set; }
         public string strFirstName = string.Empty;
         public string strLastName = string.Empty;
         public string strGender = string.Empty;
@@ -27,7 +24,6 @@ namespace SerenityHairDesigns.Models {
         public List<Image> Images;
         public IEnumerable<SelectListItem> EmployeeList { get; set; }
         public Employee SelectedEmployee { get; set; }
-        public int EmployeeId { get; set; }
 
         public Employee LoginEmployee() {
             try {
@@ -58,7 +54,7 @@ namespace SerenityHairDesigns.Models {
                 if (intEmployeeID == 0) { //insert new user
                     this.ActionType = db.InsertEmployee(this);
                 }
-                else {
+                else if(intEmployeeID.ToString() != null){
                     this.ActionType = db.UpdateEmployee(this);
                 }
                 return this.ActionType;

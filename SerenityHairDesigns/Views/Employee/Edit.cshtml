@@ -1,0 +1,36 @@
+﻿@model SerenityHairDesigns.Models.Employee
+
+<div class="Create-Account-Form">
+    <p id="Create-Account-Text"> Edit Employee <br /> </p>
+    <div id="Create-Account-Content">
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div>
+                <table>
+                    <tr>
+                        <td align="left">First Name:</td>
+                        <td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Last Name:</td>
+                        <td align="left"><div>@Html.TextBoxFor(model => model.strLastName, new { @autofocus = "autofocus" })</div></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Password:</td>
+                        <td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Phone:</td>
+                        <td align="left"><div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div></td>
+                    </tr>
+                    <tr>
+                        <td align="left">Email:</td>
+                        <td align="left"><div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div></td>
+                    </tr>
+
+                </table>
+            </div>
+            <button id="btnEditEmployee" name="btnSubmit" class="button-action">Save Employee</button>
+        }
+    </div>
+</div>

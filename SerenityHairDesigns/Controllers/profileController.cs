@@ -37,7 +37,7 @@ namespace SerenityHairDesigns.Controllers
         {
             Database db = new Database();
             var employees = db.GetEmployees();
-            var employee = employees.Find((e) => e.EmployeeId == id);
+            var employee = employees.Find((e) => e.intEmployeeID == id);
             return Json(employee);
         }
 
@@ -54,9 +54,8 @@ namespace SerenityHairDesigns.Controllers
             var lstEmployees = db.GetEmployees();
             foreach (var item in lstEmployees)
             {
-                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.EmployeeId}" });
+                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.intEmployeeID}" });
             }
-            ViewBag.lstEmployees = lstEmployees;
             var model = new Employee
             {
                 EmployeeList = employeesSelectList
@@ -163,18 +162,32 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult ManageEmployees(FormCollection col)
         {
-            var fuckingSelectedItemMaybe = col["SelectedEmployee"];
+            Database db = new Database();
+            var employeesSelectList = new List<SelectListItem>();
+            var lstEmployees = db.GetEmployees();
+            foreach (var item in lstEmployees)
+            {
+                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.intEmployeeID}" });
+            }
+            var model = new Employee
+            {
+                EmployeeList = employeesSelectList
+            };
 
             try
             {
+
                 Employee u = new Employee
                 {
                     strFirstName = col["strFirstName"],
                     strLastName = col["strLastName"],
                     strEmailAddress = col["strEmailAddress"],
                     strPhoneNumber = col["strPhoneNumber"],
-                    strPassword = col["strPassword"]
+                    strPassword = col["strPassword"],
+                    EmployeeList = employeesSelectList,
+                    
                 };
+
                 if (col["btnSubmit"] == "Create Employee")
                 { //Create button pressed
                     Employee.ActionTypes at = Employee.ActionTypes.NoType;
@@ -190,18 +203,25 @@ namespace SerenityHairDesigns.Controllers
                             //break;
                     }
                 }
-                if (col["Employees"] == "intEmployeeID")
+                if (col["btnSubmit"] == "Edit")
                 {
-                    Employee objEmployee = new Employee();
-                    Database db = new Database();
-                    //make method that pulls id from the drop down
-                    //objEmployee = db.GetEmployees();
-
-                    ViewBag.objEmployee = objEmployee;
-
-                    return View();
+                    
+                    { //Create button pressed
+                        Employee.ActionTypes at = Employee.ActionTypes.NoType;
+                        at = u.SaveEmployee();
+                        switch (at)
+                        {
+                            case Employee.ActionTypes.InsertSuccessful:
+                                u.SaveEmployeeSession();
+                                return RedirectToAction("ManageEmployees");
+                            //break;
+                            default:
+                                return View(u);
+                                //break;
+                        }
+                    }
                 }
-                return View();
+                return View(model);
             }
             
 

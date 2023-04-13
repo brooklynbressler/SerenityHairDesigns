@@ -32,12 +32,57 @@ namespace SerenityHairDesigns.Controllers
             var lstEmployees = db.GetEmployees();
             var id = formCollection["SelectedEmployee"];
             var selectedEmployee = lstEmployees.Find((e) => e.intEmployeeID == Int32.Parse(id));
-            return RedirectToAction("Edit", new { @employee = selectedEmployee});
+            var employee = new Employee
+            {
+                intEmployeeID = selectedEmployee.intEmployeeID,
+                strFirstName= selectedEmployee.strFirstName,
+                strLastName= selectedEmployee.strLastName,  
+                strEmailAddress= selectedEmployee.strEmailAddress,  
+                strPassword= selectedEmployee.strPassword,
+                strPhoneNumber= selectedEmployee.strPhoneNumber,
+            };
+            return RedirectToAction("Edit", employee);
         }
 
         public ActionResult Edit(Employee employee)
         {
             return View(employee);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(FormCollection col)
+        {
+            var employee = new Employee
+            {
+                intEmployeeID = Int32.Parse(col["intEmployeeID"]),
+                strFirstName = col["strFirstName"],
+                strLastName = col["strLastName"],
+                strEmailAddress = col["strEmailAddress"],
+                strPhoneNumber = col["strPhoneNumber"],
+                strPassword = col["strPassword"],
+            };
+            employee.SaveEmployee();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult CreateEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateEmployee(FormCollection col)
+        {
+            var employee = new Employee
+            {
+                strFirstName = col["strFirstName"],
+                strLastName = col["strLastName"],
+                strEmailAddress = col["strEmailAddress"],
+                strPhoneNumber = col["strPhoneNumber"],
+                strPassword = col["strPassword"],
+            };
+            employee.SaveEmployee();
+            return RedirectToAction("Index");
         }
     }
 }

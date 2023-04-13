@@ -371,7 +371,7 @@ namespace SerenityHairDesigns.Models
                         if (!reader.IsDBNull(0))
                             objReviews.Add(new Employee()
                             {
-								
+								intEmployeeID = reader.GetInt32(0),
                                 strFirstName = reader.GetString(1)
                                 ,
                                 strLastName = reader.GetString(2)

@@ -10,6 +10,7 @@
                 @Html.DropDownListFor(m => m.SelectedEmployee, Model.EmployeeList, "Select an employee...")
             </div>
             <button id="btnEditEmployee" name="btnSubmit" class="button-action">Edit Employee</button>
+            <button type="button" value="Create" onclick="location.href='@Url.Action("CreateEmployee")'">Create New Employee</button>
         }
     </div>
 </div>

@@ -1,6 +1,5 @@
 ﻿using SerenityHairDesigns.Models;
 using System;
-using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Controllers
@@ -45,25 +44,6 @@ namespace SerenityHairDesigns.Controllers
         {
             Employee e = new Employee();
             return View(e);
-        }
-
-        public ActionResult ManageEmployees()
-        {
-           Database db = new Database();
-            var employeesSelectList = new List<SelectListItem>();
-            var lstEmployees = db.GetEmployees();
-            foreach (var item in lstEmployees)
-            {
-                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.intEmployeeID}" });
-            }
-            var model = new Employee
-            {
-                EmployeeList = employeesSelectList
-            };
-
-
-            return View(model);
-
         }
 
         [HttpPost]
@@ -157,80 +137,6 @@ namespace SerenityHairDesigns.Controllers
                 Employee e = new Employee();
                 return View(e);
             }
-        }
-
-        [HttpPost]
-        public ActionResult ManageEmployees(FormCollection col)
-        {
-            Database db = new Database();
-            var employeesSelectList = new List<SelectListItem>();
-            var lstEmployees = db.GetEmployees();
-            foreach (var item in lstEmployees)
-            {
-                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.intEmployeeID}" });
-            }
-            var model = new Employee
-            {
-                EmployeeList = employeesSelectList
-            };
-
-            try
-            {
-
-                Employee u = new Employee
-                {
-                    strFirstName = col["strFirstName"],
-                    strLastName = col["strLastName"],
-                    strEmailAddress = col["strEmailAddress"],
-                    strPhoneNumber = col["strPhoneNumber"],
-                    strPassword = col["strPassword"],
-                    EmployeeList = employeesSelectList,
-                    
-                };
-
-                if (col["btnSubmit"] == "Create Employee")
-                { //Create button pressed
-                    Employee.ActionTypes at = Employee.ActionTypes.NoType;
-                    at = u.SaveEmployee();
-                    switch (at)
-                    {
-                        case Employee.ActionTypes.InsertSuccessful:
-                            u.SaveEmployeeSession();
-                            return RedirectToAction("ManageEmployees");
-                        //break;
-                        default:
-                            return View(u);
-                            //break;
-                    }
-                }
-                if (col["btnSubmit"] == "Edit")
-                {
-                    
-                    { //Create button pressed
-                        Employee.ActionTypes at = Employee.ActionTypes.NoType;
-                        at = u.SaveEmployee();
-                        switch (at)
-                        {
-                            case Employee.ActionTypes.InsertSuccessful:
-                                u.SaveEmployeeSession();
-                                return RedirectToAction("ManageEmployees");
-                            //break;
-                            default:
-                                return View(u);
-                                //break;
-                        }
-                    }
-                }
-                return View(model);
-            }
-            
-
-                catch (Exception)
-                {
-                Employee u = new Employee();
-                    return View(u);
-                }
-            
         }
 
         public ActionResult SignOut() {

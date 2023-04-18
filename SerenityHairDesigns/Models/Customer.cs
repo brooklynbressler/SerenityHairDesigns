@@ -10,6 +10,9 @@ namespace SerenityHairDesigns.Models {
 	public class Customer
     {
 
+
+
+
         public long intCustomerID = 0;
         public string strFirstName = string.Empty;
         public string strLastName = string.Empty;
@@ -26,10 +29,15 @@ namespace SerenityHairDesigns.Models {
         public Image UserImage;
         public List<Image> Images;
         //public List<Event> Events = new List<Event>();
-
-
         //public List<Like> Likes;
         //public List<Rating> Ratings;
+
+        public bool IsAuthenticated {
+            get {
+                if (intCustomerID > 0) return true;
+                return false;
+            }
+        }
 
         //public bool DoesUserLike(Like.Types LikeType, long EventID)
         //{
@@ -98,25 +106,21 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-		//public sbyte UpdatePrimaryImage()
-		//{
-		//    try
-		//    {
-		//        Models.Database db = new Database();
-		//        long NewUID;
-		//        if (this.UserImage.ImageID == 0)
-		//        {
-		//            NewUID = db.InsertUserImage(this);
-		//            if (NewUID > 0) UserImage.ImageID = NewUID;
-		//        }
-		//        else
-		//        {
-		//            db.UpdateUserImage(this);
-		//        }
-		//        return 0;
-		//    }
-		//    catch (Exception ex) { throw new Exception(ex.Message); }
-		//}
+		public sbyte UpdatePrimaryImage() {
+			try {
+				Models.Database db = new Database();
+				long NewUID;
+				if (this.UserImage.ImageID == 0) {
+					NewUID = db.InsertCustomerImage(this);
+					if (NewUID > 0) UserImage.ImageID = NewUID;
+				}
+				else {
+					db.UpdateCustomerImage(this);
+				}
+				return 0;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
 		public Customer LoginCustomer() {
 			try {
@@ -154,13 +158,13 @@ namespace SerenityHairDesigns.Models {
         {
             try
             {
-                Customer u = new Customer();
+                Customer c = new Customer();
                 if (HttpContext.Current.Session["CurrentUser"] == null)
                 {
-                    return u;
+                    return c;
                 }
-                u = (Customer)HttpContext.Current.Session["CurrentUser"];
-                return u;
+                c = (Customer)HttpContext.Current.Session["CurrentUser"];
+                return c;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

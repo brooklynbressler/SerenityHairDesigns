@@ -32,10 +32,24 @@ textarea {
     margin-bottom: 20px;
     text-decoration: none;
 }
+
+.center-admin {
+    margin-left: 820px;
+    width: auto;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
 h2 {
     background-color: black;
     color: white;
 }
+
 .LogoStyle {
     background-color: black;
     color: white;
@@ -371,13 +385,94 @@ img {
     border: 3px solid #b74f13;
     margin: 10px;
 }
-.select { 
-    font-size: 500px;
-}
-.label {
-    font-size: 500px;
+
+
+.Shift-Text {
+    color: white;
 }
 
-.option {
-    font-size: 50px
+.Shift-Title {
+    text-align: center;
+    color: white;
+    padding-top: 25px;
+}
+
+.Emp-Availability {
+    margin-left: 120px;
+    margin-top: 10%;
+    background-color: black;
+    width: 330px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.section {
+    overflow: visible;
+    display: block;
+    clear: both;
+    margin: 0 0 1.0em 0;
+    overflow: auto;
+}
+
+.item {
+    display: inline;
+    float: left;
+    margin-right: 1.0em;
+    margin-bottom: 1.0em;
+}
+
+#user-profile-image {
+    margin-right: 1em;
+    display: inline-block;
+    float: left;
+}
+
+.user-profile-thumbnail {
+    width: 15em;
+}
+
+.user-profile-image-container {
+    border: 1px solid gray;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+    padding: 0.4em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    display: inline-block;
+}
+
+.user-image-container {
+    border: 1px solid #ccc;
+    float: left;
+    height: 100px;
+    width: 200px;
+    overflow: hidden;
+    margin-right: 2em;
+    margin-bottom: 2em;
+    position: relative;
+}
+
+    .user-image-container img {
+        width: 200px;
+        max-height: 140px;
+        object-fit: scale-down;
+    }
+
+    .user-image-container:hover {
+        border: 1px solid black;
+        background-color: #e6ffec !important;
+    }
+
+        .user-image-container:hover .image-delete-button {
+            opacity: 1;
+        }
+
+.Admin-Profile {
+    background-color: black;
+    color: white;
+    height: 420px;
+    width: 600px;
+    text-align: center;
+    margin-left: 37%;
 }

@@ -1,8 +1,13 @@
-﻿
+﻿@model SerenityHairDesigns.Models.Customer
+
 @{
-    ViewBag.Title = "ScheduleNowLoggedIn";
+	ViewBag.Title = "ScheduleNowLoggedIn";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<p>Congrats! You have successfully signed in/created an account! Woohoo!</p>
+<a class="center-admin" name="LogOut">Log Out</a>
+<a class="center" name="EmployeeInfo">Employee Info</a>
+<a class="center" name="ScheduleAppointment">Schedule Appointment</a>
+<a class="center" name="ManageEmployees">Manage Employees</a> // Dont show Login button if employee is logged in
+

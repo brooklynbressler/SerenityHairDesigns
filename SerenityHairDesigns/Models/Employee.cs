@@ -1,31 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.IO;
 using System.ComponentModel.DataAnnotations;
-using SerenityHairDesigns.Models;
+using System.Web;
+using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
-	public class Employee {
-
-        public long intEmployeeID = 0;
-        public string strFirstName = string.Empty;
-        public string strLastName = string.Empty;
-        public string strGender = string.Empty;
-        public string strPassword = string.Empty;
-        public string strRole = string.Empty;
+    public class Employee {
+        public long intEmployeeID { get; set; }
+        public string strFirstName  { get; set; }
+        public string strLastName  { get; set; }
+        public string strGender  { get; set; }
+        public string strPassword  { get; set; }
+        public string strRole { get; set; }
 
         //[DataType(DataType.EmailAddress)]
-        public string strEmailAddress = string.Empty;
+        public string strEmailAddress  { get; set; }
 
         //[DataType(DataType.PhoneNumber)]
-        public string strPhoneNumber = string.Empty;
+        public string strPhoneNumber  { get; set; }
 
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
         public List<Image> Images;
+        public IEnumerable<SelectListItem> EmployeeList { get; set; }
+        public Employee SelectedEmployee { get; set; }
 
-		public Employee LoginEmployee() {
+        public Employee LoginEmployee() {
             try {
                 Database db = new Database();
                 return db.LoginEmployee(this);
@@ -48,7 +48,7 @@ namespace SerenityHairDesigns.Models {
             }
         }
 
-        public Employee.ActionTypes SaveEmployee() {
+        public ActionTypes SaveEmployee() {
             try {
                 Database db = new Database();
                 if (intEmployeeID == 0) { //insert new user
@@ -72,12 +72,12 @@ namespace SerenityHairDesigns.Models {
 
         public Employee GetEmployeeSession() {
             try {
-                Employee u = new Employee();
+                Employee e = new Employee();
                 if (HttpContext.Current.Session["CurrentUser"] == null) {
-                    return u;
+                    return e;
                 }
-                u = (Employee)HttpContext.Current.Session["CurrentUser"];
-                return u;
+                e = (Employee)HttpContext.Current.Session["CurrentUser"];
+                return e;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -86,6 +86,36 @@ namespace SerenityHairDesigns.Models {
             try {
                 HttpContext.Current.Session["CurrentUser"] = this;
                 return true;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public Employee.ActionTypes Save() {
+            try {
+                Database db = new Database();
+                if (intEmployeeID == 0) { //insert new employee
+                    this.ActionType = db.InsertEmployee(this);
+                }
+                else {
+                    this.ActionType = db.UpdateEmployee(this);
+                }
+                return this.ActionType;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public sbyte UpdatePrimaryImage() {
+            try {
+                Models.Database db = new Database();
+                long NewUID;
+                if (this.UserImage.ImageID == 0) {
+                    NewUID = db.InsertEmployeeImage(this);
+                    if (NewUID > 0) UserImage.ImageID = NewUID;
+                }
+                else {
+                    db.UpdateEmployeeImage(this);
+                }
+                return 0;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
     public class Employee {
-        public int intEmployeeID { get; set; }
+        public long intEmployeeID { get; set; }
         public string strFirstName  { get; set; }
         public string strLastName  { get; set; }
         public string strGender  { get; set; }

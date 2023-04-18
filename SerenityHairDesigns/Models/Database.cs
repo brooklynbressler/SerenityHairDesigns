@@ -808,12 +808,12 @@ namespace SerenityHairDesigns.Models
 					if (ds.Tables[0].Rows.Count > 0)
 					{
 						DataRow dr = ds.Tables[0].Rows[0];
-						newEmp.intEmployeeID = (long)dr["intEmployeeID"];
-						newEmp.strFirstName = (string)dr["strFirstName"];
-						newEmp.strLastName = (string)dr["strLastName"];
-						newEmp.strPassword = e.strPassword;
-						newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
-						newEmp.strEmailAddress = (string)dr["strEmailAddress"];
+						e.intEmployeeID = (long)dr["intEmployeeID"];
+						e.strFirstName = (string)dr["strFirstName"];
+						e.strLastName = (string)dr["strLastName"];
+						e.strPassword = e.strPassword;
+						e.strPhoneNumber = (string)dr["strPhoneNumber"];
+						e.strEmailAddress = (string)dr["strEmailAddress"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }

@@ -140,22 +140,6 @@ namespace SerenityHairDesigns.Controllers
             }
         }
 
-        public ActionResult ScheduleNowLoggedIn() {
-			Models.Customer c = new Models.Customer();
-			return View(c);
-		}
-
-        public ActionResult EmployeeLoggedIn()
-        {
-            Models.Employee e = new Models.Employee();
-            return View(e);
-        }
-
-		public ActionResult AdminLoggedIn() {
-			Models.Employee e = new Models.Employee();
-			return View(e);
-		}
-
 		public ActionResult SignOut() {
 			Models.Customer c = new Models.Customer();
 			c.RemoveCustomerSession();

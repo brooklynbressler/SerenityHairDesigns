@@ -2,6 +2,8 @@
 using System;
 using System.Web.Mvc;
 using System.IO;
+using System.Web;
+using System.Collections.Generic;
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -43,9 +45,69 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult AdminLoggedIn()
         {
-            Employee e = new Employee();
-            return View(e);
-        }
+			Employee e = new Employee();
+			e = e.GetEmployeeSession();
+			if (e.IsEmployeeAuthenticated) {
+				Database db = new Database();
+				List<Image> images = new List<Image>();
+				images = db.GetEmployeeImages(e.intEmployeeID, 0, true);
+				e.UserImage = new Image();
+				if (images.Count > 0) e.UserImage = images[0];
+			}
+			return View(e);
+		}
+
+        [HttpPost]
+        public ActionResult AdminLoggedIn(HttpPostedFileBase UserImage, FormCollection col) {
+
+			try {
+				Employee e = new Employee();
+				e = e.GetEmployeeSession();
+
+				e.strFirstName = col["strFirstName"];
+				e.strLastName = col["strLastName"];
+				e.strPassword = col["strPassword"];
+				e.strPhoneNumber = col["strPhoneNumber"];
+				e.strEmailAddress = col["strEmailAddress"];
+				e.strGender = col["strGender"];
+				
+
+				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0) {
+					e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
+					return View(e);
+				}
+				else {
+					if (col["btnSubmit"] == "update") { //update button pressed
+						e.Save();
+
+						e.UserImage = new Image();
+						e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+						if (UserImage != null) {
+							e.UserImage = new Image();
+							e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+							e.UserImage.Primary = true;
+							e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+							if (e.UserImage.IsImageFile()) {
+								e.UserImage.Size = UserImage.ContentLength;
+								Stream stream = UserImage.InputStream;
+								BinaryReader binaryReader = new BinaryReader(stream);
+								e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+								e.UpdatePrimaryImage();
+							}
+						}
+
+						e.SaveEmployeeSession();
+						return RedirectToAction("AdminLoggedIn", "Profile");
+					}
+					return View(e);
+				}
+			}
+			catch (Exception) {
+				Employee e = new Employee();
+				return View(e);
+			}
+		}
 
         [HttpPost]
 		public ActionResult ScheduleLogin(FormCollection col) {

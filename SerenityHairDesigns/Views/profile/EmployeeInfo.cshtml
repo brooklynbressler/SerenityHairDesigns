@@ -1,6 +1,6 @@
-﻿@model SerenityHairDesigns.Models.Employee
+﻿@model.SerenityHairDesigns.Models.Employee
 @{
-    ViewBag.Title = "EmployeeInfo";
+
 }
 
 <h2>EmployeeInfo</h2>
@@ -10,6 +10,7 @@
 	<style>
 		.header {
 			display: flex;
+			flex: 1 1 30%;
 			flex-wrap: wrap;
 			justify-content: space-between;
 			align-items: center;
@@ -33,47 +34,119 @@
 </head>
 <body>
 
-
 	<div class="header">
-		<div class="header__item">
-			<h1>Employee Costs</h1>
-			<label>Start Date: </label>
-			<input type="text">
-			<br />
-			<label>End Date: </label>
-			<input type="text">
-			<br />
-			<label>Booth Rental: </label>
-			<input type="text">
-			<br />
-			<label>Product Cost: </label>
-			<input type="text">
-		</div>
-		<div class="header__item">
-			<h1>Employee Earnings</h1>
-			<label>Start Date: </label>
-			<input type="text">
-			<br />
-			<label>End Date: </label>
-			<input type="text">
-			<br />
-			<label>Appointment Pay: </label>
-			<input type="text">
-			<br />
-			<label>Tip Amount: </label>
-			<input type="text">
-		</div>
-		<div class="header__item">
-			<h1>Employee Products</h1>
-			<input type="text" placeholder="Enter input for Header 3">
-		</div>
+		<form action="EmployeeCosts" method="post">
+
+			<div class="header__item">
+				<h1>Employee Costs</h1>
+				<label for="startdate">Start Date:</label>
+				<input type="date" id="startdate" name="startdate">
+				<br />
+				<label for="enddate">End Date:</label>
+				<input type="date" id="enddate" name="enddate">
+				<br />
+				<label for="boothrental">Booth Rental:</label>
+				<input type="text" id="boothrental" name="boothrental">
+				<br />
+				<label for="inventoryused">Product Used:</label>
+				<input type="text" id="inventoryused" name="inventoryused">
+				<br />
+				<label for="numberofproduct"># of Product Used:</label>
+				<input type="number" id="numberofproduct" name="numberofproduct">
+				<br>
+				<button value="submit">Submit</button>
+			</div>
+			}
+
+		</form>
+
+		<form action="ContactUs" method="post">
+
+			<div class="header__item">
+				<h1>Employee Earnings</h1>
+				<label for="startdate">Start Date:</label>
+				<input type="text" id="startdate" name="startdate">
+				<br />
+				<label for="enddate">End Date:</label>
+				<input type="text" id="enddate" name="enddate">
+				<br />
+				<label for="appointmentpay">Appointment Pay:</label>
+				<input type="text" id="appointmentpay" name="appointmentpay">
+				<br />
+				<label for="tip">Tip Amount:</label>
+				<input type="text" id="tip" name="tip">
+				<br />
+				<button value="submit">Submit</button>
+			</div>
+
+			}
+
+			<div class="header__item">
+				<h1>Employee Products</h1>
+
+			</div>
+
+			@*
+		</form>*@
+
+
 	</div>
 
 
-	<br />
-	<br />
-	<h2>Previous Employee Info</h2>
-	<br />
+	<!--<div class="header">-->
+	@*<form class="header__item" id="EmployeeCosts">
+		*@
+		<!--<div class="header__item">
+			<h1>Employee Costs</h1>
+			<label for="startdate">Start Date:</label>
+			<input type="date" id="startdate" name="startdate">
+			<br />
+			<label for="enddate">End Date:</label>
+			<input type="date" id="enddate" name="enddate">
+			<br />
+			<label for="boothrental">Booth Rental:</label>
+			<input type="text" id="boothrental" name="boothrental">
+			<br />
+			<label for="inventoryused">Product Used:</label>
+			<input type="text" id="inventoryused" name="inventoryused">
+			<br />
+			<label for="numberofproduct"># of Product Used:</label>
+			<input type="number" id="numberofproduct" name="numberofproduct">
+			<br>
+			<button value="submit">Submit</button>
+		</div>-->
+		@*
+	</form>*@
+
+	<!--<form class="header__item" id="EmployeeEarnings">
+			<div class="header__item">
+				<h1>Employee Earnings</h1>
+				<label for="startdate">Start Date:</label>
+				<input type="text" id="startdate" name="startdate">
+				<br />
+				<label for="enddate">End Date:</label>
+				<input type="text" id="enddate" name="enddate">
+				<br />
+				<label for="appointmentpay">Appointment Pay:</label>
+				<input type="text" id="appointmentpay" name="appointmentpay">
+				<br />
+				<label for="tip">Tip Amount:</label>
+				<input type="text" id="tip" name="tip">
+				<br />
+				<button value="submit">Submit</button>
+			</div>
+
+		</form>
+		<div class="header__item">
+
+			<div class="header__item">
+				<h1>Employee Products</h1>
+
+			</div>
+
+		</div>
+
+	</div>-->
 
 	<div class="header">
 		<div class="header__item">
@@ -133,3 +206,21 @@
 
 
 </body>
+
+<script>
+
+	function submitForm(event) {
+		event.preventDefault(); // prevent the form from submitting normally
+
+		const form = document.getElementById("EmployeeCosts");
+		const formData = new FormData(form);
+
+		// filter out unwanted form fields
+		const filteredData = new FormData();
+		filteredData.append("startdate", formData.get("startdata"));
+		filteredData.append("enddate", formData.get("email"));
+
+		// submit the filtered form data using Ajax or any other method
+		// ...
+	}
+</script>

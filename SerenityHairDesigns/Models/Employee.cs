@@ -70,13 +70,13 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public Customer GetEmployeeSession() {
+        public Employee GetEmployeeSession() {
             try {
-                Customer u = new Customer();
+                Employee u = new Employee();
                 if (HttpContext.Current.Session["CurrentUser"] == null) {
                     return u;
                 }
-                u = (Customer)HttpContext.Current.Session["CurrentUser"];
+                u = (Employee)HttpContext.Current.Session["CurrentUser"];
                 return u;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }

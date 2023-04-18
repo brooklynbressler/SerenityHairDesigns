@@ -12,7 +12,8 @@ namespace SerenityHairDesigns.Models
 	{
 
 
-		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+
+		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -305,6 +306,307 @@ namespace SerenityHairDesigns.Models
 		//	}
 		//	catch (Exception ex) { throw new Exception(ex.Message); }
 		//}
+
+		public List<EmployeeProducts> GetEmployeesProducts(long lngEmployeeID)
+		{
+
+			List<EmployeeProducts> objEmployeeProducts = new List<EmployeeProducts>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TEmployeeProducts INNER JOIN TProducts ON TProducts.intproductID = TEmployeeProducts.intProductID WHERE intEmployeeID = " + lngEmployeeID;
+				 
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+							objEmployeeProducts.Add(new EmployeeProducts()
+							{
+								intEmployeeProductID = reader.GetInt32(0)
+								,
+								intEmployeeID = reader.GetInt64(1)
+								,
+								intProductID = reader.GetInt32(2)
+								,
+								intProductInventory = reader.GetInt32(3)
+								,
+								product = new Products()
+								{ 
+									intProductID = reader.GetInt32(4)
+									,
+									strProductName = reader.GetString(5)
+									,
+									intTotalInventory = reader.GetInt32(6)
+									, 
+									blnNeedsRestocking = reader.GetBoolean(7)
+
+								}
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return objEmployeeProducts;
+		}
+
+
+		public List<Products> GetAllProducts()
+		{
+
+			List<Products> Products = new List<Products>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TProducts";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						Products.Add(new Products()
+						{
+							intProductID = reader.GetInt32(0)
+								,
+							strProductName = reader.GetString(1)
+								,
+							intTotalInventory = reader.GetInt32(2)
+								,
+							blnNeedsRestocking = reader.GetBoolean(3)
+
+						}) ;
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return Products;
+		}
+
+
+		public bool UpdateEmployeeItemInventory(int intEmployeeProductID, int intItemQuantityChange)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("UPDATE_EMPLOYEE_INVENTORY", cn);
+
+				SetParameter(ref cm, "@intEmployeeProductID", intEmployeeProductID, SqlDbType.Int);
+
+				SetParameter(ref cm, "@intItemQuantityChange", intItemQuantityChange, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+
+		}
+
+		public bool AddEmployeeProduct(long lngEmployeeID, int intProductID, int intItemQuantityChange)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("ADD_PRODUCT_TO_EMPLOYEE", cn);
+
+				SetParameter(ref cm, "@lngEmployeeID", lngEmployeeID, SqlDbType.BigInt);
+
+				SetParameter(ref cm, "@intProductID", intProductID, SqlDbType.Int);
+
+				SetParameter(ref cm, "@intItemQuantityChange", intItemQuantityChange, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+
+		}
+
+		public bool AddNewProduct(long lngEmployeeID, string strNewProductName, int intItemQuantityChange)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("ADD_NEW_PRODUCT", cn);
+
+				SetParameter(ref cm, "@lngEmployeeID", lngEmployeeID, SqlDbType.BigInt);
+
+				SetParameter(ref cm, "@strNewProductName", strNewProductName, SqlDbType.VarChar);
+
+				SetParameter(ref cm, "@intItemQuantityChange", intItemQuantityChange, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+
+		}
+
+
+		public bool EnterEmployeeCost(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intBoothRental)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_COST", cn);
+
+				SetParameter(ref cm, "@intEmployeeID", intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@dtmStartDate", dteStartDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@dtmEndDate", dteEndDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@intBoothRental", intBoothRental, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex) 
+			{ 
+				throw new Exception(ex.Message);
+			}
+
+		}
+
+		public bool EnterEmployeeEarning(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intAppointmentPay, int intTipPay)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_EARNING", cn);
+
+				SetParameter(ref cm, "@intEmployeeID", intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@dtmStartDate", dteStartDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@dtmEndDate", dteEndDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@intAppointmentPay", intAppointmentPay, SqlDbType.Int);
+				SetParameter(ref cm, "@intTipPay", intTipPay, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+
+		}
+
+
+
+		public EmployeesMoneyInfo EmployeeInfo(long lngEmployeeID, DateTime dtmStartTime, DateTime dtmEndTime)
+		{
+
+			EmployeesMoneyInfo EmployeeInfo = new EmployeesMoneyInfo();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT TEmployeeCosts.decBoothRentel, intAppointmentPay, intTipPay " +
+								"FROM TEarnings " +
+								"JOIN TEmployees ON TEmployees.intEmployeeID = TEarnings.intEmployeeID " +
+								"JOIN TEmployeeCosts ON TEmployees.intEmployeeID = TEmployeeCosts.intEmployeeID " +
+								"WHERE TEarnings.intEmployeeID = " + lngEmployeeID +
+								" AND TEmployeeCosts.intEmployeeID = " + lngEmployeeID +
+								" AND TEarnings.dteStartTime >= '" + dtmStartTime +
+								"' AND TEmployeeCosts.dtmStartDate >= '" + dtmStartTime +
+								"' AND TEmployeeCosts.dtmEndDate <= '" + dtmEndTime +
+								"' AND TEarnings.dteEndTime <= '" + dtmEndTime + "'";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							
+							{
+							EmployeeInfo.decBoothRental = reader.GetDecimal(0);
+
+							EmployeeInfo.intAppointmentPay = reader.GetInt32(1);
+
+							EmployeeInfo.intTipPay = reader.GetInt32(2);
+								
+							};
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return EmployeeInfo;
+		}
 
 
 		public List<AboutUs> GetReviews()

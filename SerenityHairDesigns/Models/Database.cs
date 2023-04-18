@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 	{
 
 
-		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -371,7 +371,7 @@ namespace SerenityHairDesigns.Models
                         if (!reader.IsDBNull(0))
                             objReviews.Add(new Employee()
                             {
-								intEmployeeID = reader.GetInt32(0),
+								intEmployeeID = reader.GetInt64(0),
                                 strFirstName = reader.GetString(1)
                                 ,
                                 strLastName = reader.GetString(2)

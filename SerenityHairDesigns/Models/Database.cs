@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 	{
 
 
-		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -351,10 +351,59 @@ namespace SerenityHairDesigns.Models
 			return objReviews;
 		}
 
+        public List<Employee> GetEmployees()
+        {
+
+            List<Employee> objReviews = new List<Employee>();
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+                string query = "SELECT intEmployeeID ,strFirstName, strLastName, strPassword, strPhoneNumber, strEmailAddress FROM TEmployees" ;
+
+                SqlCommand cmd = new SqlCommand(query, cn);
+
+                using (IDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (!reader.IsDBNull(0))
+                            objReviews.Add(new Employee()
+                            {
+								intEmployeeID = reader.GetInt32(0),
+                                strFirstName = reader.GetString(1)
+                                ,
+                                strLastName = reader.GetString(2)
+                                ,
+                                strPassword = reader.GetString(3)
+								,
+                                strPhoneNumber = reader.GetString(4)
+                                ,
+                                strEmailAddress = reader.GetString(5)
+								
+
+                            });
+
+                    }
+                    reader.Close();
+
+                }
+
+                CloseDBConnection(ref cn);
+
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+            {
+
+            }
+            return objReviews;
+        }
 
 
 
-		public ContactUs.ActionTypes InsertReview(ContactUs model)
+
+        public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
 			{
@@ -684,7 +733,7 @@ namespace SerenityHairDesigns.Models
 				switch (intReturnValue)
 				{
 					case 1: // new user created
-						e.intEmployeeID = (long)cm.Parameters["@intEmployeeID"].Value;
+						e.intEmployeeID = (int)cm.Parameters["@intEmployeeID"].Value;
 						return Employee.ActionTypes.InsertSuccessful;
 					case -1:
 						return Employee.ActionTypes.DuplicateEmail;
@@ -759,12 +808,12 @@ namespace SerenityHairDesigns.Models
 					if (ds.Tables[0].Rows.Count > 0)
 					{
 						DataRow dr = ds.Tables[0].Rows[0];
-						e.intEmployeeID = (long)dr["intEmployeeID"];
-						e.strFirstName = (string)dr["strFirstName"];
-						e.strLastName = (string)dr["strLastName"];
-						e.strPassword = (string)dr["strPassword"];
-						e.strPhoneNumber = (string)dr["strPhoneNumber"];
-						e.strEmailAddress = (string)dr["strEmailAddress"];
+						newEmp.intEmployeeID = (long)dr["intEmployeeID"];
+						newEmp.strFirstName = (string)dr["strFirstName"];
+						newEmp.strLastName = (string)dr["strLastName"];
+						newEmp.strPassword = e.strPassword;
+						newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
+						newEmp.strEmailAddress = (string)dr["strEmailAddress"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
@@ -847,6 +896,7 @@ namespace SerenityHairDesigns.Models
 				int intReturnValue = -1;
 
 				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@strpassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strpassword", e.strPassword, SqlDbType.NVarChar);

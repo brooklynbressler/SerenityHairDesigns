@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SerenityHairDesigns.Models;
-using System;
+﻿using SerenityHairDesigns.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,7 +11,7 @@ namespace SerenityHairDesigns.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            Models.Employee u = new Models.Employee();
+            Employee u = new Employee();
             return View();
         }
 

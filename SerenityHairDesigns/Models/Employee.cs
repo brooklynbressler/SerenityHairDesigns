@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
-using System.IO;
 using System.ComponentModel.DataAnnotations;
-using SerenityHairDesigns.Models;
+using System.Web;
+using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
-	public class Employee {
-
-        public long intEmployeeID = 0;
-        public string strFirstName = string.Empty;
-        public string strLastName = string.Empty;
-        public string strGender = string.Empty;
-        public string strPassword = string.Empty;
-        public string strRole = string.Empty;
+    public class Employee {
+        public int intEmployeeID { get; set; }
+        public string strFirstName  { get; set; }
+        public string strLastName  { get; set; }
+        public string strGender  { get; set; }
+        public string strPassword  { get; set; }
+        public string strRole { get; set; }
 
         //[DataType(DataType.EmailAddress)]
-        public string strEmailAddress = string.Empty;
+        public string strEmailAddress  { get; set; }
 
         //[DataType(DataType.PhoneNumber)]
-        public string strPhoneNumber = string.Empty;
+        public string strPhoneNumber  { get; set; }
 
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
         public List<Image> Images;
+        public IEnumerable<SelectListItem> EmployeeList { get; set; }
+        public Employee SelectedEmployee { get; set; }
 
         public Employee LoginEmployee() {
             try {
@@ -48,7 +48,7 @@ namespace SerenityHairDesigns.Models {
             }
         }
 
-        public Employee.ActionTypes SaveEmployee() {
+        public ActionTypes SaveEmployee() {
             try {
                 Database db = new Database();
                 if (intEmployeeID == 0) { //insert new user

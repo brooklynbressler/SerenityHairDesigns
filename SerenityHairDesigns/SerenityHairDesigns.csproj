@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="Models\AboutUs.cs" />
     <Compile Include="Models\ContactUs.cs" />
+    <Compile Include="Models\CustomerEmployee.cs" />
     <Compile Include="Models\Database.cs" />
     <Compile Include="Models\EmailSender.cs" />
     <Compile Include="Models\Employee.cs" />

@@ -25,7 +25,7 @@ namespace SerenityHairDesigns.Models {
         public Image UserImage;
         public List<Image> Images;
 
-		public Employee LoginEmployee() {
+        public Employee LoginEmployee() {
             try {
                 Database db = new Database();
                 return db.LoginEmployee(this);
@@ -70,14 +70,14 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public Customer GetEmployeeSession() {
+        public Employee GetEmployeeSession() {
             try {
-                Customer u = new Customer();
+                Employee e = new Employee();
                 if (HttpContext.Current.Session["CurrentUser"] == null) {
-                    return u;
+                    return e;
                 }
-                u = (Customer)HttpContext.Current.Session["CurrentUser"];
-                return u;
+                e = (Employee)HttpContext.Current.Session["CurrentUser"];
+                return e;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
@@ -86,6 +86,36 @@ namespace SerenityHairDesigns.Models {
             try {
                 HttpContext.Current.Session["CurrentUser"] = this;
                 return true;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public Employee.ActionTypes Save() {
+            try {
+                Database db = new Database();
+                if (intEmployeeID == 0) { //insert new employee
+                    this.ActionType = db.InsertEmployee(this);
+                }
+                else {
+                    this.ActionType = db.UpdateEmployee(this);
+                }
+                return this.ActionType;
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public sbyte UpdatePrimaryImage() {
+            try {
+                Models.Database db = new Database();
+                long NewUID;
+                if (this.UserImage.ImageID == 0) {
+                    NewUID = db.InsertEmployeeImage(this);
+                    if (NewUID > 0) UserImage.ImageID = NewUID;
+                }
+                else {
+                    db.UpdateEmployeeImage(this);
+                }
+                return 0;
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

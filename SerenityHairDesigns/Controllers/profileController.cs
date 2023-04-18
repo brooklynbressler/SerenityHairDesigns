@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -17,8 +18,8 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult Employeelogin()
         {
-            Models.Customer u = new Models.Customer();
-            return View();
+            Models.Employee u = new Models.Employee();
+            return View(u);
         }
 
         [HttpPost]
@@ -127,7 +128,71 @@ namespace SerenityHairDesigns.Controllers
 
 		public ActionResult AdminLoggedIn() {
 			Models.Employee e = new Models.Employee();
+
+			e = e.GetEmployeeSession();
+
+			if(e.IsEmployeeAuthenticated) {
+				Models.Database db = new Models.Database();
+				List<Models.Image> images = new List<Models.Image>();
+				images = db.GetEmployeeImages(e.intEmployeeID, 0, true);
+				e.UserImage = new Models.Image();
+				if (images.Count > 0) e.UserImage = images[0];
+			}
+
 			return View(e);
+		}
+
+		[HttpPost]
+		public ActionResult AdminLoggedIn(HttpPostedFileBase UserImage, FormCollection col) {
+
+			try {
+				Models.Employee e = new Models.Employee();
+				e = e.GetEmployeeSession();
+
+				e.strFirstName = col["strFirstName"];
+				e.strLastName = col["strLastName"];
+				e.strPassword = col["strPassword"];
+				e.strPhoneNumber = col["strPhoneNumber"];
+				e.strEmailAddress = col["strEmailAddress"];
+				e.strGender = col["strGender"];
+				
+
+				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0) {
+					e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
+					return View(e);
+				}
+				else {
+					if (col["btnSubmit"] == "update") { //update button pressed
+						e.Save();
+
+						e.UserImage = new Models.Image();
+						e.UserImage.ImageID = System.Convert.ToInt32(col["UserImage.ImageID"]);
+
+						if (UserImage != null) {
+							e.UserImage = new Models.Image();
+							e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+							e.UserImage.Primary = true;
+							e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+							if (e.UserImage.IsImageFile()) {
+								e.UserImage.Size = UserImage.ContentLength;
+								Stream stream = UserImage.InputStream;
+								BinaryReader binaryReader = new BinaryReader(stream);
+								e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+								e.UpdatePrimaryImage();
+							}
+						}
+
+						e.SaveEmployeeSession();
+						return RedirectToAction("AdminLoggedIn", "Profile");
+					}
+					return View(e);
+				}
+			}
+			catch (Exception) {
+				Models.Employee e = new Models.Employee();
+				return View(e);
+			}
+
 		}
 
 		public ActionResult SignOut() {

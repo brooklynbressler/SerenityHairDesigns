@@ -224,9 +224,9 @@ namespace SerenityHairDesigns.Models
 		//		SetParameter(ref cm, "@event_image_id", null, SqlDbType.BigInt, Direction: ParameterDirection.Output);
 		//		SetParameter(ref cm, "@event_id", e.ID, SqlDbType.BigInt);
 		//		if (e.EventImage.Primary)
-		//			SetParameter(ref cm, "@primary_image", "Y", SqlDbType.Char);
+		//			SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
 		//		else
-		//			SetParameter(ref cm, "@primary_image", "N", SqlDbType.Char);
+		//			SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
 
 		//		SetParameter(ref cm, "@image", e.EventImage.ImageData, SqlDbType.VarBinary);
 		//		SetParameter(ref cm, "@file_name", e.EventImage.FileName, SqlDbType.NVarChar);
@@ -290,9 +290,9 @@ namespace SerenityHairDesigns.Models
 
 		//		SetParameter(ref cm, "@event_image_id", e.EventImage.ImageID, SqlDbType.BigInt);
 		//		if (e.EventImage.Primary)
-		//			SetParameter(ref cm, "@primary_image", "Y", SqlDbType.Char);
+		//			SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
 		//		else
-		//			SetParameter(ref cm, "@primary_image", "N", SqlDbType.Char);
+		//			SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
 
 		//		SetParameter(ref cm, "@image", e.EventImage.ImageData, SqlDbType.VarBinary);
 		//		SetParameter(ref cm, "@file_name", e.EventImage.FileName, SqlDbType.NVarChar);
@@ -387,22 +387,22 @@ namespace SerenityHairDesigns.Models
 			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlCommand cm = new SqlCommand("INSERT_USER_IMAGE", cn);
+				SqlCommand cm = new SqlCommand("INSERT_CUSTOMER_IMAGE", cn);
 
-				SetParameter(ref cm, "@user_image_id", null, SqlDbType.BigInt, Direction: ParameterDirection.Output);
-				SetParameter(ref cm, "@uid", c.intCustomerID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@intCustomerImageID", null, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+				SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt);
 				if (c.UserImage.Primary)
-					SetParameter(ref cm, "@primary_image", "Y", SqlDbType.Char);
+					SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
 				else
-					SetParameter(ref cm, "@primary_image", "N", SqlDbType.Char);
+					SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
 
-				SetParameter(ref cm, "@image", c.UserImage.ImageData, SqlDbType.VarBinary);
-				SetParameter(ref cm, "@file_name", c.UserImage.FileName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@image_size", c.UserImage.Size, SqlDbType.BigInt);
+				SetParameter(ref cm, "@Image", c.UserImage.ImageData, SqlDbType.VarBinary);
+				SetParameter(ref cm, "@FileName", c.UserImage.FileName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@ImageSize", c.UserImage.Size, SqlDbType.BigInt);
 
 				cm.ExecuteReader();
 				CloseDBConnection(ref cn);
-				return (long)cm.Parameters["@user_image_id"].Value;
+				return (long)cm.Parameters["@intCustomerImageID"].Value;
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
@@ -413,17 +413,17 @@ namespace SerenityHairDesigns.Models
 			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlCommand cm = new SqlCommand("UPDATE_USER_IMAGE", cn);
+				SqlCommand cm = new SqlCommand("UPDATE_CUSTOMER_IMAGE", cn);
 
-				SetParameter(ref cm, "@user_image_id", c.UserImage.ImageID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@intCustomerImageID", c.UserImage.ImageID, SqlDbType.BigInt);
 				if (c.UserImage.Primary)
-					SetParameter(ref cm, "@primary_image", "Y", SqlDbType.Char);
+					SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
 				else
-					SetParameter(ref cm, "@primary_image", "N", SqlDbType.Char);
+					SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
 
-				SetParameter(ref cm, "@image", c.UserImage.ImageData, SqlDbType.VarBinary);
-				SetParameter(ref cm, "@file_name", c.UserImage.FileName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@image_size", c.UserImage.Size, SqlDbType.BigInt);
+				SetParameter(ref cm, "@Image", c.UserImage.ImageData, SqlDbType.VarBinary);
+				SetParameter(ref cm, "@FileName", c.UserImage.FileName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@ImageSize", c.UserImage.Size, SqlDbType.BigInt);
 
 				cm.ExecuteReader();
 				CloseDBConnection(ref cn);
@@ -433,21 +433,69 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public List<Image> GetUserImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false)
+		public long InsertEmployeeImage(Employee e) {
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_IMAGE", cn);
+
+				SetParameter(ref cm, "@intEmployeeImageID", null, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+				if (e.UserImage.Primary)
+					SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
+
+				SetParameter(ref cm, "@Image", e.UserImage.ImageData, SqlDbType.VarBinary);
+				SetParameter(ref cm, "@FileName", e.UserImage.FileName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@ImageSize", e.UserImage.Size, SqlDbType.BigInt);
+
+				cm.ExecuteReader();
+				CloseDBConnection(ref cn);
+				return (long)cm.Parameters["@intEmployeeImageID"].Value;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public long UpdateEmployeeImage(Employee e) {
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("UPDATE_EMPLOYEE_IMAGE", cn);
+
+				SetParameter(ref cm, "@intEmployeeImageID", e.UserImage.ImageID, SqlDbType.BigInt);
+				if (e.UserImage.Primary)
+					SetParameter(ref cm, "@PrimaryImage", "Y", SqlDbType.Char);
+				else
+					SetParameter(ref cm, "@PrimaryImage", "N", SqlDbType.Char);
+
+				SetParameter(ref cm, "@Image", e.UserImage.ImageData, SqlDbType.VarBinary);
+				SetParameter(ref cm, "@FileName", e.UserImage.FileName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@ImageSize", e.UserImage.Size, SqlDbType.BigInt);
+
+				cm.ExecuteReader();
+				CloseDBConnection(ref cn);
+
+				return 0; //success	
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public List<Image> GetCustomerImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false)
 		{
 			try
 			{
 				DataSet ds = new DataSet();
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlDataAdapter da = new SqlDataAdapter("SELECT_USER_IMAGES", cn);
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_CUSTOMER_IMAGES", cn);
 				List<Image> imgs = new List<Image>();
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-				if (UID > 0) SetParameter(ref da, "@uid", UID, SqlDbType.BigInt);
-				if (UserImageID > 0) SetParameter(ref da, "@user_image_id", UserImageID, SqlDbType.BigInt);
-				if (PrimaryOnly) SetParameter(ref da, "@primary_only", "Y", SqlDbType.Char);
+				if (UID > 0) SetParameter(ref da, "@intCustomerID", UID, SqlDbType.BigInt);
+				if (UserImageID > 0) SetParameter(ref da, "@intCustomerImageID", UserImageID, SqlDbType.BigInt);
+				if (PrimaryOnly) SetParameter(ref da, "@PrimaryImage", "Y", SqlDbType.Char);
 
 				try
 				{
@@ -464,7 +512,48 @@ namespace SerenityHairDesigns.Models
 					foreach (DataRow dr in ds.Tables[0].Rows)
 					{
 						Image i = new Image();
-						i.ImageID = (long)dr["UserImageID"];
+						i.ImageID = (long)dr["intCustomerImageID"];
+						i.ImageData = (byte[])dr["Image"];
+						i.FileName = (string)dr["FileName"];
+						i.Size = (long)dr["ImageSize"];
+						if (dr["PrimaryImage"].ToString() == "Y")
+							i.Primary = true;
+						else
+							i.Primary = false;
+						imgs.Add(i);
+					}
+				}
+				return imgs;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public List<Image> GetEmployeeImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false) {
+			try {
+				DataSet ds = new DataSet();
+				SqlConnection cn = new SqlConnection();
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE_IMAGES", cn);
+				List<Image> imgs = new List<Image>();
+
+				da.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+				if (UID > 0) SetParameter(ref da, "@intEmployeeID", UID, SqlDbType.BigInt);
+				if (UserImageID > 0) SetParameter(ref da, "@intEmployeeImageID", UserImageID, SqlDbType.BigInt);
+				if (PrimaryOnly) SetParameter(ref da, "@PrimaryImage", "Y", SqlDbType.Char);
+
+				try {
+					da.Fill(ds);
+				}
+				catch (Exception ex2) {
+					throw new Exception(ex2.Message);
+				}
+				finally { CloseDBConnection(ref cn); }
+
+				if (ds.Tables[0].Rows.Count != 0) {
+					foreach (DataRow dr in ds.Tables[0].Rows) {
+						Image i = new Image();
+						i.ImageID = (long)dr["intEmployeeImageID"];
 						i.ImageData = (byte[])dr["Image"];
 						i.FileName = (string)dr["FileName"];
 						i.Size = (long)dr["ImageSize"];
@@ -503,6 +592,7 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
+
 		public Customer.ActionTypes InsertCustomer(Customer c)
 		{
 			try
@@ -656,7 +746,6 @@ namespace SerenityHairDesigns.Models
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlDataAdapter da = new SqlDataAdapter("LOGIN_EMPLOYEE", cn);
 				DataSet ds;
-				Employee newEmp = null;
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
@@ -669,14 +758,13 @@ namespace SerenityHairDesigns.Models
 					da.Fill(ds);
 					if (ds.Tables[0].Rows.Count > 0)
 					{
-						newEmp = new Employee();
 						DataRow dr = ds.Tables[0].Rows[0];
-						newEmp.intEmployeeID = (long)dr["intEmployeeID"];
-						newEmp.strFirstName = (string)dr["strFirstName"];
-						newEmp.strLastName = (string)dr["strLastName"];
-						newEmp.strPassword = e.strPassword;
-						newEmp.strPhoneNumber = (string)dr["strPhoneNumber"];
-						newEmp.strEmailAddress = (string)dr["strEmailAddress"];
+						e.intEmployeeID = (long)dr["intEmployeeID"];
+						e.strFirstName = (string)dr["strFirstName"];
+						e.strLastName = (string)dr["strLastName"];
+						e.strPassword = (string)dr["strPassword"];
+						e.strPhoneNumber = (string)dr["strPhoneNumber"];
+						e.strEmailAddress = (string)dr["strEmailAddress"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
@@ -684,7 +772,7 @@ namespace SerenityHairDesigns.Models
 				{
 					CloseDBConnection(ref cn);
 				}
-				return newEmp; //alls well in the world
+				return e; //alls well in the world
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
@@ -759,9 +847,10 @@ namespace SerenityHairDesigns.Models
 				int intReturnValue = -1;
 
 				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
-				SetParameter(ref cm, "@strpassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strpassword", e.strPassword, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);

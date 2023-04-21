@@ -29,11 +29,6 @@ namespace SerenityHairDesigns.Controllers
             return View(c);
         }
 
-        public ActionResult EmployeeLoggedIn()
-        {
-            Employee e = new Employee();
-            return View(e);
-        }
 
         [HttpPost]
         public JsonResult GetEmployeeById(int id)
@@ -74,9 +69,10 @@ namespace SerenityHairDesigns.Controllers
                 e.strPhoneNumber = col["strPhoneNumber"];
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strGender = col["strGender"];
+				e.strYearsOfExperience = col["strYearsOfExperience"];
 
 
-                if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
+				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
                 {
                     e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
                     return View(e);
@@ -119,7 +115,83 @@ namespace SerenityHairDesigns.Controllers
             }
         }
 
-        public ActionResult EmployeesInfo()
+		public ActionResult EmployeeLoggedIn()
+		{
+			Employee e = new Employee();
+			e = e.GetEmployeeSession();
+			if (e.IsEmployeeAuthenticated)
+			{
+				Database db = new Database();
+				List<Image> images = new List<Image>();
+				images = db.GetEmployeeImages(e.intEmployeeID, 0, true);
+				e.UserImage = new Image();
+				if (images.Count > 0) e.UserImage = images[0];
+			}
+			return View(e);
+		}
+
+		[HttpPost]
+		public ActionResult EmployeeLoggedIn(HttpPostedFileBase UserImage, FormCollection col)
+		{
+
+			try
+			{
+				Employee e = new Employee();
+				e = e.GetEmployeeSession();
+
+				e.strFirstName = col["strFirstName"];
+				e.strLastName = col["strLastName"];
+				e.strPassword = col["strPassword"];
+				e.strPhoneNumber = col["strPhoneNumber"];
+				e.strEmailAddress = col["strEmailAddress"];
+				e.strGender = col["strGender"];
+				e.strYearsOfExperience = col["strYearsOfExperience"];
+
+
+				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
+				{
+					e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
+					return View(e);
+				}
+				else
+				{
+					if (col["btnSubmit"] == "update")
+					{ //update button pressed
+						e.Save();
+
+						e.UserImage = new Image();
+						e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+						if (UserImage != null)
+						{
+							e.UserImage = new Image();
+							e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+							e.UserImage.Primary = true;
+							e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+							if (e.UserImage.IsImageFile())
+							{
+								e.UserImage.Size = UserImage.ContentLength;
+								Stream stream = UserImage.InputStream;
+								BinaryReader binaryReader = new BinaryReader(stream);
+								e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+								e.UpdatePrimaryImage();
+							}
+						}
+
+						e.SaveEmployeeSession();
+						return RedirectToAction("EmployeeLoggedIn", "Profile");
+					}
+					return View(e);
+				}
+			}
+			catch (Exception)
+			{
+				Employee e = new Employee();
+				return View(e);
+			}
+		}
+
+		public ActionResult EmployeesInfo()
         {
 
             Models.Employee e = new Models.Employee();

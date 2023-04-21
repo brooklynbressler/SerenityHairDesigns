@@ -45,6 +45,18 @@ textarea {
     text-decoration: none;
 }
 
+.center-RegEmployee {
+    margin-left: 820px;
+    width: auto;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
 h2 {
     background-color: black;
     color: white;
@@ -375,15 +387,42 @@ img {
     color: gold;
 }
 
-.Stylist-Logged_in {
+.Stylist-logged-in {
+    display: flex;
+    justify-content: left;
+}
+
+.Stylist-logged_in-1 {
     background-color: black;
+    font-size: 25px;
     color: white;
-    width: 400px;
-    height: 150px;
-    margin-left: 17.5%;
+    width: 500px;
+    height: 285px;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
-    margin: 10px;
+    margin-right: 50px;
+}
+
+.img-Stylist-Logged-In {
+    margin-right: 50px
+}
+
+.Kelly-Logged-In-Review {
+    float: right;
+    margin-left: 300px;
+}
+
+.Availability-Title {
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 22px;
+    width: 420px;
+    height: 33px;
+    margin-left: 37%;
+    margin-top: 50px;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
 }
 
 

@@ -12,9 +12,17 @@ namespace SerenityHairDesigns.Models {
         public string strGender  { get; set; }
         public string strPassword  { get; set; }
         public string strRole { get; set; }
+        public string strYearsOfExperience { get; set; }
+
+        //public long intEmployeeID = 0;
+        //public string strFirstName = string.Empty;
+        //public string strLastName = string.Empty;
+        //public string strGender = string.Empty;
+        //public string strPassword = string.Empty;
+        //public string strRole = string.Empty;
 
         //[DataType(DataType.EmailAddress)]
-        public string strEmailAddress  { get; set; }
+        public string strEmailAddress = string.Empty;
 
         //[DataType(DataType.PhoneNumber)]
         public string strPhoneNumber  { get; set; }
@@ -41,7 +49,7 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
-        public bool IsEmployeeAuthenticated {
+		public bool IsEmployeeAuthenticated {
             get {
                 if (intEmployeeID > 0) return true;
                 return false;

@@ -12,8 +12,7 @@ namespace SerenityHairDesigns.Models
 	{
 
 
-
-		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=JANIELLEDAVE2B0;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -702,10 +701,7 @@ namespace SerenityHairDesigns.Models
             return objReviews;
         }
 
-
-
-
-        public ContactUs.ActionTypes InsertReview(ContactUs model)
+		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
 			{
@@ -831,6 +827,7 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
+
 
 		public List<Image> GetCustomerImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false)
 		{
@@ -1116,6 +1113,7 @@ namespace SerenityHairDesigns.Models
 						e.strPassword = e.strPassword;
 						e.strPhoneNumber = (string)dr["strPhoneNumber"];
 						e.strEmailAddress = (string)dr["strEmailAddress"];
+						e.strYearsOfExperience = (string)dr["strYearsOfExperience"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }

@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AboutUs.cs" />
+    <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\ContactUs.cs" />
     <Compile Include="Models\CustomerEmployee.cs" />
     <Compile Include="Models\Database.cs" />

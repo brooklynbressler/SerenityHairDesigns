@@ -288,7 +288,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
                 if (col["btnSubmit"] == "EmployeeEarnings")
@@ -316,7 +316,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
 
@@ -345,7 +345,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
                 if (col["btnSubmit"] == "btnChangeItemQuantity")
@@ -358,7 +358,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
                 if (col["btnSubmit"] == "btnAddItems")
@@ -371,7 +371,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
                 if (col["btnSubmit"] == "btnAddNewProduct")
@@ -384,7 +384,7 @@ namespace SerenityHairDesigns.Controllers
 
                     col["btnSubmit"] = "";
 
-                    return View();
+                    return RedirectToAction("EmployeesInfo", "Profile");
                 }
 
 
@@ -395,7 +395,7 @@ namespace SerenityHairDesigns.Controllers
 
             }
 
-            return View();
+            return RedirectToAction("EmployeesInfo", "Profile");
         }
 
         [HttpPost]

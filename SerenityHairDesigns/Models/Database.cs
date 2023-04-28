@@ -13,7 +13,7 @@ namespace SerenityHairDesigns.Models
 
 
 
-		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=JANIELLEDAVE2B0;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -702,6 +702,7 @@ namespace SerenityHairDesigns.Models
             return objReviews;
         }
 
+
 		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
@@ -942,6 +943,30 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public Employee InsertAvailability(Employee e)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand da = new SqlCommand("INSERT_EMPLOYEE_AVAILABILITY", cn);
+
+				SetParameter(ref da, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref da, "@dtmStartTime", e.dtmStartTime, SqlDbType.DateTime);
+				SetParameter(ref da, "@dtmEndTime", e.dtmEndTime, SqlDbType.DateTime);
+
+				SetParameter(ref da, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				da.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return e;
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
 		public Customer.ActionTypes InsertCustomer(Customer c)
 		{
 			try
@@ -1006,6 +1031,79 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
+
+
+		public List<string> SelectEmployeeSkill(Employee e)
+		{
+			try
+			{
+				SqlConnection cn = new SqlConnection();
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				SqlDataAdapter da = new SqlDataAdapter("Select_Employee_Skills", cn);
+				DataSet ds = new DataSet();
+
+				da.SelectCommand.CommandType = CommandType.StoredProcedure;
+				SetParameter(ref da, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+
+				List<string> skills = new List<string>(); // Create a list to store skills
+
+				try
+				{
+					ds = new DataSet();
+					da.Fill(ds);
+					if (ds.Tables[0].Rows.Count > 0)
+					{
+						// Iterate through each row in the result set and add skill names to the list
+						foreach (DataRow dr in ds.Tables[0].Rows)
+						{
+							string SkillName = (string)dr["strSkillName"];
+							skills.Add(SkillName);
+						}
+					}
+				}
+				catch (Exception ex) { throw new Exception(ex.Message); }
+				finally
+				{
+					CloseDBConnection(ref cn);
+				}
+
+				return skills;
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public void UpdateEmployeeSkills(Employee e)
+		{
+			using (SqlConnection cn = new SqlConnection())
+			{
+				cn.Open();
+
+				using (SqlCommand command = new SqlCommand("UpdateEmployeeSkills", cn))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+
+					// Add parameters to the stored procedure
+					command.Parameters.AddWithValue("@intEmployeeID", e.intEmployeeID);
+
+					// Create a DataTable to represent the skills data to be passed to the stored procedure
+					DataTable TSkills = new DataTable();
+					TSkills.Columns.Add("intSkillID", typeof(int));
+					foreach (var skill in e.strSkillName)
+					{
+						TSkills.Rows.Add(skill);
+					}
+
+					SqlParameter SkillsParameter = command.Parameters.AddWithValue("@strSkillName", TSkills);
+					SkillsParameter.SqlDbType = SqlDbType.Structured;
+
+					command.ExecuteNonQuery();
+				}
+
+				cn.Close();
+			}
+		}
+
 
 		public Employee.ActionTypes InsertEmployee(Employee e)
 		{

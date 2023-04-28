@@ -5,6 +5,7 @@ using System.IO;
 using System.Web;
 using System.Collections.Generic;
 using SerenityHairDesigns.Models;
+using System.Linq;
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -70,6 +71,7 @@ namespace SerenityHairDesigns.Controllers
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strGender = col["strGender"];
 				e.strYearsOfExperience = col["strYearsOfExperience"];
+                
 
 
 				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
@@ -126,19 +128,27 @@ namespace SerenityHairDesigns.Controllers
 				images = db.GetEmployeeImages(e.intEmployeeID, 0, true);
 				e.UserImage = new Image();
 				if (images.Count > 0) e.UserImage = images[0];
-			}
+
+				// Get the list of skills for the employee
+				List<string> skills = db.SelectEmployeeSkill(e);
+
+                ViewBag.skills = skills;
+
+            }
+
 			return View(e);
 		}
+
 
 		[HttpPost]
 		public ActionResult EmployeeLoggedIn(HttpPostedFileBase UserImage, FormCollection col)
 		{
-
 			try
 			{
 				Employee e = new Employee();
 				e = e.GetEmployeeSession();
 
+				// Update employee details
 				e.strFirstName = col["strFirstName"];
 				e.strLastName = col["strLastName"];
 				e.strPassword = col["strPassword"];
@@ -146,6 +156,15 @@ namespace SerenityHairDesigns.Controllers
 				e.strEmailAddress = col["strEmailAddress"];
 				e.strGender = col["strGender"];
 				e.strYearsOfExperience = col["strYearsOfExperience"];
+				e.strSkillName = col["strSkillName"];
+
+                DateTime dte;
+				DateTime.TryParse(col["dtmStartTime"], out dte);
+                e.dtmStartTime = dte;
+
+				DateTime dte2;
+				DateTime.TryParse(col["dtmEndTime"], out dte2);
+				e.dtmEndTime = dte2;
 
 
 				if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
@@ -156,9 +175,15 @@ namespace SerenityHairDesigns.Controllers
 				else
 				{
 					if (col["btnSubmit"] == "update")
-					{ //update button pressed
+					{
+						// Update employee details in the database
 						e.Save();
 
+						// Update employee skills in the database
+						Database db = new Database();
+						db.UpdateEmployeeSkills(e);
+
+						// Update employee image if provided
 						e.UserImage = new Image();
 						e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
 
@@ -177,10 +202,20 @@ namespace SerenityHairDesigns.Controllers
 								e.UpdatePrimaryImage();
 							}
 						}
+					    e.SaveEmployeeSession();
+					    return RedirectToAction("EmployeeLoggedIn", "Profile");
+					}
+
+                    if (col["btnSubmit"] == "EditAvailability")
+                    {
+                        
+                        Database db = new Database();
+                        db.InsertAvailability(e);
 
 						e.SaveEmployeeSession();
 						return RedirectToAction("EmployeeLoggedIn", "Profile");
 					}
+
 					return View(e);
 				}
 			}
@@ -190,6 +225,7 @@ namespace SerenityHairDesigns.Controllers
 				return View(e);
 			}
 		}
+
 
 		public ActionResult EmployeesInfo()
         {

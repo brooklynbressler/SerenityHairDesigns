@@ -1,0 +1,226 @@
+﻿﻿@model SerenityHairDesigns.Models.Employee
+
+@{
+	ViewBag.Title = "AdminInfo";
+}
+
+<h2>EmployeeInfo</h2>
+
+<head>
+	<title>My Display Page</title>
+	<style>
+		.header {
+			display: flex;
+			flex: 1 1 30%;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+			align-items: center;
+			background-color: lightgray;
+			padding: 10px;
+		}
+
+
+
+		.header__item {
+			flex: 1 1 30%;
+			margin-right: 200px;
+			margin-bottom: 50px;
+		}
+
+		input {
+			width: 80%;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+	</style>
+</head>
+<body>
+
+
+	<div class="header">
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+
+		<div class="header__item">
+			<h1>Input Admin Costs</h1>
+			<label for="startdatecosts">Start Date:</label>
+			<input type="date" id="startdatecosts" name="startdatecosts">
+			<br />
+			<label for="enddatecosts">End Date:</label>
+			<input type="date" id="enddatecosts" name="enddatecosts">
+			<br />
+			<label for="boothrentalcosts">Booth Rental:</label>
+			<input type="number" id="boothrentalcosts" name="boothrentalcosts">
+			<br />
+			<label for="buildingrental">Building Rental:</label>
+			<input type="number" id="buildingrental" name="buildingrental">
+			<br />
+			<label for="buildingutilities">Building Utilities:</label>
+			<input type="number" id="buildingutilities" name="buildingutilities">
+			<br />
+			<button id="btnAdminCosts" name="btnSubmit" value="btnAdminCosts" class="button-action">Submit</button>
+		</div>
+		}
+
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+
+			<div class="header__item">
+				<h1>Input Admin Earnings</h1>
+				<label for="startdateEarnings">Start Date:</label>
+				<input type="date" id="startdateEarnings" name="startdateEarnings">
+				<br />
+				<label for="enddateearnings">End Date:</label>
+				<input type="date" id="enddateearnings" name="enddateearnings">
+				<br />
+				<label for="appointmentpay">Appointment Pay:</label>
+				<input type="text" id="appointmentpay" name="appointmentpay">
+				<br />
+				<label for="tip">Tip Amount:</label>
+				<input type="text" id="tip" name="tip">
+				<br />
+				<button id="btnAdminEarnings" name="btnSubmit" value="AdminEarnings" class="button-action">Submit</button>
+			</div>
+
+		}
+
+
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+			<div class="header__item">
+				<h1>Admin Products</h1>
+				<form id="form1" runat="server">
+					@Html.ListBox("EmployeesProducts", ViewBag.EmployeesProducts as SelectList, new { style = "width: 300px; height: 200px;" })
+					<br />
+					<label for="itemquantitychange"></label>
+					<input placeholder="0" type="number" id="itemquantitychange" name="itemquantitychange" style="width: 30px;">
+					<button id="btnChangeItemQuantity" name="btnSubmit" value="btnChangeItemQuantity" class="button-action">Change Selected Item Quantity</button>
+					<br />
+					<br />
+					<select id="AddExistingItem" name="AddExistingItem">
+						@foreach (var item in ViewBag.AllProducts)
+						{
+							<option value="@item.intProductID">@item.strProductName</option>
+						}
+					</select>
+					<label for="newitemquantitychange"></label>
+					<input placeholder="0" type="number" id="newitemquantitychange" name="newitemquantitychange" style="width: 30px;">
+					<button id="btnAddItems" name="btnSubmit" value="btnAddItems" class="button-action">Add Existing Item to your inventory</button>
+					<br />
+					<br />
+					<input type="text" id="NewProduct" name="NewProduct" style="width: 100px;">
+					<input placeholder="0" type="number" id="NewProductQuantity" name="NewProductQuantity" style="width: 30px;">
+					<button id="btnAddNewProduct" name="btnSubmit" value="btnAddNewProduct" class="button-action">Add New Item to your inventory</button>
+
+
+				</form>
+			</div>
+
+		}
+
+	</div>
+
+	<br />
+	<br />
+
+	<div class="header">
+
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+
+			<div class="header__item">
+				<h1>Select Dates</h1>
+				<br />
+				<label for="startdateEarningsinfo">Start Date:</label>
+				<input type="date" id="startdateEarningsinfo" name="startdateEarningsinfo">
+				<br />
+				<label for="enddateEarningsinfo">Start Date:</label>
+				<input type="date" id="enddateEarningsinfo" name="enddateEarningsinfo">
+				<br />
+				<button id="btnInfo" name="btnSubmit" value="btnInfo" class="button-action">Submit</button>
+
+			</div>
+
+		}
+
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+
+	<div class="header__item">
+		<h1>Employee Costs</h1>
+		<br />
+		@if (ViewBag.EmployeeInfo == null)
+		{
+			<label>Booth Rental: </label>
+			<output type="label"></output>
+			<br />
+			<br />
+			<label>Building Rental: </label>
+			<output type="label"></output>
+			<br />
+			<br />
+			<label>Building Utilities: </label>
+			<output type="label"></output>
+			<br />
+		}
+		else
+		{
+			<label>Booth Rental: </label>
+			<output type="label">@ViewBag.EmployeeInfo.decBoothRental</output>
+			<br />
+			<br />
+			<label>Building Rental: </label>
+			<output type="label">@ViewBag.EmployeeInfo.decBuildingRental</output>
+			<br />
+			<br />
+			<label>Building Utilities: </label>
+			<output type="label">@ViewBag.EmployeeInfo.decBuildingUtilities</output>
+			<br />
+		}
+
+	</div>
+
+		}
+
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+	<div class="header__item">
+		<h1>Employee Earnings</h1>
+		<br />
+		@if (ViewBag.EmployeeInfo == null)
+		{
+			<label>Appointment Pay: </label>
+			<output type="label"></output>
+			<br />
+			<br />
+			<label>Tip Amount: </label>
+			<output type="label"></output>
+		}
+
+		else
+		{
+			<label>Appointment Pay: </label>
+			<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
+			<br />
+			<br />
+			<label>Tip Amount: </label>
+			<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
+		}
+	</div>
+
+		}
+
+	</div>
+
+
+
+</body>
+
+<script>
+
+	function btnChangeItemQuantity() {
+		var selectedValue = document.getElementById("EmployeesProducts").value;
+		alert("Selected item: " + selectedValue);
+	}
+</script>

@@ -1,44 +1,93 @@
-﻿
-@using (Html.BeginForm())
-{
-
-    @* Services Page Content *@
-    <div class="CutsLabel">
-        <label for="Cuts">Choose a Cut:</label>
-        <select name="Cuts" id="Cuts">
-            <option value="cut1">Cut + Blowdry - Medium</option>
-            <option value="cut2">Cut + Blowdry - Long</option>
-            <option value="cut3">Cut + Blowdry - Extra Long or thick Hair</option>
-            <option value="cut4">Cut - All Clipper* </option>
-            <option value="cut5">Cut - Short </option>
-            <option value="cut6">Edge Up* </option>
-        </select>
-    </div>
-
-
-
-    <div class="StyleLabel">
-        <label for="Styles">Choose a Style:</label>
-
-        <select name ="Styles" id="Styles">
-            <option value="style1" id="1">shampoo/Blowdry/Flat iron-Simple</option>
-            <option value="style2">Shampoo/Blowout</option>
-            <option value="style3">Thermal Style - Add on (Beach waves)</option>
-        </select>
-
-    </div>
-
-    <div class="TreatmentsLabel">
-        <label for="Treatments">Choose a Treatment:</label>
-
-        <select name"Styles" id="Treatments">
-            <option value="Treatment1">Deep Conditioning treatment Add on</option>
-            <option value="Treatment2">Treatment With Blowdry</option>
-            <option value="Treatment3">Malibu Treatment and Blowout</option>
-        </select>
-
-    </div>
-
-
+﻿@{
 
 }
+
+
+<style>
+	.header {
+		display: flex;
+		flex: 1 1 30%;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		align-items: center;
+		background-color: lightgray;
+		padding: 10px;
+	}
+
+
+
+	.header__item {
+		flex: 1 1 30%;
+		margin-right: 200px;
+		margin-bottom: 50px;
+	}
+
+	input {
+		width: 80%;
+		padding: 5px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+	}
+</style>
+
+<h2>Haircut Services</h2>
+
+<div class="header">
+
+
+	@using (Html.BeginForm())
+	{
+
+
+	<div class="header__item">
+		<h3>General Services</h3>
+		<br />
+		@foreach (var item in ViewBag.BothServices)
+		{
+			@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
+			<br />
+			<br />
+		}
+
+	</div>
+
+
+		<div class="header__item">
+			<h3>Male Services</h3>
+			<br />
+			@foreach (var item in ViewBag.MaleServices)
+			{
+				@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
+				
+				<br />
+				<br />
+			}
+
+		</div>
+
+
+
+		<div class="header__item">
+			<h3>Female Services</h3>
+			<br />
+			@foreach (var item in ViewBag.FemaleServices)
+			{
+				@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
+				<br />
+				<br />
+			}
+
+		</div>
+
+		if (ViewBag.EmployeeRole == "Admin")
+		{
+			<button id="btnAddService" name="btnSubmit" value="btnAddService" class="button-action">Add Service</button>
+			<br />
+			<br />
+			<button id="btnRemoveService" name="btnSubmit" value="btnRemoveService" class="button-action">Remove Service</button>
+		}
+
+
+
+	}
+</div>

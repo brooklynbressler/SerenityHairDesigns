@@ -11,16 +11,18 @@
 }
 
 @if (eCurrent.IsEmployeeAuthenticated) { // already logged in
-	<a class="center-admin" name="LogOut" href="~/Profile/SignOut">Log Out</a>
-	<a class="center" name="EmployeeInfo">Employee Info</a>
-	<a class="center" name="ScheduleAppointment">Schedule Appointment</a>
-	<a class="center" name="ManageEmployees">Manage Employees</a> // Dont show Login button if employee is logged in
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="EmployeeInfo">Employee Info</a>
+		<a class="center" name="ScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="ManageEmployees">Manage Employees</a>
+	</div>
 }
 
 
 @using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 	<div class="Admin-Profile">
-		<p>To make changes to your profile enter your information below and click the Update button.</p>
+		<p class="Admin-Text">To make changes to your profile enter your information below and click the Update button.</p>
 		<div id="user-profile-image">
 			@if (Model.UserImage != null) {
 				if (Model.UserImage.ImageID > 0) {
@@ -94,7 +96,7 @@
 				</tr>
 			</table>
 			<div class="section">
-				<button class="button-action" id="btnEditAvailability" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
+				<button class="button-action" id="btnSubmit" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
 			</div>
 		</div>
 

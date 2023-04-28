@@ -9,5 +9,6 @@ namespace SerenityHairDesigns.Models {
 		public long intAppointmentTypeID { get; set; }
 		public string strAppointmentName { get; set; }
 		public int intEstTimeInMins	{ get; set; }
+
 	}
 }

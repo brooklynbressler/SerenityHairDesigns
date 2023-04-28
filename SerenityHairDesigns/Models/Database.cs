@@ -14,85 +14,85 @@ namespace SerenityHairDesigns.Models
 	{
 		//string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
-		public SelectList ListAppointmentTypes() {
-			List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();
-			try {
-				SqlConnection cn = null;
-				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+		//public SelectList ListAppointmentTypes() {
+		//	List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();
+		//	try {
+		//		SqlConnection cn = null;
+		//		if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				string query = "SELECT * FROM TAppointmentTypes";
+		//		string query = "SELECT * FROM TAppointmentTypes";
 
-				SqlCommand cmd = new SqlCommand(query, cn);
+		//		SqlCommand cmd = new SqlCommand(query, cn);
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
-						objAppointmentTypes.Add(new AppointmentTypes() {
-							intAppointmentTypeID = reader.GetInt64(0)
-							,
-							strAppointmentName = reader.GetString(1)
-							,
-							intEstTimeInMins = reader.GetInt32(2)
+		//		using (IDataReader reader = cmd.ExecuteReader()) {
+		//			while (reader.Read()) {
+		//				objAppointmentTypes.Add(new AppointmentTypes() {
+		//					intAppointmentTypeID = reader.GetInt64(0)
+		//					,
+		//					strAppointmentName = reader.GetString(1)
+		//					,
+		//					intEstTimeInMins = reader.GetInt32(2)
 
-						});
+		//				});
 
-					}
-					reader.Close();
+		//			}
+		//			reader.Close();
 
-				}
+		//		}
 
-				CloseDBConnection(ref cn);
+		//		CloseDBConnection(ref cn);
 
-			}
-			catch (Exception ex) { throw new Exception(ex.Message); }
-			{
-			}
+		//	}
+		//	catch (Exception ex) { throw new Exception(ex.Message); }
+		//	{
+		//	}
 
-			var model = new Appointments();
-			model.AppointmentTypesDropDownList = new SelectList(objAppointmentTypes, "intAppointmentTypeID", "strAppointmentName");
+		//	var model = new Appointments();
+		//	model.AppointmentTypesDropDownList = new SelectList(objAppointmentTypes, "intAppointmentTypeID", "strAppointmentName");
 
-			return model.AppointmentTypesDropDownList;
-		}
+		//	return model.AppointmentTypesDropDownList;
+		//}
 
-		public SelectList ListServices() {
-			List<Services> objServices = new List<Services>();
-			try {
-				SqlConnection cn = null;
-				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+		//public SelectList ListServices() {
+		//	List<Services> objServices = new List<Services>();
+		//	try {
+		//		SqlConnection cn = null;
+		//		if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				string query = "SELECT * FROM TServices";
+		//		string query = "SELECT * FROM TServices";
 
-				SqlCommand cmd = new SqlCommand(query, cn);
+		//		SqlCommand cmd = new SqlCommand(query, cn);
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
-						objServices.Add(new Services() {
-							intServiceID = reader.GetInt64(0)
-							,
-							strServiceName = reader.GetString(1)
-							,
-							monServiceCost = reader.GetDecimal(2)
-							,
-							intEstTimeSpent = reader.GetInt32(3)
+		//		using (IDataReader reader = cmd.ExecuteReader()) {
+		//			while (reader.Read()) {
+		//				objServices.Add(new Services() {
+		//					intServiceID = reader.GetInt64(0)
+		//					,
+		//					strServiceName = reader.GetString(1)
+		//					,
+		//					monServiceCost = reader.GetDecimal(2)
+		//					,
+		//					intEstTimeSpent = reader.GetInt32(3)
 
-						});
+		//				});
 
-					}
-					reader.Close();
+		//			}
+		//			reader.Close();
 
-				}
+		//		}
 
-				CloseDBConnection(ref cn);
+		//		CloseDBConnection(ref cn);
 
-			}
-			catch (Exception ex) { throw new Exception(ex.Message); }
-			{
-			}
+		//	}
+		//	catch (Exception ex) { throw new Exception(ex.Message); }
+		//	{
+		//	}
 
-			var model = new Appointments();
-			model.ServicesDropDownList = new SelectList(objServices, "intServiceID", "strServiceName");
+		//	var model = new Appointments();
+		//	model.ServicesDropDownList = new SelectList(objServices, "intServiceID", "strServiceName");
 
-			return model.ServicesDropDownList;
-		}
+		//	return model.ServicesDropDownList;
+		//}
 
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
@@ -866,7 +866,12 @@ namespace SerenityHairDesigns.Models
 				}
 				
             }
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
 
+			}
+			return objAppointments;
+		}
 
 		public List<Services> GetAllServices()
 		{
@@ -1052,15 +1057,6 @@ namespace SerenityHairDesigns.Models
 			return Genders;
 		}
 
-
-            catch (Exception ex) { throw new Exception(ex.Message); }
-            {
-
-            }
-            return objAppointments;
-        }
-
-        public List<Employee> GetEmployees()
 		public List<Employee> GetEmployees()
         {
 

@@ -5,12 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models {
-	public class Services {
-
-		public long intServiceID { get; set; }
-		public string strServiceName { get; set; }
-		public decimal monServiceCost { get; set; }
-		public int intEstTimeSpent { get; set; }
-
-	}
+    public class Services {
+        public int intServiceID { get; set; }
+        public string strServiceName { get; set; }
+        public decimal decServiceCost { get; set; }
+        public int intMinutes { get; set; }
+        public int intGenderID { get; set; }
+    }
 }

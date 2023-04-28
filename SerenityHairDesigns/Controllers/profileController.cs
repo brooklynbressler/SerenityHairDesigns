@@ -45,8 +45,8 @@ namespace SerenityHairDesigns.Controllers
             Appointments a = new Appointments();
             Database db = new Database();
 
-            a.ServicesDropDownList = db.ListServices();
-            a.AppointmentTypesDropDownList = db.ListAppointmentTypes();
+            //a.ServicesDropDownList = db.ListServices();
+            //a.AppointmentTypesDropDownList = db.ListAppointmentTypes();
 
             return View(a);
 

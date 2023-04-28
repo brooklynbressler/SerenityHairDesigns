@@ -9,15 +9,13 @@ namespace SerenityHairDesigns.Models {
 
 	public class Customer
     {
+        public long intCustomerID { get; set; }
+        public string strFirstName { get; set; }
+        public string strLastName { get; set; }
+        public string strGender { get; set; }
+        public string strPassword { get; set; }
+        public string strRole { get; set; }
 
-
-
-
-        public long intCustomerID = 0;
-        public string strFirstName = string.Empty;
-        public string strLastName = string.Empty;
-        public string strGender = string.Empty;
-        public string strPassword = string.Empty;
 
         //[DataType(DataType.EmailAddress)]
         public string strEmailAddress = string.Empty;

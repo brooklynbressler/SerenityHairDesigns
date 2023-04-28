@@ -13,7 +13,7 @@ namespace SerenityHairDesigns.Models
 
 
 
-		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -741,6 +741,52 @@ namespace SerenityHairDesigns.Models
 			return objReviews;
 		}
 
+        public List<Appointments> GetAppointments(long CustomerID)
+        {
+
+            List<Appointments> objAppointments = new List<Appointments>();
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+                SqlCommand cm = new SqlCommand("SELECT_APPOINTMENT_INFORMATION", cn);
+
+                SetParameter(ref cm, "@intCustomerID", CustomerID, SqlDbType.BigInt);
+
+                
+
+                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+
+
+				using (IDataReader reader = cm.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							objAppointments.Add(new Appointments()
+							{
+								dtmAppointmentDate = reader.GetDateTime(0)
+								,
+								intEstTimeInMins = reader.GetInt32(1)
+								,
+								strAppointmentName = reader.GetString(2)
+								,
+								monAppointmentCost = reader.GetDecimal(3)
+								,
+								monAppointmentTip = reader.GetDecimal(4)
+
+							});
+
+					}
+					reader.Close();
+
+					CloseDBConnection(ref cn);
+
+				}
+				
+            }
+
 
 		public List<Services> GetAllServices()
 		{
@@ -927,6 +973,14 @@ namespace SerenityHairDesigns.Models
 		}
 
 
+            catch (Exception ex) { throw new Exception(ex.Message); }
+            {
+
+            }
+            return objAppointments;
+        }
+
+        public List<Employee> GetEmployees()
 		public List<Employee> GetEmployees()
         {
 
@@ -1443,6 +1497,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
@@ -1581,6 +1636,4 @@ namespace SerenityHairDesigns.Models
 
 	}
 }
-///////////////////////////////////////////////////////////////////////
-//Spring 2021
-///////////////////////////////////////////////////////////////////////
+

@@ -186,6 +186,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookNowController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Models\EmployeeCustomer.cs" />
     <Compile Include="Models\EmployeesMoneyInfo.cs" />
     <Compile Include="Models\EmployeeProducts.cs" />
+    <Compile Include="Models\Genders.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Rating.cs" />

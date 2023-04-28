@@ -1,0 +1,29 @@
+﻿@model SerenityHairDesigns.Models.Services
+
+@{
+	ViewBag.Title = "RemoveService";
+}
+
+<h2>Remove Service</h2>
+
+<div class="Create-Account-Form-Emp">
+	<div class="Sign-In-Form-Emp">
+		<p>Add a Service to the Service Page</p>
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+
+
+				<select id="Services" name="Services">
+					@foreach (var item in ViewBag.Services)
+					{
+						<option value="@item.intServiceID">@item.strServiceName</option>
+					}
+				</select>
+
+				<br />
+				<br />
+
+			<button id="btnDeleteService" name="btnSubmit" value="btnDeleteService" class="button-action"><i class="fas fa-sign-in-alt"></i> Delete Service</button>
+		}
+	</div>
+</div>

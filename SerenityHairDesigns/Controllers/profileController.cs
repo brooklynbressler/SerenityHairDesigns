@@ -4,12 +4,29 @@ using System.Web.Mvc;
 using System.IO;
 using System.Web;
 using System.Collections.Generic;
-using SerenityHairDesigns.Models;
+using System.Linq;
+
 
 namespace SerenityHairDesigns.Controllers
 {
     public class ProfileController : Controller
     {
+        public ActionResult CustomerIndex() {
+            Customer C = new Customer();
+            C = C.GetCustomerSession();
+            List<Appointments> lstAppointments = new List<Appointments>();
+            Database db = new Database();
+
+            lstAppointments = db.GetAppointments(C.intCustomerID);
+
+            List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
+
+            ViewBag.lstAppointments = sortedList;
+
+
+            
+            return View(C); 
+        }
         // GET: profile
         public ActionResult ScheduleLogin()
         {
@@ -180,6 +197,69 @@ namespace SerenityHairDesigns.Controllers
             {
                 Employee e = new Employee();
                 return View(e);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CustomerIndex(HttpPostedFileBase UserImage, FormCollection col)
+        {
+
+            try
+            {
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                c.strFirstName = col["strFirstName"];
+                c.strLastName = col["strLastName"];
+                c.strPassword = col["strPassword"];
+                c.strPhoneNumber = col["strPhoneNumber"];
+                c.strEmailAddress = col["strEmailAddress"];
+                c.strGender = col["strGender"];
+
+
+                if (c.strFirstName.Length == 0 || c.strLastName.Length == 0 || c.strEmailAddress.Length == 0 || c.strPassword.Length == 0)
+                {
+                    c.ActionType = Models.Customer.ActionTypes.RequiredFieldsMissing;
+                    return View(c);
+                }
+                else
+                {
+                    if (col["btnSubmit"] == "update")
+                    { //update button pressed
+                        c.SaveCustomer();
+
+                        c.UserImage = new Image();
+                        c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+                        if (UserImage != null)
+                        {
+                            c.UserImage = new Image();
+                            c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                            c.UserImage.Primary = true;
+                            c.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+                            if (c.UserImage.IsImageFile())
+                            {
+                                c.UserImage.Size = UserImage.ContentLength;
+                                Stream stream = UserImage.InputStream;
+                                BinaryReader binaryReader = new BinaryReader(stream);
+                                c.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+                                c.UpdatePrimaryImage();
+                            }
+                        }
+
+                        c.SaveCustomerSession();
+                        return RedirectToAction("CustomerIndex", "Profile");
+
+                    }
+                    return View(c);
+                    
+                }
+                
+            }
+            catch (Exception)
+            {
+                Customer c = new Customer();
+                return View(c);
             }
         }
 
@@ -390,6 +470,218 @@ namespace SerenityHairDesigns.Controllers
             return RedirectToAction("EmployeesInfo", "Profile");
         }
 
+
+        public ActionResult AdminInfo()
+        {
+
+            Models.Employee e = new Models.Employee();
+
+            e = e.GetEmployeeSession();
+
+            long lngEmployeeID = e.intEmployeeID;  //employees ID here
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items = GetEmployeesProducts(lngEmployeeID);
+
+            ViewBag.EmployeesProducts = items;
+
+            List<Products> AllProducts = new List<Products>();
+
+            Models.Database db = new Models.Database();
+
+            AllProducts = db.GetAllProducts();
+
+            ViewBag.AllProducts = AllProducts;
+
+            return View();
+        }
+
+        public List<SelectListItem> GetAdminProducts(long lngEmployeeID)
+        {
+            List<Models.EmployeeProducts> lstProducts = new List<Models.EmployeeProducts>();
+
+            Models.Database db = new Models.Database();
+
+            lstProducts = db.GetEmployeesProducts(lngEmployeeID);
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            foreach (var item in lstProducts)
+            {
+                items.Add(new SelectListItem { Text = item.product.strProductName + ", \t Quantity =  " + item.intProductInventory, Value = item.intEmployeeProductID.ToString() });
+            }
+
+            return items;
+
+        }
+
+
+        [HttpPost]
+        public ActionResult AdminInfo(FormCollection col, string EmployeesProducts)
+        {
+            try
+            {
+                Models.Employee e = new Models.Employee();
+
+                e = e.GetEmployeeSession();
+
+                long lngEmployeeID = e.intEmployeeID;
+
+                List<SelectListItem> items = new List<SelectListItem>();
+
+                items = GetEmployeesProducts(lngEmployeeID);
+
+                ViewBag.EmployeesProducts = items;
+
+                Models.Employee employee = new Models.Employee();
+                employee.intEmployeeID = lngEmployeeID;
+
+                List<Products> AllProducts = new List<Products>();
+
+                Models.Database db = new Models.Database();
+
+                AllProducts = db.GetAllProducts();
+
+                ViewBag.AllProducts = AllProducts;
+
+
+                if (col["btnSubmit"] == "btnAdminCosts")
+                {
+                    string startdatecosts = col["startdatecosts"];
+
+                    DateTime dteStartDate;
+
+                    DateTime.TryParse(startdatecosts, out dteStartDate);
+
+                    string enddatecosts = col["enddatecosts"];
+
+                    DateTime dteEndDate;
+
+                    DateTime.TryParse(enddatecosts, out dteEndDate);
+
+                    int intBoothRental = int.Parse(col["boothrentalcosts"]);
+
+                    int intBuildingRental = int.Parse(col["buildingrental"]);
+
+                    int intBuildingUtilities = int.Parse(col["buildingutilities"]);
+
+                    bool blnInserted;
+
+                    blnInserted = db.EnterAdminCosts(lngEmployeeID, dteStartDate, dteEndDate, intBoothRental, intBuildingRental, intBuildingUtilities);
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+                if (col["btnSubmit"] == "btnAdminEarnings")
+                {
+                    string startdateearnings = col["startdateearnings"];
+
+                    DateTime dteStartDate;
+
+                    DateTime.TryParse(startdateearnings, out dteStartDate);
+
+                    string enddateearnings = col["enddateearnings"];
+
+                    DateTime dteEndDate;
+
+                    DateTime.TryParse(enddateearnings, out dteEndDate);
+
+                    int intappointmentpay = int.Parse(col["appointmentpay"]);
+
+                    int intTipPay = int.Parse(col["tip"]);
+
+
+                    bool blnInserted;
+
+                    blnInserted = db.EnterEmployeeEarning(lngEmployeeID, dteStartDate, dteEndDate, intappointmentpay, intTipPay);
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+
+                if (col["btnSubmit"] == "btnInfo")
+                {
+                    string startdateEarningsinfo = col["startdateEarningsinfo"];
+
+                    DateTime dteStartDate;
+
+                    DateTime.TryParse(startdateEarningsinfo, out dteStartDate);
+
+                    string enddateEarningsinfo = col["enddateEarningsinfo"];
+
+                    DateTime dteEndDate;
+
+                    DateTime.TryParse(enddateEarningsinfo, out dteEndDate);
+
+
+                    bool blnInserted;
+
+                    EmployeesMoneyInfo EmployeeInfo = new EmployeesMoneyInfo();
+
+                    EmployeeInfo = db.EmployeeInfo(lngEmployeeID, dteStartDate, dteEndDate);
+
+                    ViewBag.EmployeeInfo = EmployeeInfo;
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+                if (col["btnSubmit"] == "btnChangeItemQuantity")
+                {
+                    int intItemQuantityChange = int.Parse(col["itemquantitychange"]);
+
+                    int EmployeeProducts = int.Parse(EmployeesProducts);
+
+                    db.UpdateEmployeeItemInventory(EmployeeProducts, intItemQuantityChange);
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+                if (col["btnSubmit"] == "btnAddItems")
+                {
+                    int intNewProductID = int.Parse(col["AddExistingItem"]);
+
+                    int intNewProductAmount = int.Parse(col["newitemquantitychange"]);
+
+                    db.AddEmployeeProduct(lngEmployeeID, intNewProductID, intNewProductAmount);
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+                if (col["btnSubmit"] == "btnAddNewProduct")
+                {
+                    string strNewProduct = col["NewProduct"];
+
+                    int intNewProductAmount = int.Parse(col["NewProductQuantity"]);
+
+                    db.AddNewProduct(lngEmployeeID, strNewProduct, intNewProductAmount);
+
+                    col["btnSubmit"] = "";
+
+                    return RedirectToAction("AdminInfo", "Profile");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return RedirectToAction("AdminInfo", "Profile");
+        }
+
         [HttpPost]
         public ActionResult ScheduleLogin(FormCollection col)
         {
@@ -413,7 +705,7 @@ namespace SerenityHairDesigns.Controllers
                     if (u != null && u.intCustomerID > 0)
                     {
                         u.SaveCustomerSession();
-                        return RedirectToAction("ScheduleNowLoggedIn");
+                        return RedirectToAction("CustomerIndex");
                     }
                     else
                     {
@@ -429,7 +721,7 @@ namespace SerenityHairDesigns.Controllers
                     {
                         case Customer.ActionTypes.InsertSuccessful:
                             u.SaveCustomerSession();
-                            return RedirectToAction("ScheduleNowLoggedIn");
+                            return RedirectToAction("CustomerIndex");
                         //break;
                         default:
                             return View(u);
@@ -539,6 +831,7 @@ namespace SerenityHairDesigns.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
 
 
     }

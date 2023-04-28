@@ -11,6 +11,8 @@ USE SerenityHairDesigns;
 SET NOCOUNT ON;
 
 -- Drop Table Statements
+IF OBJECT_ID ('TCustomerImages')			IS NOT NULL DROP TABLE TCustomerImages
+IF OBJECT_ID ('TEmployeeImages')			IS NOT NULL DROP TABLE TEmployeeImages
 IF OBJECT_ID ('TAppointmentTypes')			IS NOT NULL DROP TABLE TAppointmentTypes
 IF OBJECT_ID ('TAppointmentServices')		IS NOT NULL DROP TABLE TAppointmentServices
 IF OBJECT_ID ('TEmployeeGalleries')			IS NOT NULL	DROP TABLE TEmployeeGalleries
@@ -168,7 +170,8 @@ CREATE TABLE TServices (
 	intServiceID				INTEGER					NOT NULL IDENTITY (1,1)
 	,strServiceName				VARCHAR(255)			NOT NULL
 	,monServiceCost				MONEY					NOT NULL 
-	,dtmTimeSpent				DATETIME				NOT NULL		  
+	,intMinutes					INTEGER					NOT NULL	
+	,intGenderID				INTEGER					NOT NULL
 	CONSTRAINT PK_TServices PRIMARY KEY (intServiceID)
 )
 
@@ -245,43 +248,36 @@ CREATE TABLE TEarnings (
 	CONSTRAINT PK_TEarnings PRIMARY KEY (intEarningID)
 )
 
-/****** Object:  Table [dbo].[USER_IMAGES]    Script Date: 6/23/2020 3:48:48 PM ******/
-SET ANSI_NULLS ON
+
+
+CREATE TABLE TCustomerImages (
+	intCustomerImageID			BIGINT IDENTITY(1,1)	NOT NULL
+	,intCustomerID				BIGINT					NOT NULL
+	,PrimaryImage				NCHAR(1)				NOT NULL
+	,Image						VARBINARY(MAX)			NOT NULL
+	,FileName					NVARCHAR(1000)			NOT NULL
+	,ImageSize					BIGINT					NOT NULL
+	,DateAdded					DATETIME				NOT NULL
+	CONSTRAINT PK_TCustomerImages PRIMARY KEY (intCustomerImageID)
+)
+
+ALTER TABLE [dbo].[TCustomerImages] ADD  DEFAULT (getdate()) FOR [DateAdded]
 GO
 
-SET QUOTED_IDENTIFIER ON
-GO
 
-CREATE TABLE [dbo].[USER_IMAGES](
-	[UserImageID] [bigint] IDENTITY(1,1) NOT NULL,
-	[UID] [bigint] NOT NULL,
-	[PrimaryImage] [nchar](1) NOT NULL,
-	[Image] [varbinary](max) NOT NULL,
-	[FileName] [nvarchar](1000) NOT NULL,
-	[ImageSize] [bigint] NOT NULL,
-	[DateAdded] [datetime] NOT NULL,
- CONSTRAINT [PK_USER_IMAGES] PRIMARY KEY CLUSTERED 
-(
-	[UserImageID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
+CREATE TABLE TEmployeeImages (
+	intEmployeeImageID			BIGINT IDENTITY(1,1)	NOT NULL
+	,intEmployeeID				BIGINT					NOT NULL
+	,PrimaryImage				NCHAR(1)				NOT NULL
+	,Image						VARBINARY(MAX)			NOT NULL
+	,FileName					NVARCHAR(1000)			NOT NULL
+	,ImageSize					BIGINT					NOT NULL
+	,DateAdded					DATETIME				NOT NULL
+	CONSTRAINT PK_TEmployeeImages PRIMARY KEY (intEmployeeID)
+)
 
-ALTER TABLE [dbo].[USER_IMAGES] ADD  CONSTRAINT [DF_USER_IMAGES_UID]  DEFAULT ((0)) FOR [UID]
+ALTER TABLE [dbo].[TEmployeeImages] ADD  DEFAULT (getdate()) FOR [DateAdded]
 GO
-
-ALTER TABLE [dbo].[USER_IMAGES] ADD  CONSTRAINT [DF_USER_IMAGES_PrimaryImage]  DEFAULT (N'N') FOR [PrimaryImage]
-GO
-
-ALTER TABLE [dbo].[USER_IMAGES] ADD  CONSTRAINT [DF_USER_IMAGES_FileName]  DEFAULT ('') FOR [FileName]
-GO
-
-ALTER TABLE [dbo].[USER_IMAGES] ADD  CONSTRAINT [DF_USER_IMAGES_ImageSize]  DEFAULT ((0)) FOR [ImageSize]
-GO
-
-ALTER TABLE [dbo].[USER_IMAGES] ADD  DEFAULT (getdate()) FOR [DateAdded]
-GO
-
 
 
 
@@ -360,6 +356,15 @@ FOREIGN KEY ( intEmployeeID ) REFERENCES TEmployees ( intEmployeeID )
 ALTER TABLE TEarnings ADD CONSTRAINT TEarnings_TEmployees_FK1
 FOREIGN KEY ( intEmployeeID ) REFERENCES TEmployees ( intEmployeeID )
 
+ALTER TABLE TEmployeeImages ADD CONSTRAINT TEmployeeImages_TEmployees_FK1
+FOREIGN KEY ( intEmployeeID ) REFERENCES TEmployees ( intEmployeeID )
+
+ALTER TABLE TCustomerImages ADD CONSTRAINT TCustomerImages_TCustomers_FK1
+FOREIGN KEY ( intCustomerID ) REFERENCES TCustomers ( intCustomerID )
+
+ALTER TABLE TServices ADD CONSTRAINT TServices_TGenders_FK1
+FOREIGN KEY ( intGenderID ) REFERENCES TGenders ( intGenderID )
+
 INSERT INTO TRoles(strRoleName)
 VALUES				 ('Employee')
 					,('Admin')
@@ -367,6 +372,7 @@ VALUES				 ('Employee')
 INSERT INTO TGenders(strGender)
 VALUES					('Female')
 					   ,('Male')
+					   ,('Both')
 
 INSERT INTO TBooths(monDailyBoothRent)
 VALUES					(25)
@@ -384,12 +390,44 @@ INSERT INTO TCustomers(strFirstName, strLastName, strPassword, strPhoneNumber, s
 VALUES					('Test1', 'Test1', 'Test1', '123-456-7890', 'test1@gmail.com', 1)
 					   ,('Test2', 'Test2', 'Test2', '123-456-7890', 'test2@gmail.com', 2)
 
+
+
+INSERT INTO TProducts(strProductName, intTotalInventory, blnNeedsRestocking)
+VALUES ('Conditioner', 100, 1)
+,	   ('Shampoo', 100, 1)
+
+
 INSERT INTO TEmployeeProducts(intEmployeeID, intProductID, intProductInventory)
 VALUES  (2, 1, 10)
 ,		(2, 2, 10)
 ,		(1, 1, 10)
 ,		(1, 2, 10)
 
-INSERT INTO TProducts(strProductName, intTotalInventory, blnNeedsRestocking)
-VALUES ('Conditioner', 100, 1)
-,	   ('Shampoo', 100, 1)
+INSERT INTO TServices(strServiceName, monServiceCost, intMinutes, intGenderID)
+VALUES     ('Cut + Blowdry - Medium', 45, 30, 1)
+		  ,('Beard Trim', 40, 60, 2)
+		  ,('Edge Up*', 30, 20, 1002)
+
+		  SELECT * FROM TSkills
+
+		  INSERT INTO TSkills(strSkillName)
+		VALUES			('Joico hair color')
+					   ,('cuts')
+					   ,('perms')
+					   ,('Wella hair color')
+					   ,('formal hairstyling')
+					   ,('Matrix Socolor hair color')
+					   ,('Highlighting')
+					   ,('corrective color')
+					   ,('waxing')
+
+INSERT INTO TEmployeeSkills(intEmployeeID, intSkillID)
+VALUES					(1,1)
+					   ,(1,2)
+					   ,(1,3)
+					   ,(1,4)
+					   ,(2,5)
+					   ,(2,6)
+					   ,(2,7)
+					   ,(2,8)
+					   ,(2,9)

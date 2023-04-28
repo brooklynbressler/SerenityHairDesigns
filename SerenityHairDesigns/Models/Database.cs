@@ -525,6 +525,38 @@ namespace SerenityHairDesigns.Models
 
 		}
 
+		public bool EnterAdminCosts(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intBoothRental, int intBuildingRental, int intBuildingUtilities)
+		{
+
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_ADMIN_COST", cn);
+
+				SetParameter(ref cm, "@intEmployeeID", intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@dtmStartDate", dteStartDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@dtmEndDate", dteEndDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@intBoothRental", intBoothRental, SqlDbType.Int);
+				SetParameter(ref cm, "@intBuildingRental", intBuildingRental, SqlDbType.Int);
+				SetParameter(ref cm, "@intBuildingUtilities", intBuildingUtilities, SqlDbType.Int);
+
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+
+		}
+
 		public bool EnterEmployeeEarning(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intAppointmentPay, int intTipPay)
 		{
 
@@ -566,7 +598,7 @@ namespace SerenityHairDesigns.Models
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				string query = "SELECT TEmployeeCosts.decBoothRentel, intAppointmentPay, intTipPay " +
+				string query = "SELECT ISNULL(TEmployeeCosts.decBoothRentel, 0), ISNULL(TEmployeeCosts.decBuildingRental, 0), ISNULL(TEmployeeCosts.decBuildingUtilities, 0), ISNULL(intAppointmentPay, 0), ISNULL(intTipPay, 0)" +
 								"FROM TEarnings " +
 								"JOIN TEmployees ON TEmployees.intEmployeeID = TEarnings.intEmployeeID " +
 								"JOIN TEmployeeCosts ON TEmployees.intEmployeeID = TEmployeeCosts.intEmployeeID " +
@@ -588,11 +620,67 @@ namespace SerenityHairDesigns.Models
 							{
 							EmployeeInfo.decBoothRental = reader.GetDecimal(0);
 
+							EmployeeInfo.decBuildingRental = reader.GetDecimal(1);
+
+							EmployeeInfo.decBuildingUtilities = reader.GetDecimal(2);
+
+							EmployeeInfo.intAppointmentPay = reader.GetInt32(3);
+
+							EmployeeInfo.intTipPay = reader.GetInt32(4);
+								
+							};
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return EmployeeInfo;
+		}
+
+
+		public EmployeesMoneyInfo AdminInfo(long lngEmployeeID, DateTime dtmStartTime, DateTime dtmEndTime)
+		{
+
+			EmployeesMoneyInfo EmployeeInfo = new EmployeesMoneyInfo();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT TEmployeeCosts.decBoothRentel, intAppointmentPay, intTipPay " +
+								"FROM TEarnings " +
+								"JOIN TEmployees ON TEmployees.intEmployeeID = TEarnings.intEmployeeID " +
+								"JOIN TEmployeeCosts ON TEmployees.intEmployeeID = TEmployeeCosts.intEmployeeID " +
+								"WHERE TEarnings.intEmployeeID = " + lngEmployeeID +
+								" AND TEmployeeCosts.intEmployeeID = " + lngEmployeeID +
+								" AND TEarnings.dteStartTime >= '" + dtmStartTime +
+								"' AND TEmployeeCosts.dtmStartDate >= '" + dtmStartTime +
+								"' AND TEmployeeCosts.dtmEndDate <= '" + dtmEndTime +
+								"' AND TEarnings.dteEndTime <= '" + dtmEndTime + "'";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+
+						{
+							EmployeeInfo.decBoothRental = reader.GetDecimal(0);
+
 							EmployeeInfo.intAppointmentPay = reader.GetInt32(1);
 
 							EmployeeInfo.intTipPay = reader.GetInt32(2);
-								
-							};
+
+						};
 
 					}
 					reader.Close();
@@ -653,7 +741,247 @@ namespace SerenityHairDesigns.Models
 			return objReviews;
 		}
 
+        public List<Appointments> GetAppointments(long CustomerID)
+        {
+
+            List<Appointments> objAppointments = new List<Appointments>();
+            try
+            {
+                SqlConnection cn = null;
+                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+                SqlCommand cm = new SqlCommand("SELECT_APPOINTMENT_INFORMATION", cn);
+
+                SetParameter(ref cm, "@intCustomerID", CustomerID, SqlDbType.BigInt);
+
+                
+
+                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+
+
+				using (IDataReader reader = cm.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							objAppointments.Add(new Appointments()
+							{
+								dtmAppointmentDate = reader.GetDateTime(0)
+								,
+								intEstTimeInMins = reader.GetInt32(1)
+								,
+								strAppointmentName = reader.GetString(2)
+								,
+								monAppointmentCost = reader.GetDecimal(3)
+								,
+								monAppointmentTip = reader.GetDecimal(4)
+
+							});
+
+					}
+					reader.Close();
+
+					CloseDBConnection(ref cn);
+
+				}
+				
+            }
+
+
+		public List<Services> GetAllServices()
+		{
+
+			List<Services> Services = new List<Services>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TServices";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							Services.Add(new Services()
+							{
+								intServiceID = reader.GetInt32(0)
+								,
+								strServiceName = reader.GetString(1)
+								,
+								decServiceCost = reader.GetDecimal(2)
+								,
+								intMinutes = reader.GetInt32(3)
+								,
+								intGenderID = reader.GetInt32(4)
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+
+			}
+			return Services;
+		}
+
+
+		public Services GetSelectedServices(int intServiceID)
+		{
+
+			Services Service = new Services();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TServices WHERE intServiceID = " + intServiceID;
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							{
+							Service.intServiceID = reader.GetInt32(0);
+
+							Service.strServiceName = reader.GetString(1);
+
+							Service.decServiceCost = reader.GetDecimal(2);
+
+							Service.intMinutes = reader.GetInt32(3);
+
+							Service.intGenderID = reader.GetInt32(4);
+
+							};
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+
+			}
+			return Service;
+		}
+
+
+
+
+		public void InsertService(Services model)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_SERVICE", cn);
+
+				SetParameter(ref cm, "@strServiceName", model.strServiceName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@decServiceCost", model.decServiceCost, SqlDbType.Decimal);
+				SetParameter(ref cm, "@intMinutes", model.intMinutes, SqlDbType.Int);
+				SetParameter(ref cm, "@intGenderID", model.intGenderID, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+
+		public void RemoveService(int intServiceID)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("REMOVE_SERVICE", cn);
+
+				SetParameter(ref cm, "@intServiceID", intServiceID, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+
+		public List<Genders> GetGenders()
+		{
+
+			List<Genders> Genders = new List<Genders>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TGenders";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
+						if (!reader.IsDBNull(0))
+							Genders.Add(new Models.Genders()
+							{
+								intGenderID = reader.GetInt32(0)
+								,
+								strGenderDesc = reader.GetString(1)
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return Genders;
+		}
+
+
+            catch (Exception ex) { throw new Exception(ex.Message); }
+            {
+
+            }
+            return objAppointments;
+        }
+
         public List<Employee> GetEmployees()
+		public List<Employee> GetEmployees()
         {
 
             List<Employee> objReviews = new List<Employee>();
@@ -1266,6 +1594,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
@@ -1404,6 +1733,4 @@ namespace SerenityHairDesigns.Models
 
 	}
 }
-///////////////////////////////////////////////////////////////////////
-//Spring 2021
-///////////////////////////////////////////////////////////////////////
+

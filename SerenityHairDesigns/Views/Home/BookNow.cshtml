@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SerenityHairDesigns.Models.Employee
+@{
 	ViewBag.Title = "BookNow";
 }
 @*book now buttons for however many stations there are  *@
@@ -9,72 +10,33 @@
 
 	<div class="BookNow">
 		<div class="Book-Now-1">
-			<div class="BookNow">
-				<div class="img-kelley">
-					<img src="https://content.app-sources.com/s/02312516231161671/thumbnails/640x480/stylists/kelly-3059854.png" alt="Kelley">
-				</div>
-				<p class="BookNow-text">
-					Stylist 1 <br />
-					Kelley L Gibson <br />
-					Hair Designer <br />
-					Color Specialist <br />
-					(859) 628-8971 <br />
-					<br />
-					<br />
-					<a class="center" id="btnBookNow1" name="btnStylist1" href="~/BookNow/Stylist1">Book Now</a>
-				</p>
-			</div>
+			@foreach (var item in ViewBag.lstEmployees) {
+				<div class="BookNow">
+					<div id="user-profile-image">
+						@if (@item.UserImage != null) {
+							if (@item.UserImage.ImageID > 0) {
+								<div class="user-profile-image-container">
+									<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+													@item.UserImage.FileExtension, ";base64,",
+													@item.UserImage.BytesBase64)" />
+								</div>
+							}
+						}
+					</div>
 
-			<div class="BookNow">
-				<div class="img-rhonda">
-					<img src="https://mk0blushstudio1vxll1.kinstacdn.com/wp-content/uploads/rhonda.jpg" alt="Rhonda" />
+					<p class="BookNow-text">
+						@item.strFirstName @item.strLastName <br />
+						Hair Designer <br />
+						Color Specialist <br />
+						@item.strPhoneNumber <br />
+						<br />
+						<br />
+						@using (Html.BeginForm("BookNow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+							<a class="center" id="btnStylistChosen" name="btnStylistChosen" value="booknow" href="~/BookNow/Stylist/@item.intEmployeeID">Book Now</a>
+						}
+					</p>
 				</div>
-				<p class="BookNow-text">
-					Stylist 2 <br />
-					Rhonda Ausdenmoore <br />
-					Owner <br />
-					Hair Designer<br />
-					(859) 319-8009 <br />
-					<br />
-					<br />
-					<a class="center" id="btnBookNow1" name="btnStylist2" href="~/BookNow/Stylist2">Book Now</a>
-				</p>
-				
-			</div>
-		</div>
-
-		<div class="Book-Now-2">
-			<div class="BookNow">
-				<div class="img-barb">
-					<img src="https://res.cloudinary.com/ked-technology/image/upload/s--hGQzbM4l--/f_auto/v1574352993/Nova%20Salon/barb.webp" alt="Barb" />
-				</div>
-				<p class="BookNow-text">
-					Stylist 3 <br />
-					Barb Singleton<br />
-					Hair Designer <br />
-					Owner <br />
-					(859) 866-2731 <br />
-					<br />
-					<br />
-					<a class="center" id="btnBookNow1" name="btnStylist3" href="~/BookNow/Stylist3">Book Now</a>
-				</p>
-			</div>
-
-			<div class="BookNow">
-				<div class="img-carrie">
-					<img src="https://th.bing.com/th/id/OIP.Ln10HtweEUOA4xF3rwKNigHaFR?pid=ImgDet&amp;rs=1" alt="Carrie" />
-				</div>
-				<p class="BookNow-text">
-					Stylist 4 <br />
-					Carrie Geiman<br />
-					Hair Designer <br />
-					(859) 816-6587 <br />
-					<br />
-					<br />
-					<br />
-					<a class="center" id="btnBookNow1" name="btnStylist4" href="~/BookNow/Stylist4">Book Now</a>
-				</p>
-			</div>
+			 }
 		</div>
 	</div>
 </body>

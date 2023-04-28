@@ -25,9 +25,69 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult ScheduleNowLoggedIn()
         {
-            Customer c = new Customer();
-            return View(c);
+            Appointments a = new Appointments();
+            Database db = new Database();
+
+            a.ServicesDropDownList = db.ListServices();
+            a.AppointmentTypesDropDownList = db.ListAppointmentTypes();
+
+            return View(a);
+
         }
+
+        //[HttpPost]
+        //public ActionResult ScheduleNowLoggedIn(FormCollection col) {
+        //    try {
+        //        Appointments a = new Appointments();
+        //        Customer c = new Customer();
+
+        //        c = c.GetCustomerSession();
+
+        //        a.intCustomerID = c.intCustomerID;
+        //        a.intEmployeeID = col["strLastName"];
+        //        a.strPassword = col["strPassword"];
+        //        a.strPhoneNumber = col["strPhoneNumber"];
+        //        a.strEmailAddress = col["strEmailAddress"];
+        //        a.strGender = col["strGender"];
+
+
+        //        if (a.strFirstName.Length == 0 || a.strLastName.Length == 0 || a.strEmailAddress.Length == 0 || a.strPassword.Length == 0) {
+        //            a.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
+        //            return View(a);
+        //        }
+        //        else {
+        //            if (col["btnSubmit"] == "update") { //update button pressed
+        //                a.Save();
+
+        //                a.UserImage = new Image();
+        //                a.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+        //                if (UserImage != null) {
+        //                    a.UserImage = new Image();
+        //                    a.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+        //                    a.UserImage.Primary = true;
+        //                    a.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+        //                    if (a.UserImage.IsImageFile()) {
+        //                        a.UserImage.Size = UserImage.ContentLength;
+        //                        Stream stream = UserImage.InputStream;
+        //                        BinaryReader binaryReader = new BinaryReader(stream);
+        //                        a.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+        //                        a.UpdatePrimaryImage();
+        //                    }
+        //                }
+
+        //                a.SaveEmployeeSession();
+        //                return RedirectToAction("AdminLoggedIn", "Profile");
+        //            }
+        //            return View(a);
+        //        }
+        //    }
+        //    catch (Exception) {
+        //        Employee e = new Employee();
+        //        return View(e);
+        //    }
+
+        //}
 
         public ActionResult EmployeeLoggedIn()
         {
@@ -62,7 +122,6 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult AdminLoggedIn(HttpPostedFileBase UserImage, FormCollection col)
         {
-
             try
             {
                 Employee e = new Employee();
@@ -105,6 +164,11 @@ namespace SerenityHairDesigns.Controllers
                                 e.UpdatePrimaryImage();
                             }
                         }
+                        else if(col["btnSubmit"] == "EditAvailability") {
+
+
+
+						}
 
                         e.SaveEmployeeSession();
                         return RedirectToAction("AdminLoggedIn", "Profile");

@@ -33,15 +33,23 @@ textarea {
     text-decoration: none;
 }
 
-.center-admin {
-    margin-left: 820px;
-    width: auto;
+.center-emp-customer {
+    margin-left: 40%;
+    width: 368px;
     border: 3px solid #b74f13;
     padding: 10px;
     background-color: black;
     color: white;
-    text-align: center;
-    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.center-admin {
+    margin-left: 35%;
+    width: 541px;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -471,8 +479,39 @@ img {
 .Admin-Profile {
     background-color: black;
     color: white;
-    height: 420px;
+    height: auto;
     width: 600px;
     text-align: center;
-    margin-left: 37%;
+    margin-left: 34%;
+}
+
+.Admin-Text {
+    padding: 20px 0px 20px 0px;
+}
+
+#Schedule-Appointment-Text {
+    color: white;
+    margin-right: 10%;
+    padding-bottom: 20px;
+}
+
+#Schedule-Appointment-Content {
+    background-color: black;
+    height: auto;
+    width: 600px;
+    color: white;
+    margin-left: 31.5%;
+    text-align: center;
+    padding: 15px 15px 15px 80px;
+    margin-top: 30px;
+}
+
+#Schedule-Appointment-Content-Text {
+    padding-bottom: 15px;
+}
+
+#Schedule-Appointment-Btn {
+    margin-right: 10%;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }

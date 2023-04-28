@@ -1,0 +1,69 @@
+﻿@model SerenityHairDesigns.Models.Services
+
+@{
+	ViewBag.Title = "AddService";
+}
+
+<h2>Add Service</h2>
+
+<div class="Create-Account-Form-Emp">
+	<div class="Sign-In-Form-Emp">
+		<p>Add a Service to the Service Page</p>
+		@using (Html.BeginForm(FormMethod.Post))
+		{
+			<div class="Login-Textboxes">
+
+				<table>
+					<tr>
+						<td>
+							<p>Service Name:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.strServiceName, new { @autofocus = "autofocus" })</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>Service Cost:</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.decServiceCost, new { @autofocus = "autofocus" })</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<p>Length of time (in minutes):</p>
+						</td>
+						<td>
+							<div>@Html.TextBoxFor(model => model.intMinutes, new { @autofocus = "autofocus" })</div>
+						</td>
+					</tr>
+
+				</table>
+
+
+				<select id="Gender" name="Gender">
+					@foreach (var item in ViewBag.Genders)
+					{
+						<option value="@item.intGenderID">@item.strGenderDesc</option>
+					}
+				</select>
+
+				<br />
+				<br />
+
+			</div>
+			<button id="btnAddService" name="btnSubmit" value="btnAddService" class="button-action"><i class="fas fa-sign-in-alt"></i> Add Service</button>
+		}
+	</div>
+</div>
+
+
+
+<script>
+
+	function btnAddService() {
+		var selectedValue = document.getElementById("EmployeesProducts").value;
+		alert("Selected item: " + selectedValue);
+	}
+</script>

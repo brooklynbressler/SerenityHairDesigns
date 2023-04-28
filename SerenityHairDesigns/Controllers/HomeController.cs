@@ -33,10 +33,126 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        public ActionResult AddService()
+        {
+            Database db = new Database();
+            List<Genders> Genders = new List<Genders>();
+
+            Genders = db.GetGenders();
+
+            ViewBag.Genders = Genders;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddService(FormCollection col)
+        {
+            Database db = new Database();
+            List<Genders> Genders = new List<Genders>();
+
+            Genders = db.GetGenders();
+
+            ViewBag.Genders = Genders;
+
+            Services service = new Services();
+
+            service.strServiceName = col["strServiceName"];
+            service.decServiceCost = decimal.Parse(col["decServiceCost"]);
+            service.intMinutes = int.Parse(col["intMinutes"]);
+            service.intGenderID = int.Parse(col["Gender"]);
+
+            db.InsertService(service);
+
+            return RedirectToAction("Services", "Home");
+        }
+
+
+        public ActionResult RemoveService()
+        {
+
+            Database db = new Database();
+
+            List<Services> lstServices = new List<Services>();
+
+            lstServices = db.GetAllServices();
+
+            ViewBag.Services = lstServices;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RemoveService(FormCollection col)
+        {
+            Database db = new Database();
+
+            List<Services> lstServices = new List<Services>();
+
+            lstServices = db.GetAllServices();
+
+            ViewBag.Services = lstServices;
+
+            int intServiceID = int.Parse(col["Services"]);
+
+            db.RemoveService(intServiceID);
+
+            return RedirectToAction("Services", "Home");
+        }
+
+
+        [HttpPost]
+        public ActionResult Services(FormCollection col)
+        {
+            if (col["btnSubmit"] == "btnAddService")
+			{
+                return RedirectToAction("AddService", "Home");
+            }
+            else 
+			{
+                return RedirectToAction("RemoveService", "Home");
+            }
+        }
 
         // GET: Services
         public ActionResult Services()
         {
+
+            Database db = new Database();
+
+            List<Services> lstServices = new List<Services>();
+
+            lstServices = db.GetAllServices();
+
+            List<Services> MaleServices = new List<Services>();
+            List<Services> FemaleServices = new List<Services>();
+            List<Services> BothServices = new List<Services>();
+
+            foreach (var item in lstServices)
+			{
+                if (item.intGenderID == 2)
+				{
+                    MaleServices.Add(item);
+				}
+                else if (item.intGenderID == 1)
+				{
+                    FemaleServices.Add(item);
+				}
+                else
+				{
+                    BothServices.Add(item);
+				}
+			}
+
+            ViewBag.MaleServices = MaleServices;
+            ViewBag.FemaleServices = FemaleServices;
+            ViewBag.BothServices = BothServices;
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            ViewBag.EmployeeRole = e.strRole;
+
             return View();
         }
 

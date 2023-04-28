@@ -190,12 +190,14 @@
     <Compile Include="Models\EmployeeCustomer.cs" />
     <Compile Include="Models\EmployeesMoneyInfo.cs" />
     <Compile Include="Models\EmployeeProducts.cs" />
+    <Compile Include="Models\Genders.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\Reviews.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Services.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +222,9 @@
     <Content Include="Views\profile\AdminLoggedIn.cshtml" />
     <Content Include="Views\profile\EmployeeInfo.cshtml" />
     <Content Include="Views\profile\EmployeesInfo.cshtml" />
+    <Content Include="Views\profile\AdminInfo.cshtml" />
+    <Content Include="Views\Home\AddService.cshtml" />
+    <Content Include="Views\Home\RemoveService.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

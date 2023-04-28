@@ -4,12 +4,29 @@ using System.Web.Mvc;
 using System.IO;
 using System.Web;
 using System.Collections.Generic;
-using SerenityHairDesigns.Models;
+using System.Linq;
+
 
 namespace SerenityHairDesigns.Controllers
 {
     public class ProfileController : Controller
     {
+        public ActionResult CustomerIndex() {
+            Customer C = new Customer();
+            C = C.GetCustomerSession();
+            List<Appointments> lstAppointments = new List<Appointments>();
+            Database db = new Database();
+
+            lstAppointments = db.GetAppointments(C.intCustomerID);
+
+            List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
+
+            ViewBag.lstAppointments = sortedList;
+
+
+            
+            return View(C); 
+        }
         // GET: profile
         public ActionResult ScheduleLogin()
         {
@@ -116,6 +133,69 @@ namespace SerenityHairDesigns.Controllers
             {
                 Employee e = new Employee();
                 return View(e);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CustomerIndex(HttpPostedFileBase UserImage, FormCollection col)
+        {
+
+            try
+            {
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                c.strFirstName = col["strFirstName"];
+                c.strLastName = col["strLastName"];
+                c.strPassword = col["strPassword"];
+                c.strPhoneNumber = col["strPhoneNumber"];
+                c.strEmailAddress = col["strEmailAddress"];
+                c.strGender = col["strGender"];
+
+
+                if (c.strFirstName.Length == 0 || c.strLastName.Length == 0 || c.strEmailAddress.Length == 0 || c.strPassword.Length == 0)
+                {
+                    c.ActionType = Models.Customer.ActionTypes.RequiredFieldsMissing;
+                    return View(c);
+                }
+                else
+                {
+                    if (col["btnSubmit"] == "update")
+                    { //update button pressed
+                        c.SaveCustomer();
+
+                        c.UserImage = new Image();
+                        c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+                        if (UserImage != null)
+                        {
+                            c.UserImage = new Image();
+                            c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                            c.UserImage.Primary = true;
+                            c.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+                            if (c.UserImage.IsImageFile())
+                            {
+                                c.UserImage.Size = UserImage.ContentLength;
+                                Stream stream = UserImage.InputStream;
+                                BinaryReader binaryReader = new BinaryReader(stream);
+                                c.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+                                c.UpdatePrimaryImage();
+                            }
+                        }
+
+                        c.SaveCustomerSession();
+                        return RedirectToAction("CustomerIndex", "Profile");
+
+                    }
+                    return View(c);
+                    
+                }
+                
+            }
+            catch (Exception)
+            {
+                Customer c = new Customer();
+                return View(c);
             }
         }
 
@@ -349,7 +429,7 @@ namespace SerenityHairDesigns.Controllers
                     if (u != null && u.intCustomerID > 0)
                     {
                         u.SaveCustomerSession();
-                        return RedirectToAction("ScheduleNowLoggedIn");
+                        return RedirectToAction("CustomerIndex");
                     }
                     else
                     {
@@ -365,7 +445,7 @@ namespace SerenityHairDesigns.Controllers
                     {
                         case Customer.ActionTypes.InsertSuccessful:
                             u.SaveCustomerSession();
-                            return RedirectToAction("ScheduleNowLoggedIn");
+                            return RedirectToAction("CustomerIndex");
                         //break;
                         default:
                             return View(u);
@@ -475,6 +555,7 @@ namespace SerenityHairDesigns.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
 
 
     }

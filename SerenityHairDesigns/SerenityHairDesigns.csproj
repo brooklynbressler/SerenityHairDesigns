@@ -174,6 +174,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BookNowController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -181,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AboutUs.cs" />
+    <Compile Include="Models\Appointments.cs" />
     <Compile Include="Models\ContactUs.cs" />
     <Compile Include="Models\CustomerEmployee.cs" />
     <Compile Include="Models\Database.cs" />
@@ -222,6 +224,7 @@
     <Content Include="Views\Employee\CreateEmployee.cshtml" />
     <Content Include="Views\Employee\Edit.cshtml" />
     <Content Include="Views\Employee\Index.cshtml" />
+    <Content Include="Views\profile\CustomerIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -231,6 +234,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Appointments\" />
+    <Folder Include="Views\Customer\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <PropertyGroup>

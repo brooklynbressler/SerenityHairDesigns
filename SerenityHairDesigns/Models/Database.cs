@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 {
 	public class Database
 	{
-		//string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 		//public SelectList ListAppointmentTypes() {
 		//	List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();
@@ -1458,7 +1458,6 @@ namespace SerenityHairDesigns.Models
 				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE", cn);
 				int intReturnValue = -1;
 
-				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
@@ -1736,7 +1735,7 @@ namespace SerenityHairDesigns.Models
 				if (SQLConn.State != ConnectionState.Open)
 				{
 
-					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
+					SQLConn.ConnectionString = strConnectionString;
 
 					SQLConn.Open();
 				}

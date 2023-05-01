@@ -24,6 +24,7 @@ namespace SerenityHairDesigns.Models {
         public List<Image> Images;
         public IEnumerable<SelectListItem> EmployeeList { get; set; }
         public Employee SelectedEmployee { get; set; }
+        public List<string> Skills { get; set; }
 
         public Employee LoginEmployee() {
             try {
@@ -37,6 +38,14 @@ namespace SerenityHairDesigns.Models {
             try {
                 Database db = new Database();
                 return db.SelectEmployeeRole(this);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public Employee SelectEmployee(long lngID) {
+            try {
+                Database db = new Database();
+                return db.SelectEmployee(this, lngID);
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }

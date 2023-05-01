@@ -12,11 +12,9 @@ namespace SerenityHairDesigns.Models
 {
 	public class Database
 	{
-<<<<<<< HEAD
+
 		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
-=======
-		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
->>>>>>> cf167816f05da59ead99bad339c139220073cbe9
+
 
 		//public SelectList ListAppointmentTypes() {
 		//	List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();

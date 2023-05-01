@@ -36,9 +36,93 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult Employeelogin()
         {
-            Models.Customer u = new Models.Customer();
             return View();
         }
+
+        public ActionResult EmployeeScheduleAppointment()
+        {
+            Database db = new Database();
+
+            List<Services> lstServices = new List<Services>();
+
+            lstServices = db.GetAllServices();
+
+            ViewBag.Services = lstServices;
+
+            List<Genders> Genders = new List<Genders>();
+
+            Genders = db.GetGenders();
+
+            ViewBag.Genders = Genders;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EmployeeScheduleAppointment(FormCollection col)
+        {
+
+            Appointments appointment = new Appointments();
+
+            string date = col["AppointmentDateTime"];
+
+            DateTime dteDate;
+
+            DateTime.TryParse(date, out dteDate);
+
+            appointment.dtmAppointmentDate = dteDate;
+
+            int intServiceID = int.Parse(col["Services"]);
+
+            Services service = new Services();
+
+            Database db = new Database();
+
+            service = db.GetSelectedServices(intServiceID);
+
+            appointment.monAppointmentCost = service.decServiceCost;
+
+            appointment.intEstTimeInMins = service.intMinutes;
+
+            appointment.monAppointmentTip = 0;
+
+            appointment.strAppointmentName = service.strServiceName;
+
+            Models.Employee e = new Models.Employee();
+
+            e = e.GetEmployeeSession();
+
+            long lngEmployeeID = e.intEmployeeID;  //employees ID here
+
+            Customer customer = new Customer();
+
+            customer.strFirstName = col["firstname"];
+            customer.strLastName = col["lastname"];
+            customer.strPhoneNumber = col["Number"];
+            int intGender = int.Parse(col["Gender"]);
+
+            db.InsertCustomerManually(customer, intGender, lngEmployeeID );
+
+            customer = db.GetLastCustomer();
+
+            db.InsertAppointment(appointment, customer, lngEmployeeID, intServiceID);
+
+            List<Services> lstServices = new List<Services>();
+
+            lstServices = db.GetAllServices();
+
+            ViewBag.Services = lstServices;
+
+            List<Genders> Genders = new List<Genders>();
+
+            Genders = db.GetGenders();
+
+            ViewBag.Genders = Genders;
+
+
+            return View();
+        }
+
 
         public ActionResult ScheduleNowLoggedIn()
         {

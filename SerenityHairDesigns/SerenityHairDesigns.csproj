@@ -230,6 +230,7 @@
     <Content Include="Views\profile\AdminInfo.cshtml" />
     <Content Include="Views\Home\AddService.cshtml" />
     <Content Include="Views\Home\RemoveService.cshtml" />
+    <Content Include="Views\profile\EmployeeScheduleAppointment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

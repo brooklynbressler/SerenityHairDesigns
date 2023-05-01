@@ -12,6 +12,10 @@ namespace SerenityHairDesigns.Models {
         public long intCustomerID { get; set; }
         public string strFirstName { get; set; }
         public string strLastName { get; set; }
+        //public int intGenderID { get; set; }
+        public Genders Gender { get; set; }
+
+
         public string strGender { get; set; }
         public string strPassword { get; set; }
         public string strRole { get; set; }

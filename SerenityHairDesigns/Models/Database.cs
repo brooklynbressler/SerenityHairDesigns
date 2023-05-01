@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 {
 	public class Database
 	{
-		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 		//public SelectList ListAppointmentTypes() {
 		//	List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();
@@ -94,7 +94,6 @@ namespace SerenityHairDesigns.Models
 		//	return model.ServicesDropDownList;
 		//}
 
-		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -1793,7 +1792,7 @@ namespace SerenityHairDesigns.Models
 				if (SQLConn.State != ConnectionState.Open)
 				{
 
-					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
+					SQLConn.ConnectionString = strConnectionString;
 
 					SQLConn.Open();
 				}

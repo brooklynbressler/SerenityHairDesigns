@@ -12,7 +12,7 @@ namespace SerenityHairDesigns.Models
 {
 	public class Database
 	{
-		//string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=BROOKIE-B-PC\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 		//public SelectList ListAppointmentTypes() {
 		//	List<AppointmentTypes> objAppointmentTypes = new List<AppointmentTypes>();
@@ -867,8 +867,7 @@ namespace SerenityHairDesigns.Models
 				}
 				
             }
-			catch (Exception ex) { throw new Exception(ex.Message); }
-			{
+
 			catch
 			{
 
@@ -876,10 +875,7 @@ namespace SerenityHairDesigns.Models
 			return objAppointments;
 		}
 
-			}
-			 return objAppointments;
-        }
-		
+
 
 		public List<Services> GetAllServices()
 		{
@@ -1180,49 +1176,6 @@ namespace SerenityHairDesigns.Models
         }
  
 
-		public List<Employee> GetEmployeeSkills() {
-		public List<Employee> GetEmployees()
-        {
-
-			List<Employee> objReviews = new List<Employee>();
-			try {
-				SqlConnection cn = null;
-				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-
-				string query = "SELECT TE.intEmployeeID, TE.strFirstName, TE.strLastName, TE.strPhoneNumber, TG.strGender FROM TEmployees AS TE JOIN TGenders AS TG ON TG.intGenderID = TE.intGenderID";
-
-				SqlCommand cmd = new SqlCommand(query, cn);
-
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
-						if (!reader.IsDBNull(0))
-							objReviews.Add(new Employee() {
-								intEmployeeID = reader.GetInt64(0),
-								strFirstName = reader.GetString(1)
-								,
-								strLastName = reader.GetString(2)
-								,
-								strPhoneNumber = reader.GetString(3)
-								,
-								strGender = reader.GetString(4)
-
-
-							});
-
-					}
-					reader.Close();
-
-				}
-
-				CloseDBConnection(ref cn);
-
-			}
-			catch (Exception ex) { throw new Exception(ex.Message); }
-			{
-
-			}
-			return objReviews;
-		}
 
 		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{

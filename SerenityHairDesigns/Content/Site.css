@@ -90,9 +90,11 @@ body {
     margin-left: 41%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
+    position: center;
 }
 
 .Careers-Text {
+    overflow: auto;
     background-color: black;
     color: white;
     text-align: center;
@@ -100,6 +102,7 @@ body {
     margin-left: 23%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
+    position: relative ;
 }
 
 .Careers-H3 {

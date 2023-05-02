@@ -160,6 +160,19 @@ input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
 }
+.Manage-Employee-Text {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 350px;
+    height: 175px;
+    margin-left: 38.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+}
+.Manage-Employee-Title {
+    text-align: center;
+}
 
 .Reviews-H2 {
     background-color: black;

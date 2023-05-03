@@ -176,10 +176,10 @@ input[name="careerSubmit"] {
     background-color: black;
     color: white;
     text-align: center;
-    width: 350px;
-    height: 175px;
-    margin-left: 38.5%;
-    padding: 10px 10px 10px 10px;
+    width: 500px;
+    height: 450px;
+    float: left;
+    padding: 35px 70px 0px 40px;
     border: 3px solid #b74f13;
 }
 .Manage-Employee-Title {
@@ -346,11 +346,12 @@ img {
     background-color: black;
     color: white;
     width: 500px;
-    height: 600px;
+    height: 450px;
     text-align: center;
-    margin-left: 34%;
-    margin-top: 10%;
+    float: left;
+    margin-left: 142px;
     padding: 35px 70px 0px 40px;
+    border: 3px solid #b74f13;
 }
 .Create-Account-ScheduleLogin-Text {
     text-align: center;

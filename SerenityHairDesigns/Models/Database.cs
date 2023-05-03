@@ -97,7 +97,7 @@ namespace SerenityHairDesigns.Models
 		//	return model.ServicesDropDownList;
 		//}
 
-		string strConnectionString = @"Data Source=JANIELLEDAVE2B0;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
 			try {
 
@@ -926,12 +926,10 @@ namespace SerenityHairDesigns.Models
 
 			}
 			return objAppointments;
-            }
+		}
 
 			
 		}
-
-
 
 		public List<Services> GetAllServices()
 		{
@@ -1182,7 +1180,6 @@ namespace SerenityHairDesigns.Models
 			}
 			return Genders;
 		}
-		public List<Employee> GetEmployees()
         {
 
             List<Employee> objEmployees = new List<Employee>();
@@ -1191,7 +1188,7 @@ namespace SerenityHairDesigns.Models
                 SqlConnection cn = null;
                 if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				string query = "SELECT TE.intEmployeeID, TE.strFirstName, TE.strLastName, TE.strPhoneNumber, TG.strGender, TE.strEmailAddress, TE.strPassword "+
+				string query = "SELECT TE.intEmployeeID, TE.strFirstName, TE.strLastName, TE.strPhoneNumber, TG.strGender, TE.intGenderID, TE.strEmailAddress, TE.strPassword "+
 								"FROM TEmployees AS TE JOIN TGenders AS TG ON TG.intGenderID = TE.intGenderID ";
 
 				SqlCommand cmd = new SqlCommand(query, cn);
@@ -1205,12 +1202,16 @@ namespace SerenityHairDesigns.Models
 								strLastName = reader.GetString(2),
 								strPhoneNumber = reader.GetString(3),
 								strGender = reader.GetString(4),
-								strEmailAddress = reader.GetString(5),
-								strPassword = reader.GetString(6)
+								intGenderID = reader.GetInt32(5),
+								strEmailAddress = reader.GetString(6),
+								strPassword = reader.GetString(7)
 							});
 					}
 					reader.Close();
 				}
+
+
+
 
                 CloseDBConnection(ref cn);
 
@@ -1221,7 +1222,6 @@ namespace SerenityHairDesigns.Models
             }
             return objEmployees;
         }
-		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
 			{
@@ -1849,6 +1849,7 @@ namespace SerenityHairDesigns.Models
                         e.strLastName = (string)dr["strLastName"];
                         e.strPhoneNumber = (string)dr["strPhoneNumber"];
 						e.strEmailAddress = (string)dr["strEmailAddress"];
+						// dont know if this has to be genderID or strGender in ""
 						e.strGender = (string)dr["strGender"];
 						e.strPassword = (string)dr["strPassword"];
 
@@ -1900,6 +1901,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
@@ -1935,8 +1937,8 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@intGenderID", e.intGenderID, SqlDbType.Int);
+				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 

@@ -928,11 +928,7 @@ namespace SerenityHairDesigns.Models
 			return objAppointments;
             }
 
-			catch
-			{
-
-			}
-			return objAppointments;
+			
 		}
 
 
@@ -1186,8 +1182,6 @@ namespace SerenityHairDesigns.Models
 			}
 			return Genders;
 		}
-
-		public List<Employee> GetEmployees()
 		public List<Employee> GetEmployees()
         {
 
@@ -1227,10 +1221,6 @@ namespace SerenityHairDesigns.Models
             }
             return objEmployees;
         }
- 
-
-
-		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
@@ -2128,5 +2118,4 @@ namespace SerenityHairDesigns.Models
 		}
 
 	}
-}
 

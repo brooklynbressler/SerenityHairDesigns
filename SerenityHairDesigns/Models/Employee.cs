@@ -62,8 +62,6 @@ namespace SerenityHairDesigns.Models {
             }
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
-
-        public bool IsEmployeeAuthenticated {
 		public List<string> SelectEmployeeSkill()
 		{
 			try

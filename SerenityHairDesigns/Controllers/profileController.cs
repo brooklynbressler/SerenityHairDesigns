@@ -19,13 +19,16 @@ namespace SerenityHairDesigns.Controllers
 
             lstAppointments = db.GetAppointments(C.intCustomerID);
 
-            List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
+            //List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
 
             ViewBag.lstAppointments = sortedList;
-
-
-            
+    
             return View(C); 
+            //ViewBag.lstAppointments = sortedList;
+
+
+
+            return View(C);
         }
         // GET: profile
         public ActionResult ScheduleLogin()
@@ -126,84 +129,30 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult ScheduleNowLoggedIn()
         {
-            Appointments a = new Appointments();
+            List<AppointmentTypes> at = new List<AppointmentTypes>();
+            List<Services> s = new List<Services>();
+
             Database db = new Database();
 
-            //a.ServicesDropDownList = db.ListServices();
-            //a.AppointmentTypesDropDownList = db.ListAppointmentTypes();
+			at = db.GetAppointmentTypes();
+			s = db.GetServiceTypes();
 
-            return View(a);
+            ViewBag.AppointmentTypes = at;
+            ViewBag.ServiceTypes = s;
+
+            return View();
 
         }
+
 
         //[HttpPost]
-        //public ActionResult ScheduleNowLoggedIn(FormCollection col) {
-        //    try {
-        //        Appointments a = new Appointments();
-        //        Customer c = new Customer();
-
-        //        c = c.GetCustomerSession();
-
-        //        a.intCustomerID = c.intCustomerID;
-        //        a.intEmployeeID = col["strLastName"];
-        //        a.strPassword = col["strPassword"];
-        //        a.strPhoneNumber = col["strPhoneNumber"];
-        //        a.strEmailAddress = col["strEmailAddress"];
-        //        a.strGender = col["strGender"];
-
-
-        //        if (a.strFirstName.Length == 0 || a.strLastName.Length == 0 || a.strEmailAddress.Length == 0 || a.strPassword.Length == 0) {
-        //            a.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
-        //            return View(a);
-        //        }
-        //        else {
-        //            if (col["btnSubmit"] == "update") { //update button pressed
-        //                a.Save();
-
-        //                a.UserImage = new Image();
-        //                a.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
-
-        //                if (UserImage != null) {
-        //                    a.UserImage = new Image();
-        //                    a.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
-        //                    a.UserImage.Primary = true;
-        //                    a.UserImage.FileName = Path.GetFileName(UserImage.FileName);
-        //                    if (a.UserImage.IsImageFile()) {
-        //                        a.UserImage.Size = UserImage.ContentLength;
-        //                        Stream stream = UserImage.InputStream;
-        //                        BinaryReader binaryReader = new BinaryReader(stream);
-        //                        a.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
-        //                        a.UpdatePrimaryImage();
-        //                    }
-        //                }
-
-        //                a.SaveEmployeeSession();
-        //                return RedirectToAction("AdminLoggedIn", "Profile");
-        //            }
-        //            return View(a);
-        //        }
-        //    }
-        //    catch (Exception) {
-        //        Employee e = new Employee();
-        //        return View(e);
-        //    }
-
+        //public JsonResult GetEmployeeById(int id)
+        //{
+        //    Database db = new Database();
+        //    //var employees = db.GetEmployees();
+        //    //var employee = employees.Find((e) => e.intEmployeeID == id);
+        //    //return Json(employee);
         //}
-
-        public ActionResult EmployeeLoggedIn()
-        {
-            Employee e = new Employee();
-            return View(e);
-        }
-
-        [HttpPost]
-        public JsonResult GetEmployeeById(int id)
-        {
-            Database db = new Database();
-            var employees = db.GetEmployees();
-            var employee = employees.Find((e) => e.intEmployeeID == id);
-            return Json(employee);
-        }
 
         public ActionResult AdminLoggedIn()
         {
@@ -234,6 +183,7 @@ namespace SerenityHairDesigns.Controllers
                 e.strPhoneNumber = col["strPhoneNumber"];
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strGender = col["strGender"];
+                e.strYearsOfExperience = col["strYearsOfExperience"];
 
 
                 if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
@@ -265,14 +215,60 @@ namespace SerenityHairDesigns.Controllers
                                 e.UpdatePrimaryImage();
                             }
                         }
-                        else if(col["btnSubmit"] == "EditAvailability") {
-
-
-
-						}
+ 
 
                         e.SaveEmployeeSession();
                         return RedirectToAction("AdminLoggedIn", "Profile");
+                    }
+
+                    else if (col["btnSubmit"] == "EditAvailability")
+                    {
+
+
+
+                        string dteStartTime = col["dteStartDate"];
+
+
+                        DateTime dteStartDate;
+
+                        DateTime.TryParse(dteStartTime, out dteStartDate);
+
+
+                        string dteEndTime = col["dteEndDate"];
+
+                        DateTime dteEndDate;
+
+                        DateTime.TryParse(dteEndTime, out dteEndDate);
+
+
+
+                        List<DateTime> TimeSlots = new List<DateTime>();
+
+                        DateTime interval = dteStartDate;
+
+                        while (interval <= dteEndDate)
+                        {
+                            TimeSlots.Add(interval);
+                            interval = interval.AddMinutes(30);
+
+                        }
+
+                        Models.Employee emp = new Models.Employee();
+
+                        emp = emp.GetEmployeeSession();
+
+                        long lngEmployeeID = emp.intEmployeeID;  //employees ID here
+
+                        foreach (DateTime item in TimeSlots)
+						{
+                            
+
+						}
+
+
+                        e.SaveEmployeeSession();
+                        return RedirectToAction("AdminLoggedIn", "Profile");
+
                     }
                     return View(e);
                 }
@@ -284,70 +280,121 @@ namespace SerenityHairDesigns.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult CustomerIndex(HttpPostedFileBase UserImage, FormCollection col)
+        public ActionResult EmployeeLoggedIn()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+            if (e.IsEmployeeAuthenticated)
+            {
+                Database db = new Database();
+                List<Image> images = new List<Image>();
+                images = db.GetEmployeeImages(e.intEmployeeID, 0, true);
+                e.UserImage = new Image();
+                if (images.Count > 0) e.UserImage = images[0];
 
+                // Get the list of skills for the employee
+                List<string> skills = db.SelectEmployeeSkill(e);
+
+                ViewBag.skills = skills;
+
+            }
+
+            return View(e);
+        }
+
+
+        [HttpPost]
+        public ActionResult EmployeeLoggedIn(HttpPostedFileBase UserImage, FormCollection col)
+        {
             try
             {
-                Customer c = new Customer();
-                c = c.GetCustomerSession();
+                Employee e = new Employee();
+                e = e.GetEmployeeSession();
 
-                c.strFirstName = col["strFirstName"];
-                c.strLastName = col["strLastName"];
-                c.strPassword = col["strPassword"];
-                c.strPhoneNumber = col["strPhoneNumber"];
-                c.strEmailAddress = col["strEmailAddress"];
-                c.strGender = col["strGender"];
+				Database db = new Database();
+				// Get the list of skills for the employee
+				List<string> skills = db.SelectEmployeeSkill(e);
+				ViewBag.skills = skills;
 
+				// Update employee details
+				e.strFirstName = col["strFirstName"];
+                e.strLastName = col["strLastName"];
+                e.strPassword = col["strPassword"];
+                e.strPhoneNumber = col["strPhoneNumber"];
+                e.strEmailAddress = col["strEmailAddress"];
+                e.strGender = col["strGender"];
+                e.strYearsOfExperience = col["strYearsOfExperience"];
+                e.strSkillName = col["strSkillName"];
 
-                if (c.strFirstName.Length == 0 || c.strLastName.Length == 0 || c.strEmailAddress.Length == 0 || c.strPassword.Length == 0)
-                {
-                    c.ActionType = Models.Customer.ActionTypes.RequiredFieldsMissing;
-                    return View(c);
-                }
-                else
-                {
-                    if (col["btnSubmit"] == "update")
-                    { //update button pressed
-                        c.SaveCustomer();
+                string startdate = col["dtmStartTime"];
+                DateTime dteStartDate;
+                DateTime.TryParse(startdate, out dteStartDate);
+                e.dtmStartTime = dteStartDate;
 
-                        c.UserImage = new Image();
-                        c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                string enddate = col["dtmEndTime"];
+                DateTime dteEndDate;
+                DateTime.TryParse(enddate, out dteEndDate);
+                e.dtmEndTime = dteEndDate;
 
-                        if (UserImage != null)
+                  if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
+                   {
+                        e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
+                        return View(e);
+                    }
+                    else
+                    {
+                        if (col["btnSubmit"] == "update")
                         {
-                            c.UserImage = new Image();
-                            c.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
-                            c.UserImage.Primary = true;
-                            c.UserImage.FileName = Path.GetFileName(UserImage.FileName);
-                            if (c.UserImage.IsImageFile())
+                            // Update employee details in the database
+                            e.Save();
+
+                            //// Update employee skills in the database
+                            //db.UpdateEmployeeSkills(e);
+
+                            // Update employee image if provided
+                            e.UserImage = new Image();
+                            e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+
+                            if (UserImage != null)
                             {
-                                c.UserImage.Size = UserImage.ContentLength;
-                                Stream stream = UserImage.InputStream;
-                                BinaryReader binaryReader = new BinaryReader(stream);
-                                c.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
-                                c.UpdatePrimaryImage();
+                                e.UserImage = new Image();
+                                e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                                e.UserImage.Primary = true;
+                                e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+                                if (e.UserImage.IsImageFile())
+                                {
+                                    e.UserImage.Size = UserImage.ContentLength;
+                                    Stream stream = UserImage.InputStream;
+                                    BinaryReader binaryReader = new BinaryReader(stream);
+                                    e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+                                    e.UpdatePrimaryImage();
+                                }
                             }
+                            e.SaveEmployeeSession();
+                            return RedirectToAction("EmployeeLoggedIn", "Profile");
                         }
 
-                        c.SaveCustomerSession();
-                        return RedirectToAction("CustomerIndex", "Profile");
+                        if (col["btnSubmit"] == "EditAvailability")
+                        {
+                            db.InsertAvailability(e);
 
+                            e.SaveEmployeeSession();
+                            return RedirectToAction("EmployeeLoggedIn", "Profile");
+                        }
+
+                        return View(e);
                     }
-                    return View(c);
-                    
                 }
-                
-            }
+
             catch (Exception)
             {
-                Customer c = new Customer();
-                return View(c);
+                Employee e = new Employee();
+                return View(e);
             }
         }
 
-        public ActionResult EmployeesInfo()
+
+		public ActionResult EmployeesInfo()
         {
 
             Models.Employee e = new Models.Employee();

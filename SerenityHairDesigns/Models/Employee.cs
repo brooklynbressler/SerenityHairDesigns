@@ -10,13 +10,24 @@ namespace SerenityHairDesigns.Models {
         public string strFirstName  { get; set; }
         public string strLastName  { get; set; }
         public string strGender  { get; set; }
-
         public int intGenderID { get; set; }   
         public string strPassword  { get; set; }
         public string strRole { get; set; }
+        public string strYearsOfExperience { get; set; }
+		public long intSkillID { get; set; }
+		public string strSkillName { get; set; }
+		public DateTime dtmStartTime { get; set; }
+		public DateTime dtmEndTime { get; set; }
 
-        //[DataType(DataType.EmailAddress)]
-        public string strEmailAddress  { get; set; }
+		//public long intEmployeeID = 0;
+		//public string strFirstName = string.Empty;
+		//public string strLastName = string.Empty;
+		//public string strGender = string.Empty;
+		//public string strPassword = string.Empty;
+		//public string strRole = string.Empty;
+
+		//[DataType(DataType.EmailAddress)]
+		public string strEmailAddress = string.Empty;
 
         //[DataType(DataType.PhoneNumber)]
         public string strPhoneNumber  { get; set; }
@@ -53,6 +64,17 @@ namespace SerenityHairDesigns.Models {
         }
 
         public bool IsEmployeeAuthenticated {
+		public List<string> SelectEmployeeSkill()
+		{
+			try
+			{
+				Database db = new Database();
+				return db.SelectEmployeeSkill(this);
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public bool IsEmployeeAuthenticated {
             get {
                 if (intEmployeeID > 0) return true;
                 return false;

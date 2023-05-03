@@ -11,13 +11,13 @@
 }
 
 @if (eCurrent.IsEmployeeAuthenticated) { // already logged in
-	<div class="center-admin">
-		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
-		<a class="center" name="EmployeeInfo">Employee Info</a>
-		<a class="center" name="ScheduleAppointment">Schedule Appointment</a>
-		<a class="center" name="ManageEmployees">Manage Employees</a>
-
-	</div>
+<div class="center-admin">
+	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+	<a class="center" name="EmployeeInfo" href="~/Profile/EmployeesInfo">Employee Info</a>
+	<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+	<a class="center" name="ManageEmployees" href="~/Employee/CreateEmployee">Create Employee</a>
+	<a class="center" name="ManageEmployees" href="~/Employee/Index">Edit Employee</a>
+</div>
 }
 
 
@@ -84,7 +84,7 @@
 						<p class="Shift-Text">Shift Start Time:</p>
 					</td>
 					<td>
-						<div><input type="datetime-local" textmode="Date"></div>
+						<input type="datetime-local" id="dteStartDate" name="dteStartDate">
 					</td>
 				</tr>
 				<tr>
@@ -92,7 +92,7 @@
 						<p class="Shift-Text">Shift End Time:</p>
 					</td>
 					<td>
-						<div><input type="datetime-local" textmode="Date"></div>
+						<input type="datetime-local" id="dteEndDate" name="dteEndDate">
 					</td>
 				</tr>
 			</table>

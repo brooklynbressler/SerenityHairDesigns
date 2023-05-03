@@ -4,41 +4,58 @@
 	ViewBag.Title = "ScheduleNowLoggedIn";
 }
 
-<h2>@ViewBag.Title</h2>
+<body>
+	<h2>@ViewBag.Title</h2>
 
-<div class="center-emp-customer">
-	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
-	<a class="center" name="CustomerProfile">View Profile</a>
-	<a class="center" name="ScheduleAppointment" href="~/Home/BookNow">Schedule Appointment</a>
-</div>
+	<div class="center-emp-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="CustomerProfile">View Profile</a>
+		<a class="center" name="ScheduleAppointment" href="~/Home/BookNow">Schedule Appointment</a>
+	</div>
 
-<div id="Schedule-Appointment-Content">
-	@*@using (Html.BeginForm(FormMethod.Post)) {
-		<p id="Schedule-Appointment-Text"> Book Appointment <br /> </p>
-		<div>
-			<table>
-				<tr>
-					<td align="left" id="Schedule-Appointment-Content-Text">Appointment Type:</td>
-					<td align="left" id="Schedule-Appointment-Content-Text"><div>@Html.DropDownListFor(m => m.intAppointmentTypeID, Model.AppointmentTypesDropDownList)</div></td>
-				</tr>
-				<tr>
-					<td align="left" id="Schedule-Appointment-Content-Text">Pick an available time/day for the appointment:</td>
-					<td align="left" id="Schedule-Appointment-Content-Text"><div><input type="datetime-local" textmode="Date"></div></td>
-				</tr>
-				<tr>
-					<td align="left" id="Schedule-Appointment-Content-Text">Service Type:</td>
-					<td align="left" id="Schedule-Appointment-Content-Text"><div>@Html.DropDownListFor(m => m.intServiceID, Model.ServicesDropDownList)</div></td>
-				</tr>
-				<tr>
-					<td align="left" id="Schedule-Appointment-Content-Text">Current Picture of Your Hair:</td>
-					<td align="left" id="Schedule-Appointment-Content-Text"><input class="profile-item" type="file" name="UserImage" id="CurrentUserImage" /></td>
-				</tr>
-				<tr>
-					<td align="left">Desired Haircut Look:</td>
-					<td align="left"><input class="profile-item" type="file" name="UserImage" id="DesiredUserImage" /></td>
-				</tr>
-			</table>
-		</div>
-		<button id="Schedule-Appointment-Btn" name="btnSubmit" value="ScheduleAppointment" class="button-action">Schedule Appointment</button>
-	}*@
-</div>
+	<div id="Schedule-Appointment-Content">
+		@using (Html.BeginForm(FormMethod.Post)) {
+			<p id="Schedule-Appointment-Text"> Book Appointment <br /> </p>
+			<div>
+				<table>
+					<tr>
+						<td align="left" id="Schedule-Appointment-Content-Text">Appointment Type:</td>
+						<td align="left" id="Schedule-Appointment-Content-Text">
+							<select id="Gender" name="Gender">
+								@foreach (var item in ViewBag.AppointmentTypes) {
+									<option value="@item.intAppointmentTypeID">@item.strAppointmentName</option>
+								 }
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="left" id="Schedule-Appointment-Content-Text">Pick an available time/day for the appointment:</td>
+						<td align="left" id="Schedule-Appointment-Content-Text"><div><input type="datetime-local" textmode="Date" id="demo-booking-single"></div></td>
+					</tr>
+					<tr>
+						<td align="left" id="Schedule-Appointment-Content-Text">Service Type:</td>
+						<td align="left" id="Schedule-Appointment-Content-Text">
+							<select id="Gender" name="Gender">
+								@foreach (var item in ViewBag.ServiceTypes) {
+									<option value="@item.intServiceID">@item.strServiceName $@item.decServiceCost</option>
+								}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td align="left" id="Schedule-Appointment-Content-Text">Current Picture of Your Hair (Optional):</td>
+						<td align="left" id="Schedule-Appointment-Content-Text"><input class="profile-item" type="file" name="UserImage" id="CurrentUserImage" /></td>
+					</tr>
+					<tr>
+						<td align="left">Desired Haircut Look (Optional):</td>
+						<td align="left"><input class="profile-item" type="file" name="UserImage" id="DesiredUserImage" /></td>
+					</tr>
+				</table>
+
+			
+			</div>
+			<button id="Schedule-Appointment-Btn" name="btnSubmit" value="ScheduleAppointment" class="button-action">Schedule Appointment</button>
+		 }
+	</div>
+</body>
+

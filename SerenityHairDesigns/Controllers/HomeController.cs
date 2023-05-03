@@ -195,6 +195,21 @@ namespace SerenityHairDesigns.Controllers
 
             ViewBag.lstEmployees = lstEmployees;
 
+            DateTime dteStartTime = new DateTime(2023, 5, 1, 8, 0, 0);
+            DateTime dteEndTime = new DateTime(2023, 5, 1, 17, 0, 0);
+
+            List<DateTime> TimeSlots = new List<DateTime>();
+
+            DateTime interval = dteStartTime;
+
+            while (interval <= dteEndTime)
+			{
+                TimeSlots.Add(interval);
+                interval = interval.AddMinutes(30);
+
+            }
+
+
             return View();
         }
 

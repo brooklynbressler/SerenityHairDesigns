@@ -1762,6 +1762,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
@@ -1796,6 +1797,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", e.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);

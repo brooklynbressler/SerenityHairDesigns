@@ -126,13 +126,18 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult ScheduleNowLoggedIn()
         {
-            Appointments a = new Appointments();
+            List<AppointmentTypes> at = new List<AppointmentTypes>();
+            List<Services> s = new List<Services>();
+
             Database db = new Database();
 
-            //a.ServicesDropDownList = db.ListServices();
-            //a.AppointmentTypesDropDownList = db.ListAppointmentTypes();
+			at = db.GetAppointmentTypes();
+			s = db.GetServiceTypes();
 
-            return View(a);
+            ViewBag.AppointmentTypes = at;
+            ViewBag.ServiceTypes = s;
+
+            return View();
 
         }
 

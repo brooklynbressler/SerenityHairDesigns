@@ -1818,6 +1818,85 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public List<AppointmentTypes> GetAppointmentTypes() {
+
+			List<AppointmentTypes> AppointmentTypes = new List<AppointmentTypes>();
+
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TAppointmentTypes";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader()) {
+					while (reader.Read()) {
+						if (!reader.IsDBNull(0))
+							AppointmentTypes.Add(new Models.AppointmentTypes() {
+								intAppointmentTypeID = reader.GetInt32(0)
+								,
+								strAppointmentName = reader.GetString(1)
+								,
+								intEstTimeInMins = reader.GetInt32(2)
+
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return AppointmentTypes;
+		}
+
+		public List<Services> GetServiceTypes() {
+
+			List<Services> ServiceTypes = new List<Services>();
+
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT * FROM TServices";
+
+				SqlCommand cmd = new SqlCommand(query, cn);
+
+				using (IDataReader reader = cmd.ExecuteReader()) {
+					while (reader.Read()) {
+						if (!reader.IsDBNull(0))
+							ServiceTypes.Add(new Models.Services() {
+								intServiceID = reader.GetInt32(0)
+								,
+								strServiceName = reader.GetString(1)
+								,
+								decServiceCost = reader.GetDecimal(2)
+								,
+								intMinutes = reader.GetInt32(3)
+								,
+								intGenderID = reader.GetInt32(4)
+							});
+
+					}
+					reader.Close();
+
+				}
+
+				CloseDBConnection(ref cn);
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
+			}
+			return ServiceTypes;
+		}
+
 		private bool GetDBConnection(ref SqlConnection SQLConn)
 		{
 			try
@@ -1826,7 +1905,7 @@ namespace SerenityHairDesigns.Models
 				if (SQLConn.State != ConnectionState.Open)
 				{
 
-					SQLConn.ConnectionString = strConnectionString;
+					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
 
 					SQLConn.Open();
 				}

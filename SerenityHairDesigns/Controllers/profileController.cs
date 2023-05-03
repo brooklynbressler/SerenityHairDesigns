@@ -19,7 +19,7 @@ namespace SerenityHairDesigns.Controllers
 
             lstAppointments = db.GetAppointments(C.intCustomerID);
 
-            //List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
+            List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
 
             ViewBag.lstAppointments = sortedList;
     

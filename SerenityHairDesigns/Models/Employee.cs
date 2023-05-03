@@ -13,6 +13,7 @@ namespace SerenityHairDesigns.Models {
         public string strPassword  { get; set; }
         public string strRole { get; set; }
         public string strYearsOfExperience { get; set; }
+		public long intSkillID { get; set; }
 		public string strSkillName { get; set; }
 		public DateTime dtmStartTime { get; set; }
 		public DateTime dtmEndTime { get; set; }

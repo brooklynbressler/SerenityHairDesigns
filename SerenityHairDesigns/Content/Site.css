@@ -396,12 +396,38 @@ img {
     background-color: black;
     font-size: 25px;
     color: white;
-    width: 500px;
-    height: 285px;
+    width: 400px;
+    height: 510px;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
     margin-right: 50px;
 }
+
+.Employee-Profile {
+    background-color: black;
+    color: white;
+    height: 540px;
+    width: 615px;
+    text-align: center;
+    margin-left: 10%;
+    border: 3px solid #b74f13;
+}
+
+.Emp-Availability1 {
+    background-color: black;
+    width: 330px;
+    height: 300px;
+    border: 3px solid #b74f13;
+    margin-top: 50px;
+    margin-right: 150px;
+}
+
+.Shift-Title1 {
+    text-align: center;
+    color: white;
+    
+}
+
 
 .img-Stylist-Logged-In {
     margin-right: 50px

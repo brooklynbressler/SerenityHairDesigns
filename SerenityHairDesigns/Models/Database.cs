@@ -5,6 +5,8 @@ using System.Configuration;
 using System.Collections.Generic;
 using System.Net;
 using SerenityHairDesigns.Models;
+using System.Web.UI.WebControls;
+using System.Web.Mvc;
 
 namespace SerenityHairDesigns.Models
 {
@@ -745,17 +747,17 @@ namespace SerenityHairDesigns.Models
         {
 
             List<Appointments> objAppointments = new List<Appointments>();
-            try
-            {
-                SqlConnection cn = null;
-                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-                SqlCommand cm = new SqlCommand("SELECT_APPOINTMENT_INFORMATION", cn);
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("SELECT_APPOINTMENT_INFORMATION", cn);
 
-                SetParameter(ref cm, "@intCustomerID", CustomerID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@intCustomerID", CustomerID, SqlDbType.BigInt);
 
-                
 
-                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
 
 
@@ -784,7 +786,12 @@ namespace SerenityHairDesigns.Models
 					CloseDBConnection(ref cn);
 
 				}
-				
+			}
+			catch
+			{
+
+			}
+			return objAppointments;
             }
 
 
@@ -972,15 +979,6 @@ namespace SerenityHairDesigns.Models
 			return Genders;
 		}
 
-
-            catch (Exception ex) { throw new Exception(ex.Message); }
-            {
-
-            }
-            return objAppointments;
-        }
-
-        public List<Employee> GetEmployees()
 		public List<Employee> GetEmployees()
         {
 
@@ -1109,6 +1107,7 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
+
 
 		public long InsertEmployeeImage(Employee e) {
 			try {
@@ -1271,21 +1270,23 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+
 		public Employee InsertAvailability(Employee e)
 		{
 			try
 			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlCommand da = new SqlCommand("INSERT_EMPLOYEE_AVAILABILITY", cn);
 
-				SetParameter(ref da, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
-				SetParameter(ref da, "@dtmStartTime", e.dtmStartTime, SqlDbType.DateTime);
-				SetParameter(ref da, "@dtmEndTime", e.dtmEndTime, SqlDbType.DateTime);
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_AVAILABILITY", cn);
 
-				SetParameter(ref da, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@dtmStartTime", e.dtmStartTime, SqlDbType.DateTime);
+				SetParameter(ref cm, "@dtmEndTime", e.dtmEndTime, SqlDbType.DateTime);
 
-				da.ExecuteReader();
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
 
 				CloseDBConnection(ref cn);
 
@@ -1294,6 +1295,7 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
+
 
 		public Customer.ActionTypes InsertCustomer(Customer c)
 		{
@@ -1368,7 +1370,7 @@ namespace SerenityHairDesigns.Models
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				SqlDataAdapter da = new SqlDataAdapter("Select_Employee_Skills", cn);
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE_SKILLS", cn);
 				DataSet ds = new DataSet();
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -1401,36 +1403,21 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public void UpdateEmployeeSkills(Employee e)
-		{
-			using (SqlConnection cn = new SqlConnection())
-			{
-				cn.Open();
+		//public void UpdateEmployeeSkills(Employee e)
+		//{
+		//	SqlConnection cn = null;
 
-				using (SqlCommand command = new SqlCommand("UpdateEmployeeSkills", cn))
-				{
-					command.CommandType = CommandType.StoredProcedure;
+		//	if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+		//	SqlCommand cm = new SqlCommand("UpdateEmployeeSkills", cn);
 
-					// Add parameters to the stored procedure
-					command.Parameters.AddWithValue("@intEmployeeID", e.intEmployeeID);
+		//	// Add parameters to the stored procedure
+		//	SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt, Direction: ParameterDirection.Output);
+		//	SetParameter(ref cm, "@intSkillID", e.intSkillID, SqlDbType.Int, Direction: ParameterDirection.Output);
 
-					// Create a DataTable to represent the skills data to be passed to the stored procedure
-					DataTable TSkills = new DataTable();
-					TSkills.Columns.Add("intSkillID", typeof(int));
-					foreach (var skill in e.strSkillName)
-					{
-						TSkills.Rows.Add(skill);
-					}
+		//	cm.ExecuteReader();
 
-					SqlParameter SkillsParameter = command.Parameters.AddWithValue("@strSkillName", TSkills);
-					SkillsParameter.SqlDbType = SqlDbType.Structured;
-
-					command.ExecuteNonQuery();
-				}
-
-				cn.Close();
-			}
-		}
+		//	CloseDBConnection(ref cn);
+		//}
 
 
 		public Employee.ActionTypes InsertEmployee(Employee e)

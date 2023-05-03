@@ -17,8 +17,8 @@ namespace SerenityHairDesigns
 	public class EmailSender
 	{
 
-		public string strSendingEmail = "tywetterich@gmail.com";
-		public string strEmailPassword = "fjfqygtjsrkwppec";
+		public string strSendingEmail = "serenityhairdesigns456@gmail.com";
+		public string strEmailPassword = "dvpwapanxfpszmrv";
 		public int intPort = 587;
 		public string strHost = "smtp.gmail.com";
 
@@ -29,7 +29,7 @@ namespace SerenityHairDesigns
 
 				MailMessage objMailMessage = new MailMessage();
 				objMailMessage.From = new MailAddress(strSendingEmail);
-				objMailMessage.To.Add("tywetterich@gmail.com");
+				objMailMessage.To.Add("serenityhairdesigns456@gmail.com");
 				objMailMessage.Subject = "Resume";
 
 				var stream = File.InputStream;

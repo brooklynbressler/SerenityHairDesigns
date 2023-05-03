@@ -10,7 +10,6 @@ namespace SerenityHairDesigns.Models {
         public string strFirstName  { get; set; }
         public string strLastName  { get; set; }
         public string strGender  { get; set; }
-
         public int intGenderID { get; set; }   
         public string strPassword  { get; set; }
         public string strRole { get; set; }

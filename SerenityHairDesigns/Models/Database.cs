@@ -13,7 +13,7 @@ namespace SerenityHairDesigns.Models
 	public class Database
 	{
 
-		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		string strConnectionString = @"Data Source=DESKTOP-GOI89LE;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
 
 
 		//public SelectList ListAppointmentTypes() {
@@ -606,6 +606,58 @@ namespace SerenityHairDesigns.Models
 			}
 
 		}
+
+		//public Employee InsertAvailability(Employee e)
+		//{
+		//	try
+		//	{
+		//		SqlConnection cn = null;
+		//		if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+		//		SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_AVAILABILITY", cn);
+
+		//		SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.BigInt);
+		//		SetParameter(ref cm, "@dtmStartTime", e.dtmStartTime, SqlDbType.DateTime);
+		//		SetParameter(ref cm, "@dtmEndTime", e.dtmEndTime, SqlDbType.DateTime);
+
+		//		SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+		//		cm.ExecuteReader();
+
+		//		CloseDBConnection(ref cn);
+
+		//		return e;
+
+		//	}
+		//	catch (Exception ex) { throw new Exception(ex.Message); }
+		//}
+
+		public Employee InsertAvailability(DateTime dtmStartTime, DateTime dtmEndTime, long lngEmployeeID)
+		{
+			Employee e = new Employee();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_AVAILABILITY", cn);
+
+				SetParameter(ref cm, "@intEmployeeID", lngEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@dtmStartTime", dtmStartTime, SqlDbType.DateTime);
+				SetParameter(ref cm, "@dtmEndTime", dtmEndTime, SqlDbType.DateTime);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+				return e;
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+ 
 
 		public bool EnterAdminCosts(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intBoothRental, int intBuildingRental, int intBuildingUtilities)
 		{
@@ -1763,6 +1815,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
 
@@ -1797,6 +1850,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", e.strFirstName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", e.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 
@@ -1905,7 +1959,7 @@ namespace SerenityHairDesigns.Models
 				if (SQLConn.State != ConnectionState.Open)
 				{
 
-					SQLConn.ConnectionString = ConfigurationManager.AppSettings["AppDBConnect"];
+					SQLConn.ConnectionString = strConnectionString;
 
 					SQLConn.Open();
 				}

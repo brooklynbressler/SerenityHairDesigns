@@ -22,9 +22,7 @@ namespace SerenityHairDesigns.Controllers
             List<Appointments> sortedList = lstAppointments.OrderByDescending(x => x.intAppointmentID).ToList();
 
             ViewBag.lstAppointments = sortedList;
-
-
-            
+    
             return View(C); 
         }
         // GET: profile
@@ -270,14 +268,60 @@ namespace SerenityHairDesigns.Controllers
                                 e.UpdatePrimaryImage();
                             }
                         }
-                        else if(col["btnSubmit"] == "EditAvailability") {
-
-
-
-						}
+ 
 
                         e.SaveEmployeeSession();
                         return RedirectToAction("AdminLoggedIn", "Profile");
+                    }
+
+                    else if (col["btnSubmit"] == "EditAvailability")
+                    {
+
+
+
+                        string dteStartTime = col["dteStartDate"];
+
+
+                        DateTime dteStartDate;
+
+                        DateTime.TryParse(dteStartTime, out dteStartDate);
+
+
+                        string dteEndTime = col["dteEndDate"];
+
+                        DateTime dteEndDate;
+
+                        DateTime.TryParse(dteEndTime, out dteEndDate);
+
+
+
+                        List<DateTime> TimeSlots = new List<DateTime>();
+
+                        DateTime interval = dteStartDate;
+
+                        while (interval <= dteEndDate)
+                        {
+                            TimeSlots.Add(interval);
+                            interval = interval.AddMinutes(30);
+
+                        }
+
+                        Models.Employee emp = new Models.Employee();
+
+                        emp = emp.GetEmployeeSession();
+
+                        long lngEmployeeID = emp.intEmployeeID;  //employees ID here
+
+                        foreach (DateTime item in TimeSlots)
+						{
+                            
+
+						}
+
+
+                        e.SaveEmployeeSession();
+                        return RedirectToAction("AdminLoggedIn", "Profile");
+
                     }
                     return View(e);
                 }

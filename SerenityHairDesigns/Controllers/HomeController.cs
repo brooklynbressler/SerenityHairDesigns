@@ -1,4 +1,5 @@
 ﻿using SerenityHairDesigns.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -187,7 +188,42 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult BookNow()
         {
+            List<Employee> lstEmployees = new List<Employee>();
+            Database db = new Database();
+
+            lstEmployees = db.GetEmployees();
+
+            ViewBag.lstEmployees = lstEmployees;
+
+            DateTime dteStartTime = new DateTime(2023, 5, 1, 8, 0, 0);
+            DateTime dteEndTime = new DateTime(2023, 5, 1, 17, 0, 0);
+
+            List<DateTime> TimeSlots = new List<DateTime>();
+
+            DateTime interval = dteStartTime;
+
+            while (interval <= dteEndTime)
+			{
+                TimeSlots.Add(interval);
+                interval = interval.AddMinutes(30);
+
+            }
+
+
             return View();
         }
-	}
+
+        [HttpPost]
+        public ActionResult BookNow(FormCollection col) {
+            List<Employee> lstEmployees = new List<Employee>();
+            Database db = new Database();
+
+            lstEmployees = db.GetEmployees();
+
+            ViewBag.lstEmployees = lstEmployees;            
+
+            long lngID = Convert.ToInt64(RouteData.Values["id"]);
+            return RedirectToAction("Stylist", "BookNow", new { @id = lngID });
+        }
+    }
 }

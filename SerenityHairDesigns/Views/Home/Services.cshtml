@@ -1,93 +1,108 @@
-﻿@{
+﻿@model SerenityHairDesigns.Models.Employee
+@{
 
 }
 
 
 <style>
-	.header {
-		display: flex;
-		flex: 1 1 30%;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-		align-items: center;
-		background-color: lightgray;
-		padding: 10px;
-	}
+    .header {
+        display: flex;
+        flex: 1 1 30%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: lightgray;
+        padding: 10px;
+    }
 
 
 
-	.header__item {
-		flex: 1 1 30%;
-		margin-right: 200px;
-		margin-bottom: 50px;
-	}
+    .header__item {
+        flex: 1 1 30%;
+        margin-right: 200px;
+        margin-bottom: 50px;
+    }
 
-	input {
-		width: 80%;
-		padding: 5px;
-		border-radius: 5px;
-		border: 1px solid #ccc;
-	}
+    input {
+        width: 80%;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 </style>
+@{
+    SerenityHairDesigns.Models.Employee eCurrent = new SerenityHairDesigns.Models.Employee();
+    eCurrent = eCurrent.GetEmployeeSession();
+}
+@if (eCurrent.IsEmployeeAuthenticated)
+{ // already logged in
+    <div class="center-admin">
+        <a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+        <a class="center" name="EmployeeInfo">Employee Info</a>
+        <a class="center" name="ScheduleAppointment">Schedule Appointment</a>
+        <a class="center" name="ManageEmployees">Manage Employees</a>
+        <a class="center" name="Profile" href="~/Profile/AdminLoggedIn">AdminProfile</a>
+    </div>
+}
 
 <h2>Haircut Services</h2>
 
 <div class="header">
 
 
-	@using (Html.BeginForm())
-	{
+    @using (Html.BeginForm())
+    {
 
 
-	<div class="header__item">
-		<h3>General Services</h3>
-		<br />
-		@foreach (var item in ViewBag.BothServices)
-		{
-			@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
-			<br />
-			<br />
-		}
+        <div class="header__item">
+            <h3>General Services</h3>
+            <br />
+            @foreach (var item in ViewBag.BothServices)
+            {
+                @(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
+                <br />
+                <br />
+            }
 
-	</div>
-
-
-		<div class="header__item">
-			<h3>Male Services</h3>
-			<br />
-			@foreach (var item in ViewBag.MaleServices)
-			{
-				@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
-				
-				<br />
-				<br />
-			}
-
-		</div>
+        </div>
 
 
+        <div class="header__item">
+            <h3>Male Services</h3>
+            <br />
+            @foreach (var item in ViewBag.MaleServices)
+            {
+                @(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
 
-		<div class="header__item">
-			<h3>Female Services</h3>
-			<br />
-			@foreach (var item in ViewBag.FemaleServices)
-			{
-				@(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
-				<br />
-				<br />
-			}
+                <br />
+                <br />
+            }
 
-		</div>
-
-		if (ViewBag.EmployeeRole == "Admin")
-		{
-			<button id="btnAddService" name="btnSubmit" value="btnAddService" class="button-action">Add Service</button>
-			<br />
-			<br />
-			<button id="btnRemoveService" name="btnSubmit" value="btnRemoveService" class="button-action">Remove Service</button>
-		}
+        </div>
 
 
 
-	}
+        <div class="header__item">
+            <h3>Female Services</h3>
+            <br />
+            @foreach (var item in ViewBag.FemaleServices)
+            {
+                @(item.strServiceName + " --> $" + item.decServiceCost.ToString("0.#") + " --> Around " + item.intMinutes + " min")
+                <br />
+                <br />
+            }
+
+        </div>
+
+        if (ViewBag.EmployeeRole == "Admin")
+        {
+            <button id="btnAddService" name="btnSubmit" value="btnAddService" class="button-action">Add Service</button>
+            <br />
+            <br />
+            <button id="btnRemoveService" name="btnSubmit" value="btnRemoveService" class="button-action">Remove Service</button>
+        }
+
+
+
+    }
 </div>

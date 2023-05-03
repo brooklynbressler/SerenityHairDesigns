@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.WebPages;
 
 namespace SerenityHairDesigns.Controllers
 {
@@ -10,19 +11,7 @@ namespace SerenityHairDesigns.Controllers
         // GET: Employee
         public ActionResult Index()
         {
-            Database db = new Database();
-            var employeesSelectList = new List<SelectListItem>();
-            var lstEmployees = db.GetEmployees();
-            foreach (var item in lstEmployees)
-            {
-                employeesSelectList.Add(new SelectListItem { Text = $"{item.strFirstName} {item.strLastName}", Value = $"{item.intEmployeeID}" });
-            }
-            var model = new Employee
-            {
-                EmployeeList = employeesSelectList
-            };
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -70,7 +59,98 @@ namespace SerenityHairDesigns.Controllers
             return View();
         }
 
+        public ActionResult ManageEmployees()
+        {
+            List<Employee> lstEmployees = new List<Employee>();
+            List<Genders>   lstGenders = new List<Genders>();
+            Database db = new Database();
+             
+            lstEmployees = db.GetEmployees();
+            lstGenders = db.GetGenders();
+
+            ViewBag.lstEmployees = lstEmployees;
+            ViewBag.Genders = lstGenders;
+
+            return View();
+        }
+
+
         [HttpPost]
+        public ActionResult ManageEmployees(FormCollection col, Employee employee)
+        {
+            List<Genders> lstGenders = new List<Genders>();
+            List<Employee> lstEmployees = new List<Employee>();
+            Database db = new Database();
+
+            lstEmployees = db.GetEmployees();
+            lstGenders = db.GetGenders();
+
+            ViewBag.lstEmployees = lstEmployees;
+            ViewBag.Genders = lstGenders;
+
+
+            employee.strFirstName = col["strFirstName"];
+            employee.strLastName = col["strLastName"];
+            employee.strEmailAddress = col["strEmailAddress"];
+            employee.strPhoneNumber = col["strPhoneNumber"];
+            employee.strPassword = col["strPassword"];
+
+
+            try
+            {
+                if (col["btnSubmit"] == "edit") {
+                    string strEmployeeID = col["Employees"];
+                    int intEmployeeID = Convert.ToInt32(strEmployeeID);
+
+                    employee.intEmployeeID = intEmployeeID;
+
+                    employee = db.SelectEmployeeDropDownList(employee, intEmployeeID);
+
+
+
+                    return View(employee);
+                }
+                else if (col["btnSubmit"] == "update") {
+                      db.UpdateEmployee(employee);
+
+
+                    lstEmployees = db.GetEmployees();
+                    lstGenders = db.GetGenders();
+
+                    ViewBag.lstEmployees = lstEmployees;
+                    ViewBag.Genders = lstGenders;
+
+                    return View(employee);
+                }
+                else if (col["btnSubmit"] == "Create")
+                {
+                    
+
+                    string strGenderID = col["Gender"];
+
+                    employee.intGenderID = Convert.ToInt32(strGenderID);
+                     
+
+                    db.InsertEmployee(employee);
+
+                    lstEmployees = db.GetEmployees();
+                    lstGenders= db.GetGenders();
+
+                    ViewBag.lstEmployees = lstEmployees;
+                    ViewBag.Genders = lstGenders;
+
+                    RedirectToAction("ManageEmployees");
+                    return View(employee);
+                }
+            }
+
+            catch { 
+            }
+
+            return View();
+        }
+
+            [HttpPost]
         public ActionResult CreateEmployee(FormCollection col)
         {
             var employee = new Employee

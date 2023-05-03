@@ -10,6 +10,7 @@ namespace SerenityHairDesigns.Models {
         public string strFirstName  { get; set; }
         public string strLastName  { get; set; }
         public string strGender  { get; set; }
+        public int intGenderID { get; set; }   
         public string strPassword  { get; set; }
         public string strRole { get; set; }
         public string strYearsOfExperience { get; set; }
@@ -36,6 +37,7 @@ namespace SerenityHairDesigns.Models {
         public List<Image> Images;
         public IEnumerable<SelectListItem> EmployeeList { get; set; }
         public Employee SelectedEmployee { get; set; }
+        public List<string> Skills { get; set; }
 
         public Employee LoginEmployee() {
             try {
@@ -53,6 +55,15 @@ namespace SerenityHairDesigns.Models {
             catch (Exception ex) { throw new Exception(ex.Message); }
         }
 
+        public Employee SelectEmployee(long lngID) {
+            try {
+                Database db = new Database();
+                return db.SelectEmployee(this, lngID);
+            }
+            catch (Exception ex) { throw new Exception(ex.Message); }
+        }
+
+        public bool IsEmployeeAuthenticated {
 		public List<string> SelectEmployeeSkill()
 		{
 			try

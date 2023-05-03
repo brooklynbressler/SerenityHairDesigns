@@ -159,6 +159,7 @@ CREATE TABLE TAppointments (
 	,intCustomerID				BIGINT					NOT NULL
 	,intEmployeeID				BIGINT					NOT NULL
 	,intAppointmentTypeID		INTEGER					NOT NULL
+	,intServiceID				INTEGER					NOT NULL
 	,dtmAppointmentDate			DATETIME				NOT NULL
 	,dtmAppointmentTime			DATETIME				NOT NULL
 	,monAppointmentCost			MONEY					NOT NULL
@@ -290,6 +291,9 @@ FOREIGN KEY ( intAppointmentID ) REFERENCES TAppointments ( intAppointmentID )
 ALTER TABLE TAppointments ADD CONSTRAINT TAppointments_TAppointmentTypes_FK1
 FOREIGN KEY ( intAppointmentTypeID ) REFERENCES TAppointmentTypes ( intAppointmentTypeID )
 
+ALTER TABLE TAppointments ADD CONSTRAINT TAppointments_TServices_FK1
+FOREIGN KEY ( intServiceID ) REFERENCES TServices ( intServiceID )
+
 ALTER TABLE TAppointmentServices ADD CONSTRAINT TAppointmentServices_TServices_FK1
 FOREIGN KEY ( intServiceID ) REFERENCES TServices ( intServiceID )
 
@@ -408,10 +412,9 @@ VALUES     ('Cut + Blowdry - Medium', 45, 30, 1)
 		  ,('Beard Trim', 40, 60, 2)
 		  ,('Edge Up*', 30, 20, 1002)
 
-		  SELECT * FROM TSkills
 
-		  INSERT INTO TSkills(strSkillName)
-		VALUES			('Joico hair color')
+INSERT INTO TSkills(strSkillName)
+VALUES			('Joico hair color')
 					   ,('cuts')
 					   ,('perms')
 					   ,('Wella hair color')
@@ -431,3 +434,11 @@ VALUES					(1,1)
 					   ,(2,7)
 					   ,(2,8)
 					   ,(2,9)
+
+
+INSERT INTO TAppointments (intCustomerID, intEmployeeID,intAppointmentTypeID, intServiceID, dtmAppointmentDate,dtmAppointmentTime,monAppointmentCost,monAppointmentTip) 
+VALUES                        (1,1,2, 2, '20221111 12:30:00',11-30-21,$12,$3.30);
+
+INSERT INTO TAppointmentTypes (strAppointmentName,intEstTimeInMins)
+VALUES	                        ('Haircut',30),
+                                ('Hairstyling', 45);

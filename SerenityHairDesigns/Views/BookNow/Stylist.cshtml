@@ -1,0 +1,37 @@
+﻿@model SerenityHairDesigns.Models.Employee
+@{
+	ViewBag.Title = "Stylist";
+}
+
+<h2>@Model.strFirstName @Model.strLastName</h2>
+
+<head>
+	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
+</head>
+
+<div id="user-profile-image">
+	@if (Model.UserImage != null) {
+		if (Model.UserImage.ImageID > 0) {
+			<div class="user-profile-image-container">
+				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+										Model.UserImage.FileExtension, ";base64,",
+										Model.UserImage.BytesBase64)" />
+			</div>
+		}
+	}
+</div>
+
+
+<div class="Review-Text">
+	<p>
+		<br />
+		<br />
+		Skills: <br />
+
+		@foreach (var item in ViewBag.lstSkills) {
+
+			@item <br />
+		 }
+	</p>
+</div>
+<a class="center" id="btnBookNow4" name="btnBookNow" href="~/profile/ScheduleLogin">ScheduleNow</a>

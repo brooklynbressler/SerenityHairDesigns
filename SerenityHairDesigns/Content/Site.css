@@ -33,15 +33,23 @@ textarea {
     text-decoration: none;
 }
 
-.center-admin {
-    margin-left: 820px;
-    width: auto;
+.center-emp-customer {
+    margin-left: 40%;
+    width: 368px;
     border: 3px solid #b74f13;
     padding: 10px;
     background-color: black;
     color: white;
-    text-align: center;
-    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.center-admin {
+    margin-left: 35%;
+    width: 541px;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -70,7 +78,7 @@ h2 {
     float: left;
     margin: 5px;
     padding: 3px;
-    width: 100%;
+    width: 98.5%;
     margin-bottom: 10px;
 }
 
@@ -94,9 +102,11 @@ body {
     margin-left: 41%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
+    position: center;
 }
 
 .Careers-Text {
+    overflow: auto;
     background-color: black;
     color: white;
     text-align: center;
@@ -104,6 +114,7 @@ body {
     margin-left: 23%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
+    position: relative ;
 }
 
 .Careers-H3 {
@@ -123,7 +134,7 @@ body {
     text-align: center;
     width: fit-content;
     height: fit-content;
-    margin-left: 38%;
+    margin-left: 39%;
     margin-top: 1%;
     padding-left: 40px;
     padding-top: 5px;
@@ -161,6 +172,19 @@ input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
 }
+.Manage-Employee-Text {
+    background-color: black;
+    color: white;
+    text-align: center;
+    width: 350px;
+    height: 175px;
+    margin-left: 38.5%;
+    padding: 10px 10px 10px 10px;
+    border: 3px solid #b74f13;
+}
+.Manage-Employee-Title {
+    text-align: center;
+}
 
 .Reviews-H2 {
     background-color: black;
@@ -174,8 +198,9 @@ input[name="careerSubmit"] {
 }
 
 .Review {
-    float: left;
-    margin-left: 47px;
+    float:left;
+    margin-left: 270px;
+    text-align: center;
 }
 
 .Book-Now-Btn {
@@ -197,7 +222,7 @@ input[name="careerSubmit"] {
 
 .Book-Now-1 {
     float: left;
-    margin-left: 490px;
+    margin-left: 410px;
     margin-bottom: 30px;
 }
 
@@ -324,8 +349,12 @@ img {
     height: 600px;
     text-align: center;
     margin-left: 34%;
-    margin-top: 35%;
+    margin-top: 10%;
     padding: 35px 70px 0px 40px;
+}
+.Create-Account-ScheduleLogin-Text {
+    text-align: center;
+    margin-left: 50%;
 }
 
 .Create-Account-Form-Emp {
@@ -532,9 +561,42 @@ img {
 .Admin-Profile {
     background-color: black;
     color: white;
-    height: 420px;
+    height: auto;
     width: 600px;
     text-align: center;
+    margin-left: 34%;
+}
+
+.Admin-Text {
+    padding: 20px 0px 20px 0px;
+}
+
+#Schedule-Appointment-Text {
+    color: white;
+    margin-right: 10%;
+    padding-bottom: 20px;
+}
+
+#Schedule-Appointment-Content {
+    background-color: black;
+    height: auto;
+    width: 600px;
+    color: white;
+    margin-left: 31.5%;
+    text-align: center;
+    padding: 15px 15px 15px 80px;
+    margin-top: 30px;
+}
+
+#Schedule-Appointment-Content-Text {
+    padding-bottom: 15px;
+}
+
+#Schedule-Appointment-Btn {
+    margin-right: 10%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
     margin-left: 37%;
 }
 

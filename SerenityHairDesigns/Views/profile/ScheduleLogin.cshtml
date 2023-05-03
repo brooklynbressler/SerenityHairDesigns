@@ -39,8 +39,8 @@
 	<p id="Create-Account-Text"> Create Account <br /> </p>
 	<div id="Create-Account-Content">
 		@using (Html.BeginForm(FormMethod.Post)) {
-			<div>
-				<table>
+			<div id="Create-Account-ScheduleLogin-Text">
+				<table >
 					<tr>
 						<td align="left">First Name:</td>
 						<td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>

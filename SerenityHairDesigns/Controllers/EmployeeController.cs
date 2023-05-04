@@ -268,14 +268,12 @@ namespace SerenityHairDesigns.Controllers
             }
 
             List<Employee> lstEmployees = new List<Employee>();
-            List<Genders>   lstGenders = new List<Genders>();
             Database db = new Database();
              
             lstEmployees = db.GetEmployees();
-            lstGenders = db.GetGenders();
 
             ViewBag.lstEmployees = lstEmployees;
-            ViewBag.Genders = lstGenders;
+
 
             return View();
         }
@@ -284,6 +282,7 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult ManageEmployees(FormCollection col, Employee employee)
         {
+
             Employee e = new Employee();
             e = e.GetEmployeeSession();
 
@@ -318,19 +317,33 @@ namespace SerenityHairDesigns.Controllers
                 }
             }
 
-            List<Genders> lstGenders = new List<Genders>();
             List<Employee> lstEmployees = new List<Employee>();
             Database db = new Database();
 
             lstEmployees = db.GetEmployees();
-            lstGenders = db.GetGenders();
+
 
             ViewBag.lstEmployees = lstEmployees;
-            ViewBag.Genders = lstGenders;
+
 
 
             employee.strFirstName = col["strFirstName"];
             employee.strLastName = col["strLastName"];
+            employee.strGender = col["strGender"];
+            if (employee.strGender == "Female")
+            {
+                employee.intGenderID = 1;
+            }
+            else if (employee.strGender == "Male")
+            {
+                employee.intGenderID = 2;
+
+            }
+            else if (employee.strGender == "General")
+            {
+                employee.intGenderID = 3;
+
+            }
             employee.strEmailAddress = col["strEmailAddress"];
             employee.strPhoneNumber = col["strPhoneNumber"];
             employee.strPassword = col["strPassword"];
@@ -338,7 +351,8 @@ namespace SerenityHairDesigns.Controllers
 
             try
             {
-                if (col["btnSubmit"] == "edit") {
+                if (col["btnSubmit"] == "edit")
+                {
                     string strEmployeeID = col["Employees"];
                     int intEmployeeID = Convert.ToInt32(strEmployeeID);
 
@@ -350,47 +364,46 @@ namespace SerenityHairDesigns.Controllers
 
                     return View(employee);
                 }
-                else if (col["btnSubmit"] == "update") {
-                      db.UpdateEmployee(employee);
+                else if (col["btnSubmit"] == "update")
+                {
+                    employee.Save();
 
 
                     lstEmployees = db.GetEmployees();
-                    lstGenders = db.GetGenders();
 
                     ViewBag.lstEmployees = lstEmployees;
-                    ViewBag.Genders = lstGenders;
+
 
                     return View(employee);
                 }
-                else if (col["btnSubmit"] == "Create")
+                else    if (col["btnSubmit"] == "Create")
                 {
-                    
 
-                    string strGenderID = col["Gender"];
-
-                    employee.intGenderID = Convert.ToInt32(strGenderID);
-                     
 
                     db.InsertEmployee(employee);
 
                     lstEmployees = db.GetEmployees();
-                    lstGenders= db.GetGenders();
+
+
 
                     ViewBag.lstEmployees = lstEmployees;
-                    ViewBag.Genders = lstGenders;
+
 
                     RedirectToAction("ManageEmployees");
                     return View(employee);
                 }
             }
 
-            catch { 
+            catch
+            {
             }
 
             return View();
         }
+    
 
             [HttpPost]
+            //this works
         public ActionResult CreateEmployee(FormCollection col)
         {
 

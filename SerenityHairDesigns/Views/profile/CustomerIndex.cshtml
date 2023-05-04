@@ -64,6 +64,23 @@
 				<button id="btnCreateEmployee" name="btnSubmit" value="update" class="button-action">Edit Now</button>
 			}
 
+        </div>
+    </div>
+    @foreach (var appointment in ViewBag.lstAppointments)
+    {
+        <div class="Review">
+            <p class="Review-Text">
+                @appointment.dtmAppointmentDate
+                |
+                @appointment.intEstTimeInMins
+                |
+                $@appointment.monAppointmentCost.ToString("F2")
+                |
+                @appointment.strAppointmentName
+            </p>
+        </div>
+    }
+    
 		</div>
 	</div>
 	@foreach (var appointment in ViewBag.lstAppointments)

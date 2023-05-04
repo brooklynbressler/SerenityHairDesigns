@@ -1,4 +1,5 @@
-﻿
+﻿@model SerenityHairDesigns.Models.Employee
+
 @{
 	ViewBag.Title = "EmployeeLoggedIn";
 }
@@ -30,18 +31,131 @@
 	</div>
 }
 
-<h2>EmployeeLoggedIn</h2>
 
-<head>
-	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
-</head>
 
-<div class="Stylist-Logged_in">
-	<p>
-		<div class="img-kelley">
-			<img src="https://content.app-sources.com/s/02312516231161671/thumbnails/640x480/stylists/kelly-3059854.png" alt="Kelley">
+<h2>Welcome @Model.strFirstName</h2>
+
+
+@using (Html.BeginForm("EmployeeLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="Stylist-logged-in">
+	<div class="img-Stylist-Logged-In">
+		@if (Model.UserImage != null)
+		{
+			if (Model.UserImage.ImageID > 0)
+			{
+				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+										Model.UserImage.FileExtension, ";base64,",
+										Model.UserImage.BytesBase64)" />
+			}
+		}
+
+	</div>
+
+	<div class="Stylist-logged_in-1">
+		<label for=model.strFirstName>Years of Expereince:</label>
+		@Html.TextBoxFor(model => model.strYearsOfExperience, new { @autofocus = "autofocus" })
+		<br />
+
+		<br />
+
+		Skills: <br />
+		@if (ViewBag.skills != null)
+		{
+
+			foreach (var item in ViewBag.skills)
+			{
+				<ul>
+					<li>@item</li>
+				</ul>
+			}
+		}
+	</div>
+
+	<div class="Employee-Profile">
+		<p>To make changes to your profile enter your information below and click the Update button.</p>
+		<div id="user-profile-image">
+			@if (Model.UserImage != null)
+			{
+				if (Model.UserImage.ImageID > 0)
+				{
+					<div class="user-profile-image-container">
+						<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+										Model.UserImage.FileExtension, ";base64,",
+										Model.UserImage.BytesBase64)" />
+					</div>
+				}
+			}
+			@Html.TextBoxFor(model => model.UserImage.ImageID, new { style = "display: none;" })
+			<div id="user-profile-data">
+				<div class="section">
+					<div class="section">
+						<div>User Profile Image</div>
+						<div>
+							<input class="profile-item" type="file" name="UserImage" id="UserImage" />
+						</div>
+					</div>
+				</div>
+				<div class="section">
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strFirstName)</div>
+						<div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div>
+					</div>
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strLastName)</div>
+						<div>@Html.TextBoxFor(model => model.strLastName)</div>
+					</div>
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strPassword)</div>
+						<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
+					</div>
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strPhoneNumber)</div>
+						<div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div>
+					</div>
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strEmailAddress)</div>
+						<div>@Html.TextBoxFor(model => model.strEmailAddress)</div>
+					</div>
+					<div class="section">
+						<div>@Html.LabelFor(model => model.strGender)</div>
+						<div>@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })</div>
+					</div>
+				</div>
+				<div class="section">
+					<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+				</div>
+
+				<div class="Emp-Availability1">
+					<p class="Shift-Title">Edit Availability</p>
+					<table>
+						<tr>
+							<td>
+								<p class="Shift-Text">Shift Start Time:</p>
+							</td>
+							<td>
+								<input type="datetime-local" id="dtmStartTime" name="dtmStartTime">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p class="Shift-Text">Shift End Time:</p>
+							</td>
+							<td>
+								<input type="datetime-local" id="dtmEndTime" name="dtmEndTime">
+
+							</td>
+						</tr>
+					</table>
+					<div class="section">
+						<button class="button-action" id="btnEditAvailability" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</p>
-</div>
 
+	</div>
+</div>
+	}
 

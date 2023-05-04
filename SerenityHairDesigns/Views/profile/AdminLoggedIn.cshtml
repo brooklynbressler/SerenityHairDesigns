@@ -5,6 +5,7 @@
 
 <h2>@ViewBag.Title</h2>
 
+
 @if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
 {
 	<div class="center-admin">
@@ -116,19 +117,73 @@
 		</div>
 	</div>
 
+	<p>Schedules</p>
 	@using (Html.BeginForm(FormMethod.Post))
 	{
-		<div class="header__item">
-			<h1>Scheduled Times</h1>
-			<form id="form1" runat="server">
-				@Html.ListBox("Schedules", ViewBag.Schedules as SelectList, new { style = "width: 300px; height: 200px;" })
-				<br />
-				<button id="btnDeleteSchedule" name="btnSubmit" value="btnDeleteSchedule" class="button-action">Delete Selected Schedule</button>
 
-			</form>
-		</div>
+		if (ViewBag.Schedules == null)
+		{
+			<p>You are not scheduled for any shifts coming up.</p>
+		}
+		else
+		{
+			foreach (var item in ViewBag.Schedules)
+			{
+				<input type="checkbox" name="Schedules" value="@item.intScheduleID" />
+				<label for="Schedule">
+					<pre>
+						Customer First Name: @item.dteStartTime
+
+						Customer Last Name: @item.dteEndTime
+				</pre>
+					@*<table>
+							<tr>
+								<td> Customer First Name: </td>
+								<td> @item.strCustomerFirstName </td>
+							</tr>
+							<tr>
+								<td> Customer Last Name: </td>
+								<td> @item.strCustomerLastName </td>
+							</tr>
+							<tr>
+								<td> Appointment Date: </td>
+								<td> @item.dtmAppointmentDate </td>
+							</tr>
+							<tr>
+								<td> Appointment Length: </td>
+								<td> @item.intEstTimeInMins </td>
+							</tr>
+							<tr>
+								<td> Service Type: </td>
+								<td> @item.strAppointmentName </td>
+							</tr>
+							<tr>
+								<td> Estimated Appointment Cost: </td>
+								<td> $@item.monAppointmentCost </td>
+							</tr>
+							<tr>
+								<td> Appointment Tip Amount: </td>
+								<td> $@item.monAppointmentTip </td>
+							</tr>
+							<tr>
+								<td> Customer Phone Number: </td>
+								<td> @item.strCustomerPhone </td>
+							</tr>
+							<tr>
+								<td> Customer Email: </td>
+								<td> @item.strCustomerEmail </td>
+							</tr>
+						</table>*@
+				</label>
+
+				<button id="btnCancelSchedule" name="btnSubmit" value="btnCancelSchedule" class="button-action">Cancel Schedule</button>
+			}
+		}
+
+
 
 	}
+
 
 
 </div>

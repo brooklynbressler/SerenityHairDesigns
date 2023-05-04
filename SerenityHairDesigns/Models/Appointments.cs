@@ -20,5 +20,13 @@ namespace SerenityHairDesigns.Models
         public decimal monAppointmentTip { get; set; }
 
         public string strAppointmentType { get; set; }        
+
+        public string strCustomerFirstName { get; set; }
+
+        public string strCustomerLastName { get; set; }
+
+        public string strCustomerPhone { get; set; }
+
+        public string strCustomerEmail { get; set; }
     }
 }

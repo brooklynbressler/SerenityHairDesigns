@@ -25,10 +25,6 @@ namespace SerenityHairDesigns.Controllers
     
             return View(C); 
             //ViewBag.lstAppointments = sortedList;
-
-
-
-            return View(C);
         }
         // GET: profile
         public ActionResult ScheduleLogin()
@@ -58,6 +54,18 @@ namespace SerenityHairDesigns.Controllers
 
             ViewBag.Genders = Genders;
 
+            Employee e = new Employee();
+
+            e = e.GetEmployeeSession();
+
+            long lngEmployeeID = e.intEmployeeID;
+
+            List<Appointments> a = new List<Appointments>();
+
+            a = db.GetEmployeeAppointments(lngEmployeeID);
+
+            ViewBag.Appointments = a;
+
             return View();
         }
 
@@ -67,6 +75,8 @@ namespace SerenityHairDesigns.Controllers
 
             Appointments appointment = new Appointments();
 
+            List<Appointments> a = new List<Appointments>();
+
             string date = col["AppointmentDateTime"];
 
             DateTime dteDate;
@@ -75,7 +85,12 @@ namespace SerenityHairDesigns.Controllers
 
             appointment.dtmAppointmentDate = dteDate;
 
-            int intServiceID = int.Parse(col["Services"]);
+            string strServiceID = "";
+            int intServiceID = 0;
+
+            strServiceID = col["Services"];
+
+            intServiceID = Convert.ToInt32(strServiceID);
 
             Services service = new Services();
 
@@ -97,18 +112,40 @@ namespace SerenityHairDesigns.Controllers
 
             long lngEmployeeID = e.intEmployeeID;  //employees ID here
 
+            a = db.GetEmployeeAppointments(lngEmployeeID);
+
+            ViewBag.Appointments = a;
+
             Customer customer = new Customer();
 
-            customer.strFirstName = col["firstname"];
-            customer.strLastName = col["lastname"];
-            customer.strPhoneNumber = col["Number"];
-            int intGender = int.Parse(col["Gender"]);
+            if(col["btnSubmit"] == "btnScheduleAppointment") 
+            {
+                customer.strFirstName = col["firstname"];
+                customer.strLastName = col["lastname"];
+                customer.strPhoneNumber = col["Number"];
+                int intGender = int.Parse(col["Gender"]);
 
-            db.InsertCustomerManually(customer, intGender, lngEmployeeID );
+                db.InsertCustomerManually(customer, intGender, lngEmployeeID);
 
-            customer = db.GetLastCustomer();
+                customer = db.GetLastCustomer();
 
-            db.InsertAppointment(appointment, customer, lngEmployeeID, intServiceID);
+                db.InsertAppointment(appointment, customer, lngEmployeeID, intServiceID);
+
+                a = db.GetEmployeeAppointments(lngEmployeeID);
+
+                ViewBag.Appointments = a;
+            } else if (col["btnSubmit"] == "btnCancelAppointment") 
+            {
+                appointment.intAppointmentID = Convert.ToInt32(col["Appointment"]);
+
+                db.CancelAppointment(appointment.intAppointmentID);
+
+                a = db.GetEmployeeAppointments(lngEmployeeID);
+
+                ViewBag.Appointments = a;
+
+                RedirectToAction("EmployeeScheduleAppointment", "Profile");
+            }
 
             List<Services> lstServices = new List<Services>();
 
@@ -121,7 +158,6 @@ namespace SerenityHairDesigns.Controllers
             Genders = db.GetGenders();
 
             ViewBag.Genders = Genders;
-
 
             return View();
         }
@@ -223,9 +259,6 @@ namespace SerenityHairDesigns.Controllers
 
                     else if (col["btnSubmit"] == "EditAvailability")
                     {
-
-
-
                         string dteStartTime = col["dteStartDate"];
 
 
@@ -264,6 +297,10 @@ namespace SerenityHairDesigns.Controllers
                             
 
 						}
+
+                        Database db = new Database();
+
+                        db.InsertAvailability(dteStartDate, dteEndDate, lngEmployeeID);
 
 
                         e.SaveEmployeeSession();

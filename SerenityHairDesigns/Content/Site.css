@@ -361,8 +361,8 @@ img {
 .Create-Account-Form-Emp {
     background-color: black;
     color: white;
-    width: 500px;
-    height: 350px;
+    width: fit-content;
+    height: fit-content;
     text-align: center;
     margin-left: 34%;
     margin-top: 4%;
@@ -606,4 +606,8 @@ img {
     width: 100px; /* Adjust the width to your preference */
     text-align: right; /* Align the text to the right for horizontal label */
     margin-right: 10px; /* Add some margin between the label and textbox */
+}
+
+#btnScheduleAppointment {
+    margin-bottom: 20px;
 }

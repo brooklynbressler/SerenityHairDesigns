@@ -1,15 +1,14 @@
-
-﻿@model SerenityHairDesigns.Models.AboutUs
+@model SerenityHairDesigns.Models.AboutUs
 
 <!DOCTYPE html>
 
 @* About Us Page Content *@
 
-<html> 
+<html>
 <head>
-	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
 </head>
- 
+
 <body>
     <h2 class="Careers-H2">
         About Serenity Hair Designs
@@ -29,26 +28,7 @@
         Reviews From Our Amazing Customers
     </h2>
 
-	@foreach (var item in ViewBag.lstReviews)
-		{
-			<div class="Review">
-				<p class="Review-Text">
-					@item.strName
-					<br>
-					<br>
-
-                @item.strReview
-                <br>
-                @for (int i = 0; i < @item.intRating; i++)
-                {
-                    <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-                }
-                <br />
-                <br />
-            </p>
-        </div>
-    }
-    @*@foreach (var item in ViewBag.lstReviews)
+    @foreach (var item in ViewBag.lstReviews)
     {
         <div class="Review">
             <p class="Review-Text">
@@ -66,7 +46,26 @@
                 <br />
             </p>
         </div>
-    }*@
+    }
+    @*@foreach (var item in ViewBag.lstReviews)
+        {
+            <div class="Review">
+                <p class="Review-Text">
+                    @item.strName
+                    <br>
+                    <br>
+
+                    @item.strReview
+                    <br>
+                    @for (int i = 0; i < @item.intRating; i++)
+                    {
+                        <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+                    }
+                    <br />
+                    <br />
+                </p>
+            </div>
+        }*@
 
 </body>
 </html>

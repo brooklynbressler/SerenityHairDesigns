@@ -29,6 +29,9 @@ namespace SerenityHairDesigns.Models {
 
         public ActionTypes ActionType = ActionTypes.NoType;
         public Image UserImage;
+        public Image UserImage1;
+        public Image UserImage2;
+
         public List<Image> Images;
         //public List<Event> Events = new List<Event>();
         //public List<Like> Likes;

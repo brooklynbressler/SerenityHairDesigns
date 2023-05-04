@@ -4,6 +4,33 @@
 	ViewBag.Title = "AdminInfo";
 }
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+<div class="center-admin">
+	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+	<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+	<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+	<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+	<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
 <h2>EmployeeInfo</h2>
 
 <head>
@@ -42,25 +69,25 @@
 		@using (Html.BeginForm(FormMethod.Post))
 		{
 
-		<div class="header__item">
-			<h1>Input Admin Costs</h1>
-			<label for="startdatecosts">Start Date:</label>
-			<input type="date" id="startdatecosts" name="startdatecosts">
-			<br />
-			<label for="enddatecosts">End Date:</label>
-			<input type="date" id="enddatecosts" name="enddatecosts">
-			<br />
-			<label for="boothrentalcosts">Booth Rental:</label>
-			<input type="number" id="boothrentalcosts" name="boothrentalcosts">
-			<br />
-			<label for="buildingrental">Building Rental:</label>
-			<input type="number" id="buildingrental" name="buildingrental">
-			<br />
-			<label for="buildingutilities">Building Utilities:</label>
-			<input type="number" id="buildingutilities" name="buildingutilities">
-			<br />
-			<button id="btnAdminCosts" name="btnSubmit" value="btnAdminCosts" class="button-action">Submit</button>
-		</div>
+			<div class="header__item">
+				<h1>Input Admin Costs</h1>
+				<label for="startdatecosts">Start Date:</label>
+				<input type="date" id="startdatecosts" name="startdatecosts">
+				<br />
+				<label for="enddatecosts">End Date:</label>
+				<input type="date" id="enddatecosts" name="enddatecosts">
+				<br />
+				<label for="boothrentalcosts">Booth Rental:</label>
+				<input type="number" id="boothrentalcosts" name="boothrentalcosts">
+				<br />
+				<label for="buildingrental">Building Rental:</label>
+				<input type="number" id="buildingrental" name="buildingrental">
+				<br />
+				<label for="buildingutilities">Building Utilities:</label>
+				<input type="number" id="buildingutilities" name="buildingutilities">
+				<br />
+				<button id="btnAdminCosts" name="btnSubmit" value="btnAdminCosts" class="button-action">Submit</button>
+			</div>
 		}
 
 		@using (Html.BeginForm(FormMethod.Post))
@@ -147,67 +174,67 @@
 		@using (Html.BeginForm(FormMethod.Post))
 		{
 
-	<div class="header__item">
-		<h1>Employee Costs</h1>
-		<br />
-		@if (ViewBag.EmployeeInfo == null)
-		{
-			<label>Booth Rental: </label>
-			<output type="label"></output>
-			<br />
-			<br />
-			<label>Building Rental: </label>
-			<output type="label"></output>
-			<br />
-			<br />
-			<label>Building Utilities: </label>
-			<output type="label"></output>
-			<br />
-		}
-		else
-		{
-			<label>Booth Rental: </label>
-			<output type="label">@ViewBag.EmployeeInfo.decBoothRental</output>
-			<br />
-			<br />
-			<label>Building Rental: </label>
-			<output type="label">@ViewBag.EmployeeInfo.decBuildingRental</output>
-			<br />
-			<br />
-			<label>Building Utilities: </label>
-			<output type="label">@ViewBag.EmployeeInfo.decBuildingUtilities</output>
-			<br />
-		}
+			<div class="header__item">
+				<h1>Employee Costs</h1>
+				<br />
+				@if (ViewBag.EmployeeInfo == null)
+				{
+					<label>Booth Rental: </label>
+					<output type="label"></output>
+					<br />
+					<br />
+					<label>Building Rental: </label>
+					<output type="label"></output>
+					<br />
+					<br />
+					<label>Building Utilities: </label>
+					<output type="label"></output>
+					<br />
+				}
+				else
+				{
+					<label>Booth Rental: </label>
+					<output type="label">@ViewBag.EmployeeInfo.decBoothRental</output>
+					<br />
+					<br />
+					<label>Building Rental: </label>
+					<output type="label">@ViewBag.EmployeeInfo.decBuildingRental</output>
+					<br />
+					<br />
+					<label>Building Utilities: </label>
+					<output type="label">@ViewBag.EmployeeInfo.decBuildingUtilities</output>
+					<br />
+				}
 
-	</div>
+			</div>
 
 		}
 
 		@using (Html.BeginForm(FormMethod.Post))
 		{
-	<div class="header__item">
-		<h1>Employee Earnings</h1>
-		<br />
-		@if (ViewBag.EmployeeInfo == null)
-		{
-			<label>Appointment Pay: </label>
-			<output type="label"></output>
-			<br />
-			<br />
-			<label>Tip Amount: </label>
-			<output type="label"></output>
-		}
+			<div class="header__item">
+				<h1>Employee Earnings</h1>
+				<br />
+				@if (ViewBag.EmployeeInfo == null)
+				{
+					<label>Appointment Pay: </label>
+					<output type="label"></output>
+					<br />
+					<br />
+					<label>Tip Amount: </label>
+					<output type="label"></output>
+				}
 
-		else
-		{
-			<label>Appointment Pay: </label>
-			<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
-			<br />
-			<br />
-			<label>Tip Amount: </label>
-			<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
-		}
-	</div>
+				else
+				{
+					<label>Appointment Pay: </label>
+					<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
+					<br />
+					<br />
+					<label>Tip Amount: </label>
+					<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
+				}
+			</div>
 
 		}
 

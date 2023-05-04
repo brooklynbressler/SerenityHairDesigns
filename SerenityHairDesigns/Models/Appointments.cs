@@ -14,6 +14,7 @@ namespace SerenityHairDesigns.Models
         public int intEstTimeInMins { get; set; }
 
         public string strAppointmentName { get; set; }
+        public int intAppointmentType { get; set; }
 
         public decimal monAppointmentCost { get; set; }
 

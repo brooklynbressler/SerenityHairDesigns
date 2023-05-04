@@ -3,6 +3,33 @@
 	ViewBag.Title = "BookNow";
 }
 @*book now buttons for however many stations there are  *@
+
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
 <div class="center">
 	<h2>BookNow!!!</h2>
 </div>
@@ -10,11 +37,14 @@
 
 	<div class="BookNow">
 		<div class="Book-Now-1">
-			@foreach (var item in ViewBag.lstEmployees) {
+			@foreach (var item in ViewBag.lstEmployees)
+			{
 				<div class="BookNow">
 					<div id="user-profile-image">
-						@if (@item.UserImage != null) {
-							if (@item.UserImage.ImageID > 0) {
+						@if (@item.UserImage != null)
+						{
+							if (@item.UserImage.ImageID > 0)
+							{
 								<div class="user-profile-image-container">
 									<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 													@item.UserImage.FileExtension, ";base64,",
@@ -31,12 +61,13 @@
 						@item.strPhoneNumber <br />
 						<br />
 						<br />
-						@using (Html.BeginForm("BookNow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+						@using (Html.BeginForm("BookNow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+						{
 							<a class="center" id="btnStylistChosen" name="btnStylistChosen" value="booknow" href="~/BookNow/Stylist/@item.intEmployeeID">Book Now</a>
 						}
 					</p>
 				</div>
-			 }
+			}
 		</div>
 	</div>
 </body>

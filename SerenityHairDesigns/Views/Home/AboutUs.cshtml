@@ -1,33 +1,60 @@
-
 ﻿@model SerenityHairDesigns.Models.AboutUs
 
 <!DOCTYPE html>
 
 @* About Us Page Content *@
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
 
-<html> 
+
+
+<html>
 <head>
 	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
 </head>
- 
+
 <body>
-    <h2 class="Careers-H2">
-        About Serenity Hair Designs
-    </h2>
+	<h2 class="Careers-H2">
+		About Serenity Hair Designs
+	</h2>
 
-    <p class="AboutUs-Text">
-        At Serenity Hair Designs, we take pride in ensuring every customer walks out happier than they came in! <br />
-        <br />
-        We are located at the lower part of 4150 Alexandria Pike, Cold Spring, KY 41076 across from fire department in the Sunoco gas station plaza with plenty of parking in the back. <br />
-        <br />
-        You can reach us through Facebook Messenger under Rhonda Ausdenmoore or Cathy Guthier, or leave us a message at the shop at (859) 441-6700. <br />
-        <br />
-        Feel free to stop by, but please reach out first to make sure we are there!
-    </p>
+	<p class="AboutUs-Text">
+		At Serenity Hair Designs, we take pride in ensuring every customer walks out happier than they came in! <br />
+		<br />
+		We are located at the lower part of 4150 Alexandria Pike, Cold Spring, KY 41076 across from fire department in the Sunoco gas station plaza with plenty of parking in the back. <br />
+		<br />
+		You can reach us through Facebook Messenger under Rhonda Ausdenmoore or Cathy Guthier, or leave us a message at the shop at (859) 441-6700. <br />
+		<br />
+		Feel free to stop by, but please reach out first to make sure we are there!
+	</p>
 
-    <h2 class="Reviews-H2">
-        Reviews From Our Amazing Customers
-    </h2>
+	<h2 class="Reviews-H2">
+		Reviews From Our Amazing Customers
+	</h2>
 
 	<div class="">
 		<div class="Review">
@@ -76,6 +103,25 @@
 
 
 	@foreach (var item in ViewBag.lstReviews)
+	{
+		<div class="Review">
+			<p class="Review-Text">
+				@item.strName
+				<br>
+				<br>
+
+				@item.strReview
+				<br>
+				@for (int i = 0; i < @item.intRating; i++)
+				{
+					<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+				}
+				<br />
+				<br />
+			</p>
+		</div>
+	}
+	@*@foreach (var item in ViewBag.lstReviews)
 		{
 			<div class="Review">
 				<p class="Review-Text">
@@ -83,36 +129,17 @@
 					<br>
 					<br>
 
-                @item.strReview
-                <br>
-                @for (int i = 0; i < @item.intRating; i++)
-                {
-                    <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-                }
-                <br />
-                <br />
-            </p>
-        </div>
-    }
-    @*@foreach (var item in ViewBag.lstReviews)
-    {
-        <div class="Review">
-            <p class="Review-Text">
-                @item.strName
-                <br>
-                <br>
-
-                @item.strReview
-                <br>
-                @for (int i = 0; i < @item.intRating; i++)
-                {
-                    <i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
-                }
-                <br />
-                <br />
-            </p>
-        </div>
-    }*@
+					@item.strReview
+					<br>
+					@for (int i = 0; i < @item.intRating; i++)
+					{
+						<i id="star-icon" class="fa-sharp fa-solid fa-star"></i>
+					}
+					<br />
+					<br />
+				</p>
+			</div>
+		}*@
 
 </body>
 </html>

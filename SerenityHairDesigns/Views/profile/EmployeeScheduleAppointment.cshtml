@@ -1,6 +1,33 @@
 ﻿
 @{
-    ViewBag.Title = "EmployeeScheduleAppointment";
+	ViewBag.Title = "EmployeeScheduleAppointment";
+}
+
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
 }
 
 <h2>EmployeeScheduleAppointment</h2>
@@ -10,41 +37,41 @@
 	<div class="Sign-In-Form-Emp">
 		@using (Html.BeginForm(FormMethod.Post))
 		{
-		<div class="header__item">
-			<h1>Schedule Hair Appointment</h1>
-			<label for="AppointmentDateTime">Pick an available time/day:</label>
-			<input type="datetime-local" id="AppointmentDateTime" name="AppointmentDateTime">
-			<br />
-			<br />
-			<label for="AppointmentService">Type of Service:</label>
-			<select id="Services" name="Services">
-				@foreach (var item in ViewBag.Services)
-				{
-					<option value="@item.intServiceID">@item.strServiceName</option>
-				}
-			</select>
+			<div class="header__item">
+				<h1>Schedule Hair Appointment</h1>
+				<label for="AppointmentDateTime">Pick an available time/day:</label>
+				<input type="datetime-local" id="AppointmentDateTime" name="AppointmentDateTime">
+				<br />
+				<br />
+				<label for="AppointmentService">Type of Service:</label>
+				<select id="Services" name="Services">
+					@foreach (var item in ViewBag.Services)
+					{
+						<option value="@item.intServiceID">@item.strServiceName</option>
+					}
+				</select>
 
-			<br />
-			<label for="firstname">First Name:</label>
-			<input type="text" id="firstname" name="firstname">
-			<br />
-			<label for="lastname">Last Name:</label>
-			<input type="text" id="lastname" name="lastname">
-			<br />
-			<label for="Number">Phone Number:</label>
-			<input type="text" id="Number" name="Number">
-			<br />
-			<label for="Gender">Gender:</label>
-			<select id="Gender" name="Gender">
-				@foreach (var item in ViewBag.Genders)
-				{
-					<option value="@item.intGenderID">@item.strGenderDesc</option>
-				}
-			</select>
+				<br />
+				<label for="firstname">First Name:</label>
+				<input type="text" id="firstname" name="firstname">
+				<br />
+				<label for="lastname">Last Name:</label>
+				<input type="text" id="lastname" name="lastname">
+				<br />
+				<label for="Number">Phone Number:</label>
+				<input type="text" id="Number" name="Number">
+				<br />
+				<label for="Gender">Gender:</label>
+				<select id="Gender" name="Gender">
+					@foreach (var item in ViewBag.Genders)
+					{
+						<option value="@item.intGenderID">@item.strGenderDesc</option>
+					}
+				</select>
 
-			<br />
-			<button id="btnScheduleAppointment" name="btnSubmit" value="btnScheduleAppointment" class="button-action">Submit Appointment</button>
-		</div>
+				<br />
+				<button id="btnScheduleAppointment" name="btnSubmit" value="btnScheduleAppointment" class="button-action">Submit Appointment</button>
+			</div>
 		}
 	</div>
 </div>

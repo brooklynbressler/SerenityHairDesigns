@@ -16,7 +16,7 @@
 			padding: 10px;
 		}
 
-		
+
 
 		.header__item {
 			flex: 1 1 30%;
@@ -31,6 +31,33 @@
 			border: 1px solid #ccc;
 		}
 	</style>
+
+	@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+	{
+		<div class="center-admin">
+			<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+			<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+			<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+			<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+			<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+		</div>
+	}
+	@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+	{
+		<div class="center-employee">
+			<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+			<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+			<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+			<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+		</div>
+	}
+	@if (ViewBag.blnIsCustomer == 1)
+	{
+		<div class="center-customer">
+			<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+			<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+		</div>
+	}
 </head>
 <body>
 

@@ -45,7 +45,7 @@ textarea {
 
 .center-admin {
     margin-left: 35%;
-    width: 541px;
+    width: 625px;
     border: 3px solid #b74f13;
     padding: 10px;
     background-color: black;
@@ -53,6 +53,25 @@ textarea {
     text-decoration: none;
 }
 
+.center-employee {
+    margin-left: 38%;
+    width: 439px;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
+
+.center-customer {
+    margin-left: 43%;
+    width: 180px;
+    border: 3px solid #b74f13;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
 h2 {
     background-color: black;
     color: white;

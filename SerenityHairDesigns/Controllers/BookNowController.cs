@@ -10,9 +10,44 @@ namespace SerenityHairDesigns.Controllers
     public class BookNowController : Controller
     {
         public ActionResult Stylist() {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             List<string> lstSkills = new List<string>();
             Database db = new Database();
-            Employee e = new Employee();
+            //Employee e = new Employee();
             long lngID = Convert.ToInt64(RouteData.Values["id"]);
 
             lstSkills = db.SelectSkills(lngID);
@@ -22,6 +57,58 @@ namespace SerenityHairDesigns.Controllers
             e = e.SelectEmployee(lngID);
 
             return View(e);
+        }
+
+        [HttpPost]
+        public ActionResult Stylist(FormCollection col)
+        {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
+            List<string> lstSkills = new List<string>();
+            Database db = new Database();
+          //  Employee e = new Employee();
+            long lngID = Convert.ToInt64(RouteData.Values["id"]);
+
+            lstSkills = db.SelectSkills(lngID);
+
+            ViewBag.lstSkills = lstSkills;
+
+            e = e.SelectEmployee(lngID);
+
+            return RedirectToAction("ScheduleNowLoggedIn", "profile", new { @id = lngID });
         }
 
         public ActionResult ScheduleLogin()

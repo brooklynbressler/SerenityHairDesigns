@@ -4,12 +4,40 @@
 	ViewBag.Title = "ScheduleLogin";
 }
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
 <h2>ScheduleLogin</h2>
 
 <div class="Create-Account-Form">
 	<div class="Sign-In-Form">
 		<p>Existing Customer? Sign-In</p>
-		@using (Html.BeginForm(FormMethod.Post)) {
+		@using (Html.BeginForm(FormMethod.Post))
+		{
 			<div class="Login-Textboxes">
 				<table>
 					<tr>
@@ -31,16 +59,17 @@
 				</table>
 			</div>
 			<button id="btnSignIn" name="btnSubmit" value="signin" class="button-action"><i class="fas fa-sign-in-alt"></i> Sign-In</button>
-		 }
+		}
 		<p id="Create-Account-OR">OR</p>
 	</div>
 
 
 	<p id="Create-Account-Text"> Create Account <br /> </p>
 	<div id="Create-Account-Content">
-		@using (Html.BeginForm(FormMethod.Post)) {
+		@using (Html.BeginForm(FormMethod.Post))
+		{
 			<div id="Create-Account-ScheduleLogin-Text">
-				<table >
+				<table>
 					<tr>
 						<td align="left">First Name:</td>
 						<td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
@@ -68,6 +97,6 @@
 				</table>
 			</div>
 			<button id="btnCreateAccount" name="btnSubmit" value="signup" class="button-action">Create Account</button>
-		 }
+		}
 	</div>
 </div>

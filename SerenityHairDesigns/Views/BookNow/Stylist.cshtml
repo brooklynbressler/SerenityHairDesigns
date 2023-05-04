@@ -3,6 +3,33 @@
 	ViewBag.Title = "Stylist";
 }
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
 <h2>@Model.strFirstName @Model.strLastName</h2>
 
 <head>
@@ -10,8 +37,10 @@
 </head>
 
 <div id="user-profile-image">
-	@if (Model.UserImage != null) {
-		if (Model.UserImage.ImageID > 0) {
+	@if (Model.UserImage != null)
+	{
+		if (Model.UserImage.ImageID > 0)
+		{
 			<div class="user-profile-image-container">
 				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 										Model.UserImage.FileExtension, ";base64,",
@@ -28,10 +57,15 @@
 		<br />
 		Skills: <br />
 
-		@foreach (var item in ViewBag.lstSkills) {
+		@foreach (var item in ViewBag.lstSkills)
+		{
 
 			@item <br />
-		 }
+		}
 	</p>
 </div>
-<a class="center" id="btnBookNow4" name="btnBookNow" href="~/profile/ScheduleLogin">ScheduleNow</a>
+@using (Html.BeginForm("Stylist", "BookNow", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+	<button class="center" id="btnBookNow" value="btnSubmit" name="btnBookNow">ScheduleNow</button>
+}
+

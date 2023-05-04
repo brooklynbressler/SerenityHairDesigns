@@ -4,6 +4,33 @@
 	ViewBag.Title = "RemoveService";
 }
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
 <h2>Remove Service</h2>
 
 <div class="Create-Account-Form-Emp">
@@ -13,15 +40,15 @@
 		{
 
 
-				<select id="Services" name="Services">
-					@foreach (var item in ViewBag.Services)
-					{
-						<option value="@item.intServiceID">@item.strServiceName</option>
-					}
-				</select>
+			<select id="Services" name="Services">
+				@foreach (var item in ViewBag.Services)
+				{
+					<option value="@item.intServiceID">@item.strServiceName</option>
+				}
+			</select>
 
-				<br />
-				<br />
+			<br />
+			<br />
 
 			<button id="btnDeleteService" name="btnSubmit" value="btnDeleteService" class="button-action"><i class="fas fa-sign-in-alt"></i> Delete Service</button>
 		}

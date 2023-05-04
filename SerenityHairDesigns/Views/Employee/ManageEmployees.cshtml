@@ -1,109 +1,138 @@
 ﻿@model SerenityHairDesigns.Models.Employee
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
+<br />
+
 <div class="Manage-Employee-Text">
-    <p id="Manage-Employee-Title"> Edit Employee <br /> </p>
-    <div>
+	<p id="Manage-Employee-Title"> Edit Employee <br /> </p>
+	<div>
 
-        @using (Html.BeginForm(FormMethod.Post))
-        {
+		@using (Html.BeginForm(FormMethod.Post))
+		{
 
-           <select id="Employees" name="Employees">
-               @foreach (var item in ViewBag.lstEmployees)
-               {
-                   <option value="@item.intEmployeeID">@item.strFirstName @item.strLastName</option>
-               }
-           </select>
+			<select id="Employees" name="Employees">
+				@foreach (var item in ViewBag.lstEmployees)
+				{
+					<option value="@item.intEmployeeID">@item.strFirstName @item.strLastName</option>
+				}
+			</select>
 
-            <button id="btnEditEmployee" name="btnSubmit" value="edit" class="button-action">Edit Employee</button>
-            <button type="button" value="Create" onclick="location.href='@Url.Action("CreateEmployee")'">Create New Employee</button>
-        }
-    </div>
+			<button id="btnEditEmployee" name="btnSubmit" value="edit" class="button-action">Edit Employee</button>
+			<button type="button" value="Create" onclick="location.href='@Url.Action("CreateEmployee")'">Create New Employee</button>
+		}
+	</div>
 
 </div>
 @using (Html.BeginForm(FormMethod.Post))
 {
-    <div class="Create-Account-Form">
-        <p id="Create-Account-Text"> Edit Employee <br /> </p>
-        <div id="Create-Account-Content">
-            <div>
-                <table>
-                    <tr>
-                        <td align="left">First Name:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Last Name:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strLastName, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Password:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Phone:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Email:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
-                    @Html.HiddenFor(m => m.intEmployeeID)
-                </table>
-            </div>
-            <button id="btnEditEmployee" name="btnSubmit" value="update" class="button-action">Save Employee</button>
+	<div class="Create-Account-Form">
+		<p id="Create-Account-Text"> Edit Employee <br /> </p>
+		<div id="Create-Account-Content">
+			<div>
+				<table>
+					<tr>
+						<td align="left">First Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Last Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strLastName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Password:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Phone:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Email:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					@Html.HiddenFor(m => m.intEmployeeID)
+				</table>
+			</div>
+			<button id="btnEditEmployee" name="btnSubmit" value="update" class="button-action">Save Employee</button>
 
-        </div>
-    </div>
+		</div>
+	</div>
 }
 @using (Html.BeginForm(FormMethod.Post))
 {
-    <div class="Create-Account-Form">
-        <p id="Create-Account-Text"> Create Employee <br /> </p>
-        <div id="Create-Account-Content">
+	<div class="Create-Account-Form">
+		<p id="Create-Account-Text"> Create Employee <br /> </p>
+		<div id="Create-Account-Content">
 
-            <div>
-                <table>
-                    <tr>
-                        <td align="left">First Name:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Last Name:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strLastName, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
+			<div>
+				<table>
+					<tr>
+						<td align="left">First Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Last Name:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strLastName, new { @autofocus = "autofocus" })</div></td>
+					</tr>
 
-                    <tr>
-                        <td align="left">Phone:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div></td>
-                    </tr>
-                    <tr>
-                        <td align="left">Email:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
+					<tr>
+						<td align="left">Phone:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div></td>
+					</tr>
+					<tr>
+						<td align="left">Email:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strEmailAddress, new { @autofocus = "autofocus" })</div></td>
+					</tr>
 
-                    <tr>
-                        <td align="left">Password:</td>
-                        <td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
-                    </tr>
+					<tr>
+						<td align="left">Password:</td>
+						<td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
+					</tr>
 
-                    <tr>
-                        <td align="left">Gender:</td>
-                        <td align="left">
-                            <select id="Gender" name="Gender">
-                                @foreach (var item in ViewBag.Genders)
-                                {
-                                    <option value="@item.intGenderID">@item.strGenderDesc</option>
-                                }
-                            </select>
-                        </td>
-                    </tr>
+					<tr>
+						<td align="left">Gender:</td>
+						<td align="left">
+							<select id="Gender" name="Gender">
+								@foreach (var item in ViewBag.Genders)
+								{
+									<option value="@item.intGenderID">@item.strGenderDesc</option>
+								}
+							</select>
+						</td>
+					</tr>
 
-                </table>
-            </div>
-            <button id="btnCreateEmployee" name="btnSubmit" value="Create" class="button-action">Create Employee</button>
+				</table>
+			</div>
+			<button id="btnCreateEmployee" name="btnSubmit" value="Create" class="button-action">Create Employee</button>
 
-        </div>
-    </div>
+		</div>
+	</div>
 }
 
 

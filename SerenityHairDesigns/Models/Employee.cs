@@ -13,7 +13,7 @@ namespace SerenityHairDesigns.Models {
         public int intGenderID { get; set; }   
         public string strPassword  { get; set; }
         public string strRole { get; set; }
-
+        public int intScheduleID { get; set; }
         //[DataType(DataType.EmailAddress)]
         public string strEmailAddress  { get; set; }
 
@@ -89,7 +89,12 @@ namespace SerenityHairDesigns.Models {
                 e = (Employee)HttpContext.Current.Session["CurrentUser"];
                 return e;
             }
-            catch (Exception ex) { throw new Exception(ex.Message); }
+            catch (Exception ex)
+            {
+                Employee e = new Employee();
+
+                return e;
+            }
         }
 
         public bool SaveEmployeeSession() {

@@ -11,16 +11,84 @@ namespace SerenityHairDesigns.Controllers
         // GET: Employee
         public ActionResult Index()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             return View();
         }
 
         [HttpPost]
         public ActionResult Index(FormCollection formCollection)
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Database db = new Database();
             var lstEmployees = db.GetEmployees();
             var id = formCollection["SelectedEmployee"];
-            var selectedEmployee = lstEmployees.Find((e) => e.intEmployeeID == Int32.Parse(id));
+            var selectedEmployee = lstEmployees.Find((e2) => e2.intEmployeeID == Int32.Parse(id));
             var employee = new Employee
             {
                 intEmployeeID = selectedEmployee.intEmployeeID,
@@ -35,12 +103,81 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult Edit(Employee employee)
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             return View(employee);
         }
 
         [HttpPost]
         public ActionResult Edit(FormCollection col)
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             var employee = new Employee
             {
                 intEmployeeID = Int32.Parse(col["intEmployeeID"]),
@@ -56,11 +193,80 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult CreateEmployee()
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             return View();
         }
 
         public ActionResult ManageEmployees()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             List<Employee> lstEmployees = new List<Employee>();
             List<Genders>   lstGenders = new List<Genders>();
             Database db = new Database();
@@ -78,6 +284,40 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult ManageEmployees(FormCollection col, Employee employee)
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             List<Genders> lstGenders = new List<Genders>();
             List<Employee> lstEmployees = new List<Employee>();
             Database db = new Database();
@@ -153,6 +393,41 @@ namespace SerenityHairDesigns.Controllers
             [HttpPost]
         public ActionResult CreateEmployee(FormCollection col)
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             var employee = new Employee
             {
                 strFirstName = col["strFirstName"],

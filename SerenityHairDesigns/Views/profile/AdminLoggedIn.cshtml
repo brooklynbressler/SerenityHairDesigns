@@ -5,101 +5,138 @@
 
 <h2>@ViewBag.Title</h2>
 
-@{
-	SerenityHairDesigns.Models.Employee eCurrent = new SerenityHairDesigns.Models.Employee();
-	eCurrent = eCurrent.GetEmployeeSession();
-}
-
-@if (eCurrent.IsEmployeeAuthenticated) { // already logged in
-<div class="center-admin">
-	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
-	<a class="center" name="EmployeeInfo" href="~/Profile/EmployeesInfo">Employee Info</a>
-	<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
-	<a class="center" name="ManageEmployees" href="~/Employee/CreateEmployee">Create Employee</a>
-	<a class="center" name="ManageEmployees" href="~/Employee/Index">Edit Employee</a>
-</div>
-}
-
-
-@using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" })) {
-	<div class="Admin-Profile">
-		<p class="Admin-Text">To make changes to your profile enter your information below and click the Update button.</p>
-		<div id="user-profile-image">
-			@if (Model.UserImage != null) {
-				if (Model.UserImage.ImageID > 0) {
-					<div class="user-profile-image-container">
-						<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
-										Model.UserImage.FileExtension, ";base64,",
-										Model.UserImage.BytesBase64)" />
-					</div>
-				}
-			}
-		</div>
-		@Html.TextBoxFor(model => model.UserImage.ImageID, new { style = "display: none;" })
-		<div id="user-profile-data">
-			<div class="section">
-				<div class="section">
-					<div>User Profile Image</div>
-					<div>
-						<input class="profile-item" type="file" name="UserImage" id="UserImage" />
-					</div>
-				</div>
-			</div>
-			<div class="section">
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strFirstName)</div>
-					<div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div>
-				</div>
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strLastName)</div>
-					<div>@Html.TextBoxFor(model => model.strLastName)</div>
-				</div>
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strPassword)</div>
-					<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
-				</div>
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strPhoneNumber)</div>
-					<div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div>					
-				</div>
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strEmailAddress)</div>
-					<div>@Html.TextBoxFor(model => model.strEmailAddress)</div>
-				</div>
-				<div class="section">
-					<div>@Html.LabelFor(model => model.strGender)</div>
-					<div>@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })</div>
-				</div>
-			</div>
-			<div class="section">
-				<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
-			</div>
-		</div>
-
-		<div class="Emp-Availability">
-			<p class="Shift-Title">Edit Availability</p>
-			<table>
-				<tr>
-					<td>
-						<p class="Shift-Text">Shift Start Time:</p>
-					</td>
-					<td>
-						<input type="datetime-local" id="dteStartDate" name="dteStartDate">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<p class="Shift-Text">Shift End Time:</p>
-					</td>
-					<td>
-						<input type="datetime-local" id="dteEndDate" name="dteEndDate">
-					</td>
-				</tr>
-			</table>
-			<div class="section">
-				<button class="button-action" id="btnSubmit" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
-			</div>
-		</div>
-
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
 	</div>
 }
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
+
+@using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<div class="Admin-Profile">
+	<p class="Admin-Text">To make changes to your profile enter your information below and click the Update button.</p>
+	<div id="user-profile-image">
+		@if (Model.UserImage != null)
+		{
+			if (Model.UserImage.ImageID > 0)
+			{
+				<div class="user-profile-image-container">
+					<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+										Model.UserImage.FileExtension, ";base64,",
+										Model.UserImage.BytesBase64)" />
+				</div>
+			}
+		}
+	</div>
+	@Html.TextBoxFor(model => model.UserImage.ImageID, new { style = "display: none;" })
+	<div id="user-profile-data">
+		<div class="section">
+			<div class="section">
+				<div>User Profile Image</div>
+				<div>
+					<input class="profile-item" type="file" name="UserImage" id="UserImage" />
+				</div>
+			</div>
+		</div>
+		<div class="section">
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strFirstName)</div>
+				<div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div>
+			</div>
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strLastName)</div>
+				<div>@Html.TextBoxFor(model => model.strLastName)</div>
+			</div>
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strPassword)</div>
+				<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
+			</div>
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strPhoneNumber)</div>
+				<div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div>
+			</div>
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strEmailAddress)</div>
+				<div>@Html.TextBoxFor(model => model.strEmailAddress)</div>
+			</div>
+			<div class="section">
+				<div>@Html.LabelFor(model => model.strGender)</div>
+				<div>@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })</div>
+			</div>
+		</div>
+		<div class="section">
+			<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+		</div>
+	</div>
+
+	<div class="Emp-Availability">
+		<p class="Shift-Title">Edit Availability</p>
+		<table>
+			<tr>
+				<td>
+					<p class="Shift-Text">Shift Start Time:</p>
+				</td>
+				<td>
+					<input type="datetime-local" id="dteStartDate" name="dteStartDate">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p class="Shift-Text">Shift End Time:</p>
+				</td>
+				<td>
+					<input type="datetime-local" id="dteEndDate" name="dteEndDate">
+				</td>
+			</tr>
+		</table>
+		<div class="section">
+			<button class="button-action" id="btnSubmit" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
+		</div>
+	</div>
+
+	@using (Html.BeginForm(FormMethod.Post))
+	{
+		<div class="header__item">
+			<h1>Scheduled Times</h1>
+			<form id="form1" runat="server">
+				@Html.ListBox("Schedules", ViewBag.Schedules as SelectList, new { style = "width: 300px; height: 200px;" })
+				<br />
+				<button id="btnDeleteSchedule" name="btnSubmit" value="btnDeleteSchedule" class="button-action">Delete Selected Schedule</button>
+
+			</form>
+		</div>
+
+	}
+
+
+</div>
+}
+<script>
+
+	function btnDeleteSchedule() {
+		var selectedValue = document.getElementById("Schedules").value;
+		alert("Selected item: " + selectedValue);
+	}
+</script>

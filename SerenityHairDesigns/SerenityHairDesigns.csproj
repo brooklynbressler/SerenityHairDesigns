@@ -211,7 +211,9 @@
     <Compile Include="Models\Resume.cs" />
     <Compile Include="Models\Reviews.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Schedules.cs" />
     <Compile Include="Models\Services.cs" />
+    <Compile Include="Models\StylistAvailability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

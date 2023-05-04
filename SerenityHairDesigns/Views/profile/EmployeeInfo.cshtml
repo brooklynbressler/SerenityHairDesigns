@@ -3,6 +3,33 @@
 
 }
 
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+	<div class="center-admin">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+	</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+	<div class="center-employee">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+		<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+	</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
+		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
+	</div>
+}
+
 <h2>EmployeeInfo</h2>
 
 <head>
@@ -87,7 +114,7 @@
 			</div>
 
 			@*
-		</form>*@
+				</form>*@
 
 
 	</div>
@@ -95,28 +122,28 @@
 
 	<!--<div class="header">-->
 	@*<form class="header__item" id="EmployeeCosts">
-		*@
-		<!--<div class="header__item">
-			<h1>Employee Costs</h1>
-			<label for="startdate">Start Date:</label>
-			<input type="date" id="startdate" name="startdate">
-			<br />
-			<label for="enddate">End Date:</label>
-			<input type="date" id="enddate" name="enddate">
-			<br />
-			<label for="boothrental">Booth Rental:</label>
-			<input type="text" id="boothrental" name="boothrental">
-			<br />
-			<label for="inventoryused">Product Used:</label>
-			<input type="text" id="inventoryused" name="inventoryused">
-			<br />
-			<label for="numberofproduct"># of Product Used:</label>
-			<input type="number" id="numberofproduct" name="numberofproduct">
-			<br>
-			<button value="submit">Submit</button>
-		</div>-->
-		@*
-	</form>*@
+	*@
+	<!--<div class="header__item">
+		<h1>Employee Costs</h1>
+		<label for="startdate">Start Date:</label>
+		<input type="date" id="startdate" name="startdate">
+		<br />
+		<label for="enddate">End Date:</label>
+		<input type="date" id="enddate" name="enddate">
+		<br />
+		<label for="boothrental">Booth Rental:</label>
+		<input type="text" id="boothrental" name="boothrental">
+		<br />
+		<label for="inventoryused">Product Used:</label>
+		<input type="text" id="inventoryused" name="inventoryused">
+		<br />
+		<label for="numberofproduct"># of Product Used:</label>
+		<input type="number" id="numberofproduct" name="numberofproduct">
+		<br>
+		<button value="submit">Submit</button>
+	</div>-->
+	@*
+		</form>*@
 
 	<!--<form class="header__item" id="EmployeeEarnings">
 			<div class="header__item">

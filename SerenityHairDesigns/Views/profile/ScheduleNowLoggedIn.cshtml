@@ -1,61 +1,142 @@
-﻿@model SerenityHairDesigns.Models.Appointments
+﻿@model SerenityHairDesigns.Models.Customer
 
 @{
 	ViewBag.Title = "ScheduleNowLoggedIn";
 }
 
-<body>
-	<h2>@ViewBag.Title</h2>
-
-	<div class="center-emp-customer">
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
+{
+<div class="center-admin">
+	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+	<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+	<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+	<a class="center" name="ManageEmployees" href="~/Employee/ManageEmployees">Manage Employees</a>
+	<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
+</div>
+}
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
+{
+<div class="center-employee">
+	<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
+	<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
+	<a class="center" name="EmployeesInfo" href="~/Profile/EmployeesInfo">My Info</a>
+	<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
+</div>
+}
+@if (ViewBag.blnIsCustomer == 1)
+{
+	<div class="center-customer">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
-		<a class="center" name="CustomerProfile">View Profile</a>
-		<a class="center" name="ScheduleAppointment" href="~/Home/BookNow">Schedule Appointment</a>
+		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
 	</div>
+}
+
+<body>
+	<h2>Schedule Appointment</h2>
+
 
 	<div id="Schedule-Appointment-Content">
-		@using (Html.BeginForm(FormMethod.Post)) {
+		@using (Html.BeginForm(FormMethod.Post))
+		{
 			<p id="Schedule-Appointment-Text"> Book Appointment <br /> </p>
 			<div>
 				<table>
 					<tr>
 						<td align="left" id="Schedule-Appointment-Content-Text">Appointment Type:</td>
 						<td align="left" id="Schedule-Appointment-Content-Text">
-							<select id="Gender" name="Gender">
-								@foreach (var item in ViewBag.AppointmentTypes) {
+							<select id="AptTypes" name="AptTypes">
+								@foreach (var item in ViewBag.AppointmentTypes)
+								{
 									<option value="@item.intAppointmentTypeID">@item.strAppointmentName</option>
-								 }
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td align="left" id="Schedule-Appointment-Content-Text">Pick an available time/day for the appointment:</td>
-						<td align="left" id="Schedule-Appointment-Content-Text"><div><input type="datetime-local" textmode="Date" id="demo-booking-single"></div></td>
-					</tr>
-					<tr>
-						<td align="left" id="Schedule-Appointment-Content-Text">Service Type:</td>
-						<td align="left" id="Schedule-Appointment-Content-Text">
-							<select id="Gender" name="Gender">
-								@foreach (var item in ViewBag.ServiceTypes) {
-									<option value="@item.intServiceID">@item.strServiceName $@item.decServiceCost</option>
 								}
 							</select>
 						</td>
 					</tr>
 					<tr>
+						<td align="left" id="Schedule-Appointment-Content-Text">Service Type:</td>
+						<td align="left" id="Schedule-Appointment-Content-Text">
+							<select id="ServiceType" name="ServiceType">
+								@foreach (var item in ViewBag.ServiceTypes)
+								{
+									<option value="@item.intServiceID">@item.strServiceName $@item.decServiceCost.ToString("0.#")</option>
+								}
+							</select>
+
+						</td>
+					</tr>
+					@*<tr>
+						@Html.TextBoxFor(model => model.UserImage1.ImageID, new { style = "display: none;" })
+
 						<td align="left" id="Schedule-Appointment-Content-Text">Current Picture of Your Hair (Optional):</td>
-						<td align="left" id="Schedule-Appointment-Content-Text"><input class="profile-item" type="file" name="UserImage" id="CurrentUserImage" /></td>
+						<td align="left" id="Schedule-Appointment-Content-Text"><input class="profile-item" type="file" name="UserImage1" id="UserImage1" /> </td>
 					</tr>
 					<tr>
+						@Html.TextBoxFor(model => model.UserImage2.ImageID, new { style = "display: none;" })
+
 						<td align="left">Desired Haircut Look (Optional):</td>
-						<td align="left"><input class="profile-item" type="file" name="UserImage" id="DesiredUserImage" /></td>
+						<td align="left"><input class="profile-item" type="file" name="UserImage2" id="UserImage2" /></td>
+					</tr>*@
+
+					<tr>
+						<td><br></td>
 					</tr>
+
+					<tr>
+						<td>
+							Select Date:
+							<input type="date" id="date" name="date" value="@ViewBag.CurrentDate" />
+
+						</td>
+						<td>
+							<button id="ViewTimes" name="btnSubmit" value="ViewTimes" class="button-action">View Available Times</button>
+
+						</td>
+					</tr>
+
+					<tr>
+						<td><br></td>
+					</tr>
+
+					<tr>
+						<td align="center">
+							Select Available Times
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<select id="Times" name="Times">
+								@if (ViewBag.StylistAvailabilities == null)
+								{
+									<option>No times available today</option>
+								}
+
+								else
+								{
+									foreach (var item in ViewBag.StylistAvailabilities)
+									{
+										<option value="@item.intStylistAvailability">@item.strStartTimeString</option>
+									}
+								}
+
+							</select>
+						</td>
+
+
+
+					</tr>
+
+					<tr>
+						<td><br></td>
+					</tr>
+
 				</table>
 
-			
+
 			</div>
-			<button id="Schedule-Appointment-Btn" name="btnSubmit" value="ScheduleAppointment" class="button-action">Schedule Appointment</button>
-		 }
+			<button id="Schedule-Appointment-Btn" name="btnSubmit" value="Schedule-Appointment-Btn" class="button-action">Schedule Appointment</button>
+
+		}
 	</div>
 </body>
 

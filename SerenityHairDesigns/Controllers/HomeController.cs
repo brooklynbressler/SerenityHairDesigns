@@ -12,13 +12,80 @@ namespace SerenityHairDesigns.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Employee u = new Employee();
             return View();
         }
 
         // GET: Careers
-        public ActionResult Careers() { 
+        public ActionResult Careers() {
 
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
 
             return View(new Resume());
         }
@@ -27,6 +94,41 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult Careers(Resume model, HttpPostedFileBase File )
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             EmailSender sender = new EmailSender();
 
 			sender.SendEmail(model, File);
@@ -36,6 +138,41 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult AddService()
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Database db = new Database();
             List<Genders> Genders = new List<Genders>();
 
@@ -49,6 +186,40 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult AddService(FormCollection col)
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
             Database db = new Database();
             List<Genders> Genders = new List<Genders>();
 
@@ -72,6 +243,40 @@ namespace SerenityHairDesigns.Controllers
         public ActionResult RemoveService()
         {
 
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Database db = new Database();
 
             List<Services> lstServices = new List<Services>();
@@ -86,6 +291,41 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult RemoveService(FormCollection col)
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Database db = new Database();
 
             List<Services> lstServices = new List<Services>();
@@ -105,6 +345,41 @@ namespace SerenityHairDesigns.Controllers
         [HttpPost]
         public ActionResult Services(FormCollection col)
         {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             if (col["btnSubmit"] == "btnAddService")
 			{
                 return RedirectToAction("AddService", "Home");
@@ -118,6 +393,8 @@ namespace SerenityHairDesigns.Controllers
         // GET: Services
         public ActionResult Services()
         {
+
+
 
             Database db = new Database();
 
@@ -149,8 +426,40 @@ namespace SerenityHairDesigns.Controllers
             ViewBag.FemaleServices = FemaleServices;
             ViewBag.BothServices = BothServices;
 
+
             Employee e = new Employee();
             e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+				{
+                    ViewBag.blnIsCustomer = 1;
+				}
+                else
+				{
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+			{
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if(e.strRole == "Admin")
+				{
+                    ViewBag.IsAdmin = 1;
+				}
+                else
+				{
+                    ViewBag.IsAdmin = 0;
+				}
+			}
 
             ViewBag.EmployeeRole = e.strRole;
 
@@ -159,6 +468,40 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult AboutUs()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             List<AboutUs> lstReviews = new List<AboutUs>();
             Database db = new Database();
 
@@ -173,12 +516,81 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult ContactUs()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
+
             return View();
         }
         
         [HttpPost]
         public ActionResult ContactUs(ContactUs model)
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             Database db = new Database();
 
             db.InsertReview(model);
@@ -188,6 +600,40 @@ namespace SerenityHairDesigns.Controllers
 
         public ActionResult BookNow()
         {
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
+
             List<Employee> lstEmployees = new List<Employee>();
             Database db = new Database();
 
@@ -215,6 +661,40 @@ namespace SerenityHairDesigns.Controllers
 
         [HttpPost]
         public ActionResult BookNow(FormCollection col) {
+
+            Employee e = new Employee();
+            e = e.GetEmployeeSession();
+
+            if (e.intEmployeeID == 0)
+            {
+
+                ViewBag.blnIsEmployee = 0;
+                Customer c = new Customer();
+                c = c.GetCustomerSession();
+
+                if (c.intCustomerID > 0)
+                {
+                    ViewBag.blnIsCustomer = 1;
+                }
+                else
+                {
+                    ViewBag.blnIsCustomer = 0;
+                }
+
+            }
+            else
+            {
+                e = e.SelectEmployeeRole();
+                ViewBag.blnIsEmployee = 1;
+                if (e.strRole == "Admin")
+                {
+                    ViewBag.IsAdmin = 1;
+                }
+                else
+                {
+                    ViewBag.IsAdmin = 0;
+                }
+            }
             List<Employee> lstEmployees = new List<Employee>();
             Database db = new Database();
 

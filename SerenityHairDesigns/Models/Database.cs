@@ -97,9 +97,11 @@ namespace SerenityHairDesigns.Models
 		//	return model.ServicesDropDownList;
 		//}
 
-		string strConnectionString = @"Data Source=BRIANSPCDESKTOP\SQLEXPRESS;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
-		public bool InsertReport(long UID, long IDToReport, int ProblemID) {
-			try {
+		string strConnectionString = @"Data Source=JANIELLEDAVE2B0;Initial Catalog=SerenityHairDesigns;Integrated Security=True";
+		public bool InsertReport(long UID, long IDToReport, int ProblemID)
+		{
+			try
+			{
 
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
@@ -401,36 +403,36 @@ namespace SerenityHairDesigns.Models
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
 				string query = "SELECT * FROM TEmployeeProducts INNER JOIN TProducts ON TProducts.intproductID = TEmployeeProducts.intProductID WHERE intEmployeeID = " + lngEmployeeID;
-				 
+
 				SqlCommand cmd = new SqlCommand(query, cn);
 
 				using (IDataReader reader = cmd.ExecuteReader())
 				{
 					while (reader.Read())
 					{
-							objEmployeeProducts.Add(new EmployeeProducts()
+						objEmployeeProducts.Add(new EmployeeProducts()
+						{
+							intEmployeeProductID = reader.GetInt32(0)
+							,
+							intEmployeeID = reader.GetInt64(1)
+							,
+							intProductID = reader.GetInt32(2)
+							,
+							intProductInventory = reader.GetInt32(3)
+							,
+							product = new Products()
 							{
-								intEmployeeProductID = reader.GetInt32(0)
+								intProductID = reader.GetInt32(4)
 								,
-								intEmployeeID = reader.GetInt64(1)
+								strProductName = reader.GetString(5)
 								,
-								intProductID = reader.GetInt32(2)
+								intTotalInventory = reader.GetInt32(6)
 								,
-								intProductInventory = reader.GetInt32(3)
-								,
-								product = new Products()
-								{ 
-									intProductID = reader.GetInt32(4)
-									,
-									strProductName = reader.GetString(5)
-									,
-									intTotalInventory = reader.GetInt32(6)
-									, 
-									blnNeedsRestocking = reader.GetBoolean(7)
+								blnNeedsRestocking = reader.GetBoolean(7)
 
-								}
+							}
 
-							});
+						});
 
 					}
 					reader.Close();
@@ -474,7 +476,7 @@ namespace SerenityHairDesigns.Models
 								,
 							blnNeedsRestocking = reader.GetBoolean(3)
 
-						}) ;
+						});
 
 					}
 					reader.Close();
@@ -602,8 +604,8 @@ namespace SerenityHairDesigns.Models
 
 				return true;
 			}
-			catch (Exception ex) 
-			{ 
+			catch (Exception ex)
+			{
 				throw new Exception(ex.Message);
 			}
 
@@ -659,7 +661,7 @@ namespace SerenityHairDesigns.Models
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
- 
+
 
 		public bool EnterAdminCosts(long intEmployeeID, DateTime dteStartDate, DateTime dteEndDate, int intBoothRental, int intBuildingRental, int intBuildingUtilities)
 		{
@@ -752,8 +754,8 @@ namespace SerenityHairDesigns.Models
 					while (reader.Read())
 					{
 						if (!reader.IsDBNull(0))
-							
-							{
+
+						{
 							EmployeeInfo.decBoothRental = reader.GetDecimal(0);
 
 							EmployeeInfo.decBuildingRental = reader.GetDecimal(1);
@@ -763,8 +765,8 @@ namespace SerenityHairDesigns.Models
 							EmployeeInfo.intAppointmentPay = reader.GetInt32(3);
 
 							EmployeeInfo.intTipPay = reader.GetInt32(4);
-								
-							};
+
+						};
 
 					}
 					reader.Close();
@@ -877,10 +879,10 @@ namespace SerenityHairDesigns.Models
 			return objReviews;
 		}
 
-        public List<Appointments> GetAppointments(long CustomerID)
-        {
+		public List<Appointments> GetAppointments(long CustomerID)
+		{
 
-            List<Appointments> objAppointments = new List<Appointments>();
+			List<Appointments> objAppointments = new List<Appointments>();
 			try
 			{
 				SqlConnection cn = null;
@@ -908,7 +910,7 @@ namespace SerenityHairDesigns.Models
 								,
 								strAppointmentName = reader.GetString(2)
 								,
-                                monAppointmentCost = reader.GetDecimal(3)
+								monAppointmentCost = reader.GetDecimal(3)
 								,
 								monAppointmentTip = reader.GetDecimal(4)
 
@@ -928,8 +930,7 @@ namespace SerenityHairDesigns.Models
 			return objAppointments;
 		}
 
-			
-		}
+
 
 		public List<Services> GetAllServices()
 		{
@@ -997,7 +998,7 @@ namespace SerenityHairDesigns.Models
 					while (reader.Read())
 					{
 						if (!reader.IsDBNull(0))
-							{
+						{
 							Service.intServiceID = reader.GetInt32(0);
 
 							Service.strServiceName = reader.GetString(1);
@@ -1008,7 +1009,7 @@ namespace SerenityHairDesigns.Models
 
 							Service.intGenderID = reader.GetInt32(4);
 
-							};
+						};
 
 					}
 					reader.Close();
@@ -1180,23 +1181,29 @@ namespace SerenityHairDesigns.Models
 			}
 			return Genders;
 		}
-        {
 
-            List<Employee> objEmployees = new List<Employee>();
-            try
-            {
-                SqlConnection cn = null;
-                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
-				string query = "SELECT TE.intEmployeeID, TE.strFirstName, TE.strLastName, TE.strPhoneNumber, TG.strGender, TE.intGenderID, TE.strEmailAddress, TE.strPassword "+
+		public List<Employee> GetEmployees()
+		{
+
+			List<Employee> objEmployees = new List<Employee>();
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				string query = "SELECT TE.intEmployeeID, TE.strFirstName, TE.strLastName, TE.strPhoneNumber, TG.strGender, TE.intGenderID, TE.strEmailAddress, TE.strPassword " +
 								"FROM TEmployees AS TE JOIN TGenders AS TG ON TG.intGenderID = TE.intGenderID ";
 
 				SqlCommand cmd = new SqlCommand(query, cn);
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
 						if (!reader.IsDBNull(0))
-							objEmployees.Add(new Employee() {
+							objEmployees.Add(new Employee()
+							{
 								intEmployeeID = reader.GetInt64(0),
 								strFirstName = reader.GetString(1),
 								strLastName = reader.GetString(2),
@@ -1213,15 +1220,20 @@ namespace SerenityHairDesigns.Models
 
 
 
-                CloseDBConnection(ref cn);
+				CloseDBConnection(ref cn);
 
-            }
-            catch (Exception ex) { throw new Exception(ex.Message); }
-            {
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			{
 
-            }
-            return objEmployees;
-        }
+			}
+			return objEmployees;
+		}
+
+
+
+
+		public ContactUs.ActionTypes InsertReview(ContactUs model)
 		{
 			try
 			{
@@ -1301,8 +1313,10 @@ namespace SerenityHairDesigns.Models
 		}
 
 
-		public long InsertEmployeeImage(Employee e) {
-			try {
+		public long InsertEmployeeImage(Employee e)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_IMAGE", cn);
@@ -1325,8 +1339,10 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public long UpdateEmployeeImage(Employee e) {
-			try {
+		public long UpdateEmployeeImage(Employee e)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("UPDATE_EMPLOYEE_IMAGE", cn);
@@ -1397,8 +1413,10 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public List<Image> GetEmployeeImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false) {
-			try {
+		public List<Image> GetEmployeeImages(long UID = 0, long UserImageID = 0, bool PrimaryOnly = false)
+		{
+			try
+			{
 				DataSet ds = new DataSet();
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
@@ -1411,16 +1429,20 @@ namespace SerenityHairDesigns.Models
 				if (UserImageID > 0) SetParameter(ref da, "@intEmployeeImageID", UserImageID, SqlDbType.BigInt);
 				if (PrimaryOnly) SetParameter(ref da, "@PrimaryImage", "Y", SqlDbType.Char);
 
-				try {
+				try
+				{
 					da.Fill(ds);
 				}
-				catch (Exception ex2) {
+				catch (Exception ex2)
+				{
 					throw new Exception(ex2.Message);
 				}
 				finally { CloseDBConnection(ref cn); }
 
-				if (ds.Tables[0].Rows.Count != 0) {
-					foreach (DataRow dr in ds.Tables[0].Rows) {
+				if (ds.Tables[0].Rows.Count != 0)
+				{
+					foreach (DataRow dr in ds.Tables[0].Rows)
+					{
 						Image i = new Image();
 						i.ImageID = (long)dr["intEmployeeImageID"];
 						i.ImageData = (byte[])dr["Image"];
@@ -1562,24 +1584,88 @@ namespace SerenityHairDesigns.Models
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("INSERT_CUSTOMER", cn);
 
-					SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
-					SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
-					SetParameter(ref cm, "@strPassword", "NOLOGIN", SqlDbType.NVarChar);
-					SetParameter(ref cm, "@intGenderID", intGenderID, SqlDbType.Int);
-					SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
-					SetParameter(ref cm, "@strEmailAddress", "NOLOGIN", SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strPassword", "NOLOGIN", SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intGenderID", intGenderID, SqlDbType.Int);
+				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strEmailAddress", "NOLOGIN", SqlDbType.NVarChar);
 
 
-					cm.ExecuteReader();
+				cm.ExecuteReader();
 
-					CloseDBConnection(ref cn);
+				CloseDBConnection(ref cn);
 
 
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public void InsertSkill(Employee model, string skill)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
+				SqlCommand cm = new SqlCommand("INSERT_SKILLS", cn);
+				SetParameter(ref cm, "@strSkillName", skill, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intEmployeeID", model.intEmployeeID, SqlDbType.BigInt);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public void InsertEmployeeSkill(Employee e)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				SqlCommand cm = new SqlCommand("INSERT_EMPLOYEE_SKILLS", cn);
+				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID, SqlDbType.Int);
+				SetParameter(ref cm, "@intSkillID", e.intSkillID, SqlDbType.Int);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public void DeleteSkill(string strDeleteSkill, Employee e)
+		{
+			try
+			{
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+
+				SqlCommand cm = new SqlCommand("DELETE_SKILL", cn);
+				SetParameter(ref cm, "@strSkillName", strDeleteSkill, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@intEmployeeID", e.intEmployeeID , SqlDbType.NVarChar);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 		public List<string> SelectEmployeeSkill(Employee e)
 		{
 			try
@@ -1651,9 +1737,9 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
-                SetParameter(ref cm, "@intGender", e.intGenderID, SqlDbType.Int);
+				SetParameter(ref cm, "@intGender", e.intGenderID, SqlDbType.Int);
 
-                SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
 				cm.ExecuteReader();
 
@@ -1757,8 +1843,10 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public Employee SelectEmployeeRole(Employee e) {
-			try {
+		public Employee SelectEmployeeRole(Employee e)
+		{
+			try
+			{
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE_ROLE", cn);
@@ -1769,16 +1857,19 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref da, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
 				SetParameter(ref da, "@strPassword", e.strPassword, SqlDbType.NVarChar);
 
-				try {
+				try
+				{
 					ds = new DataSet();
 					da.Fill(ds);
-					if (ds.Tables[0].Rows.Count > 0) {
+					if (ds.Tables[0].Rows.Count > 0)
+					{
 						DataRow dr = ds.Tables[0].Rows[0];
-						e.strRole = (string)dr["strRoleName"];						
+						e.strRole = (string)dr["strRoleName"];
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
-				finally {
+				finally
+				{
 					CloseDBConnection(ref cn);
 				}
 				return e; //alls well in the world
@@ -1786,21 +1877,25 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public Employee SelectEmployee(Employee e, long lngID) {
-			try {
+		public Employee SelectEmployee(Employee e, long lngID)
+		{
+			try
+			{
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE", cn);
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEES", cn);
 				DataSet ds;
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
 				SetParameter(ref da, "@intEmployeeID", lngID, SqlDbType.NVarChar);
 
-				try {
+				try
+				{
 					ds = new DataSet();
 					da.Fill(ds);
-					if (ds.Tables[0].Rows.Count > 0) {
+					if (ds.Tables[0].Rows.Count > 0)
+					{
 						DataRow dr = ds.Tables[0].Rows[0];
 						e.strFirstName = (string)dr["strFirstName"];
 						e.strLastName = (string)dr["strLastName"];
@@ -1817,7 +1912,8 @@ namespace SerenityHairDesigns.Models
 					}
 				}
 				catch (Exception ex) { throw new Exception(ex.Message); }
-				finally {
+				finally
+				{
 					CloseDBConnection(ref cn);
 				}
 				return e; //alls well in the world
@@ -1825,48 +1921,50 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-        public Employee SelectEmployeeDropDownList(Employee e, long lngID)
-        {
-            try
-            {
-                SqlConnection cn = new SqlConnection();
-                if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-                SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEES", cn);
-                DataSet ds;
+		public Employee SelectEmployeeDropDownList(Employee e, long lngID)
+		{
+			try
+			{
+				SqlConnection cn = new SqlConnection();
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEES", cn);
+				DataSet ds;
 
-                da.SelectCommand.CommandType = CommandType.StoredProcedure;
+				da.SelectCommand.CommandType = CommandType.StoredProcedure;
 
-                SetParameter(ref da, "@intEmployeeID", lngID, SqlDbType.NVarChar);
+				SetParameter(ref da, "@intEmployeeID", lngID, SqlDbType.NVarChar);
 
-                try
-                {
-                    ds = new DataSet();
-                    da.Fill(ds);
-                    if (ds.Tables[0].Rows.Count > 0)
-                    {
-                        DataRow dr = ds.Tables[0].Rows[0];
-                        e.strFirstName = (string)dr["strFirstName"];
-                        e.strLastName = (string)dr["strLastName"];
-                        e.strPhoneNumber = (string)dr["strPhoneNumber"];
+				try
+				{
+					ds = new DataSet();
+					da.Fill(ds);
+					if (ds.Tables[0].Rows.Count > 0)
+					{
+						DataRow dr = ds.Tables[0].Rows[0];
+						e.strFirstName = (string)dr["strFirstName"];
+						e.strLastName = (string)dr["strLastName"];
+						e.strPhoneNumber = (string)dr["strPhoneNumber"];
 						e.strEmailAddress = (string)dr["strEmailAddress"];
 						// dont know if this has to be genderID or strGender in ""
 						e.strGender = (string)dr["strGender"];
 						e.strPassword = (string)dr["strPassword"];
 
-                    }
-                }
-                catch (Exception ex) { throw new Exception(ex.Message); }
-                finally
-                {
-                    CloseDBConnection(ref cn);
-                }
-                return e; //alls well in the world
-            }
-            catch (Exception ex) { throw new Exception(ex.Message); }
-        }
+					}
+				}
+				catch (Exception ex) { throw new Exception(ex.Message); }
+				finally
+				{
+					CloseDBConnection(ref cn);
+				}
+				return e; //alls well in the world
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
 
-        public List<string> SelectSkills(long lngID) {
-			try {
+		public List<string> SelectSkills(long lngID)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
@@ -1876,8 +1974,10 @@ namespace SerenityHairDesigns.Models
 
 				List<string> Skills = new List<string>();
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
 						if (!reader.IsDBNull(0))
 							Skills.Add(reader.GetString(0));
 					}
@@ -1891,8 +1991,10 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public Customer.ActionTypes UpdateCustomer(Customer c) {
-			try {
+		public Customer.ActionTypes UpdateCustomer(Customer c)
+		{
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 				SqlCommand cm = new SqlCommand("UPDATE_CUSTOMER", cn);
@@ -1941,6 +2043,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@strLastName", e.strLastName, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", e.strPhoneNumber, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strEmailAddress", e.strEmailAddress, SqlDbType.NVarChar);
+				SetParameter(ref cm, "@strYearsOfExperience", e.strYearsOfExperience, SqlDbType.NVarChar);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
@@ -1960,11 +2063,13 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
-		public List<AppointmentTypes> GetAppointmentTypes() {
+		public List<AppointmentTypes> GetAppointmentTypes()
+		{
 
 			List<AppointmentTypes> AppointmentTypes = new List<AppointmentTypes>();
 
-			try {
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
@@ -1972,10 +2077,13 @@ namespace SerenityHairDesigns.Models
 
 				SqlCommand cmd = new SqlCommand(query, cn);
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
 						if (!reader.IsDBNull(0))
-							AppointmentTypes.Add(new Models.AppointmentTypes() {
+							AppointmentTypes.Add(new Models.AppointmentTypes()
+							{
 								intAppointmentTypeID = reader.GetInt32(0)
 								,
 								strAppointmentName = reader.GetString(1)
@@ -1998,11 +2106,13 @@ namespace SerenityHairDesigns.Models
 			return AppointmentTypes;
 		}
 
-		public List<Services> GetServiceTypes() {
+		public List<Services> GetServiceTypes()
+		{
 
 			List<Services> ServiceTypes = new List<Services>();
 
-			try {
+			try
+			{
 				SqlConnection cn = null;
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
 
@@ -2010,10 +2120,13 @@ namespace SerenityHairDesigns.Models
 
 				SqlCommand cmd = new SqlCommand(query, cn);
 
-				using (IDataReader reader = cmd.ExecuteReader()) {
-					while (reader.Read()) {
+				using (IDataReader reader = cmd.ExecuteReader())
+				{
+					while (reader.Read())
+					{
 						if (!reader.IsDBNull(0))
-							ServiceTypes.Add(new Models.Services() {
+							ServiceTypes.Add(new Models.Services()
+							{
 								intServiceID = reader.GetInt32(0)
 								,
 								strServiceName = reader.GetString(1)
@@ -2120,4 +2233,5 @@ namespace SerenityHairDesigns.Models
 		}
 
 	}
+}
 

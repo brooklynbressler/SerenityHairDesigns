@@ -323,7 +323,21 @@ namespace SerenityHairDesigns.Controllers
                 e.strPhoneNumber = col["strPhoneNumber"];
                 e.strEmailAddress = col["strEmailAddress"];
                 e.strGender = col["strGender"];
-                e.strYearsOfExperience = col["strYearsOfExperience"];
+				if (e.strGender == "Female")
+				{
+					e.intGenderID = 1;
+				}
+				else if (e.strGender == "Male")
+				{
+					e.intGenderID = 2;
+
+				}
+				else if (e.strGender == "General")
+				{
+					e.intGenderID = 3;
+
+				}
+				e.strYearsOfExperience = col["strYearsOfExperience"];
                 e.strSkillName = col["strSkillName"];
 
                 string startdate = col["dtmStartTime"];
@@ -336,15 +350,38 @@ namespace SerenityHairDesigns.Controllers
                 DateTime.TryParse(enddate, out dteEndDate);
                 e.dtmEndTime = dteEndDate;
 
+                string strAddSkill = col["txtAddSkill"];
+                string strDeleteSkill = col["Skills"];
+
                   if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
                    {
                         e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
                         return View(e);
                     }
-                    else
+                  else
                     {
-                        if (col["btnSubmit"] == "update")
+                        if (col["btnSubmit"] == "AddSkills")
                         {
+                            db.InsertSkill(e, strAddSkill);
+						    skills = db.SelectEmployeeSkill(e);
+						    ViewBag.skills = skills;
+						   
+                            e.SaveEmployeeSession();
+                            return RedirectToAction("EmployeeLoggedIn", "Profile");
+                    
+					    }
+
+                    if (col["btnSubmit"] == "DeleteSkills")
+                    {
+                        db.DeleteSkill(strDeleteSkill, e);
+						skills = db.SelectEmployeeSkill(e);
+						ViewBag.skills = skills;
+						RedirectToAction("EmployeeLoggedIn", "Profile");
+
+					}
+
+                       if (col["btnSubmit"] == "update")
+                       {
                             // Update employee details in the database
                             e.Save();
 
@@ -355,23 +392,23 @@ namespace SerenityHairDesigns.Controllers
                             e.UserImage = new Image();
                             e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
 
-                            if (UserImage != null)
+                       if (UserImage != null)
+                       {
+                            e.UserImage = new Image();
+                            e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                            e.UserImage.Primary = true;
+                            e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+                            if (e.UserImage.IsImageFile())
                             {
-                                e.UserImage = new Image();
-                                e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
-                                e.UserImage.Primary = true;
-                                e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
-                                if (e.UserImage.IsImageFile())
-                                {
-                                    e.UserImage.Size = UserImage.ContentLength;
-                                    Stream stream = UserImage.InputStream;
-                                    BinaryReader binaryReader = new BinaryReader(stream);
-                                    e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
-                                    e.UpdatePrimaryImage();
-                                }
+                                e.UserImage.Size = UserImage.ContentLength;
+                                Stream stream = UserImage.InputStream;
+                                BinaryReader binaryReader = new BinaryReader(stream);
+                                e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+                                e.UpdatePrimaryImage();
                             }
-                            e.SaveEmployeeSession();
-                            return RedirectToAction("EmployeeLoggedIn", "Profile");
+                        }
+                        e.SaveEmployeeSession();
+                        return RedirectToAction("EmployeeLoggedIn", "Profile");
                         }
 
                         if (col["btnSubmit"] == "EditAvailability")

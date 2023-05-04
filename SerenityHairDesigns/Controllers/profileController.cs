@@ -294,12 +294,15 @@ namespace SerenityHairDesigns.Controllers
                 customer.strLastName = col["lastname"];
                 customer.strPhoneNumber = col["Number"];
                 int intGender = int.Parse(col["Gender"]);
+                int intTimeID = int.Parse(col["Times"]);
 
                 db.InsertCustomerManually(customer, intGender, lngEmployeeID);
 
                 customer = db.GetLastCustomer();
 
-                db.InsertAppointmentNoPic(appointment, customer, lngEmployeeID, intServiceID);
+
+
+                db.InsertAppointmentNoPic(appointment, customer, lngEmployeeID, intServiceID, intTimeID);
 
                 a = db.GetEmployeeAppointments(lngEmployeeID);
 
@@ -1048,12 +1051,12 @@ namespace SerenityHairDesigns.Controllers
                 string strDeleteSkill = col["Skills"];
 
                   if (e.strFirstName.Length == 0 || e.strLastName.Length == 0 || e.strEmailAddress.Length == 0 || e.strPassword.Length == 0)
-                   {
+                  {
                         e.ActionType = Models.Employee.ActionTypes.RequiredFieldsMissing;
                         return View(e);
-                    }
+                  }
                   else
-                    {
+                  {
                         if (col["btnSubmit"] == "AddSkills")
                         {
                             db.InsertSkill(e, strAddSkill);
@@ -1065,14 +1068,14 @@ namespace SerenityHairDesigns.Controllers
                     
 					    }
 
-                    if (col["btnSubmit"] == "DeleteSkills")
-                    {
-                        db.DeleteSkill(strDeleteSkill, e);
-						skills = db.SelectEmployeeSkill(e);
-						ViewBag.skills = skills;
-						RedirectToAction("EmployeeLoggedIn", "Profile");
+                        if (col["btnSubmit"] == "DeleteSkills")
+                        {
+                            db.DeleteSkill(strDeleteSkill, e);
+						    skills = db.SelectEmployeeSkill(e);
+						    ViewBag.skills = skills;
+						    RedirectToAction("EmployeeLoggedIn", "Profile");
 
-					}
+					    }
 
                        if (col["btnSubmit"] == "update")
                        {
@@ -1086,24 +1089,25 @@ namespace SerenityHairDesigns.Controllers
                             e.UserImage = new Image();
                             e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
 
-                       if (UserImage != null)
-                       {
-                            e.UserImage = new Image();
-                            e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
-                            e.UserImage.Primary = true;
-                            e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
-                            if (e.UserImage.IsImageFile())
-                            {
-                                e.UserImage.Size = UserImage.ContentLength;
-                                Stream stream = UserImage.InputStream;
-                                BinaryReader binaryReader = new BinaryReader(stream);
-                                e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
-                                e.UpdatePrimaryImage();
+
+                           if (UserImage != null)
+                           {
+                                e.UserImage = new Image();
+                                e.UserImage.ImageID = Convert.ToInt32(col["UserImage.ImageID"]);
+                                e.UserImage.Primary = true;
+                                e.UserImage.FileName = Path.GetFileName(UserImage.FileName);
+                                if (e.UserImage.IsImageFile())
+                                {
+                                    e.UserImage.Size = UserImage.ContentLength;
+                                    Stream stream = UserImage.InputStream;
+                                    BinaryReader binaryReader = new BinaryReader(stream);
+                                    e.UserImage.ImageData = binaryReader.ReadBytes((int)stream.Length);
+                                    e.UpdatePrimaryImage();
+                                }
                             }
-                        }
-                        e.SaveEmployeeSession();
-                        return RedirectToAction("EmployeeLoggedIn", "Profile");
-                        }
+                            e.SaveEmployeeSession();
+                            return RedirectToAction("EmployeeLoggedIn", "Profile");
+                       }
 
 
 
@@ -1138,10 +1142,9 @@ namespace SerenityHairDesigns.Controllers
                         }
 
                         return View(e);
-                    }
-                }
-
-            catch (Exception ex )
+                  }
+            }
+            catch (Exception ex)
             {
                 Employee e = new Employee();
                 return View(e);

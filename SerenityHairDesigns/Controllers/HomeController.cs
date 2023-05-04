@@ -641,6 +641,15 @@ namespace SerenityHairDesigns.Controllers
 
             ViewBag.lstEmployees = lstEmployees;
 
+           //         List<Skill> lstSkills = new List<Skill>();
+
+			        //foreach (var item in lstEmployees) {
+           //             Skill skill = new Skill();
+           //             lstSkills = db.SelectEmployeeSkills();                 
+           //         }            
+
+           //         ViewBag.lstSkills = lstSkills;
+
             DateTime dteStartTime = new DateTime(2023, 5, 1, 8, 0, 0);
             DateTime dteEndTime = new DateTime(2023, 5, 1, 17, 0, 0);
 

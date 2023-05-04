@@ -194,8 +194,21 @@ Model.UserImage.BytesBase64)" />
 							<label for="Schedule">
 								<pre>
 						Start Time : @item.dteStartTime
+		if (ViewBag.Schedules == null)
+		{
+			<p>You are not scheduled for any shifts coming up.</p>
+		}
+		else
+		{
+			foreach (var item in ViewBag.Schedules)
+			{
+				<input type="checkbox" name="Schedules" value="@item.intScheduleID" />
+				<label for="Schedule">
+					<pre>
+						Shift Start Time: @item.dteStartTime
 
 						End Time : @item.dteEndTime
+						Shift End Time: @item.dteEndTime
 				</pre>
 							</label>
 

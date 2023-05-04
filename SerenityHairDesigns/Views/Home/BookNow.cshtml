@@ -35,41 +35,36 @@
 </div>
 <body>
 
-	<div class="BookNow">
 		<div class="Book-Now-1">
 			@foreach (var item in ViewBag.lstEmployees)
 			{
 				<div class="BookNow">
-					<div id="user-profile-image">
-						@if (@item.UserImage != null)
-						{
-							if (@item.UserImage.ImageID > 0)
-							{
-								<div class="user-profile-image-container">
-									<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+					<form action="/" method="post">
+						<div id="user-profile-image">
+							@if (@item.UserImage != null) {
+								if (@item.UserImage.ImageID > 0) {
+									<div class="user-profile-image-container">
+										<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 													@item.UserImage.FileExtension, ";base64,",
 													@item.UserImage.BytesBase64)" />
-								</div>
+									</div>
+								}
 							}
-						}
-					</div>
+						</div>
 
-					<p class="BookNow-text">
-						@item.strFirstName @item.strLastName <br />
-						Hair Designer <br />
-						Color Specialist <br />
-						@item.strPhoneNumber <br />
-						<br />
-						<br />
-						@using (Html.BeginForm("BookNow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-						{
-							<a class="center" id="btnStylistChosen" name="btnStylistChosen" value="booknow" href="~/BookNow/Stylist/@item.intEmployeeID">Book Now</a>
-						}
-					</p>
+						<p class="BookNow-text">
+							@item.strFirstName @item.strLastName <br />
+							@item.strPhoneNumber <br />
+							<br />
+							<br />
+							@using (Html.BeginForm("BookNow", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+								<a class="center" id="btnStylistChosen" name="btnStylistChosen" value="booknow" href="~/BookNow/Stylist/@item.intEmployeeID">Book Now</a>
+							}
+						</p>
+					</form>
 				</div>
 			}
 		</div>
-	</div>
 </body>
 
 

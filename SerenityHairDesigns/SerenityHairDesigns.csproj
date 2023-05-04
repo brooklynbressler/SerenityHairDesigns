@@ -213,6 +213,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Schedules.cs" />
     <Compile Include="Models\Services.cs" />
+    <Compile Include="Models\Skill.cs" />
     <Compile Include="Models\StylistAvailability.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

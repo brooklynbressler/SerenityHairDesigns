@@ -33,7 +33,7 @@
 <h2>Schedule Appointment</h2>
 
 
-<div class="Create-Account-Form-Emp">
+<div class="Create-Account-Form">
 	<div class="Sign-In-Form-Emp">
 		<div class="header__item">
 			@using (Html.BeginForm(FormMethod.Post))
@@ -74,16 +74,24 @@
 				<button id="btnScheduleAppointment" name="btnSubmit" value="btnScheduleAppointment" class="button-action">Submit Appointment</button>
 			}
 
+		</div>
+	</div>
 
-			<p>Appointments</p>
+</div>
 
-			@using (Html.BeginForm(FormMethod.Post))
-			{
-				foreach (var item in ViewBag.Appointments)
-				{
-					<input type="checkbox" name="Appointment" value="@item.intAppointmentID" />
-					<label for="Appointment">
-						<pre>
+
+
+
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+	foreach (var item in ViewBag.Appointments)
+	{
+		<div class="Create-Account-Form2">
+			<h2>Appointments</h2>
+			<input class="Customer-Info" type="checkbox" name="Appointment" value="@item.intAppointmentID" />
+			<label class="Customer-Info" for="Appointment">
+					<pre class="Customer-Info">
 						Customer First Name: @item.strCustomerFirstName
 
 						Customer Last Name: @item.strCustomerLastName
@@ -96,61 +104,59 @@
 
 						Estimated Appointment Cost: $@item.monAppointmentCost
 
-						Appointment Tip Amount: $@item.monAppointmentTip
-
 						Customer Phone Number: @item.strCustomerPhone 
 
 						Customer Email: @item.strCustomerEmail
 					</pre>
-						@*<table>
-								<tr>
-									<td> Customer First Name: </td>
-									<td> @item.strCustomerFirstName </td>
-								</tr>
-								<tr>
-									<td> Customer Last Name: </td>
-									<td> @item.strCustomerLastName </td>
-								</tr>
-								<tr>
-									<td> Appointment Date: </td>
-									<td> @item.dtmAppointmentDate </td>
-								</tr>
-								<tr>
-									<td> Appointment Length: </td>
-									<td> @item.intEstTimeInMins </td>
-								</tr>
-								<tr>
-									<td> Service Type: </td>
-									<td> @item.strAppointmentName </td>
-								</tr>
-								<tr>
-									<td> Estimated Appointment Cost: </td>
-									<td> $@item.monAppointmentCost </td>
-								</tr>
-								<tr>
-									<td> Appointment Tip Amount: </td>
-									<td> $@item.monAppointmentTip </td>
-								</tr>
-								<tr>
-									<td> Customer Phone Number: </td>
-									<td> @item.strCustomerPhone </td>
-								</tr>
-								<tr>
-									<td> Customer Email: </td>
-									<td> @item.strCustomerEmail </td>
-								</tr>
-							</table>*@
-					</label>
+				@*<table>
+						<tr>
+							<td> Customer First Name: </td>
+							<td> @item.strCustomerFirstName </td>
+						</tr>
+						<tr>
+							<td> Customer Last Name: </td>
+							<td> @item.strCustomerLastName </td>
+						</tr>
+						<tr>
+							<td> Appointment Date: </td>
+							<td> @item.dtmAppointmentDate </td>
+						</tr>
+						<tr>
+							<td> Appointment Length: </td>
+							<td> @item.intEstTimeInMins </td>
+						</tr>
+						<tr>
+							<td> Service Type: </td>
+							<td> @item.strAppointmentName </td>
+						</tr>
+						<tr>
+							<td> Estimated Appointment Cost: </td>
+							<td> $@item.monAppointmentCost </td>
+						</tr>
+						<tr>
+							<td> Appointment Tip Amount: </td>
+							<td> $@item.monAppointmentTip </td>
+						</tr>
+						<tr>
+							<td> Customer Phone Number: </td>
+							<td> @item.strCustomerPhone </td>
+						</tr>
+						<tr>
+							<td> Customer Email: </td>
+							<td> @item.strCustomerEmail </td>
+						</tr>
+					</table>*@
+			</label>
 
-					<button id="btnScheduleAppointment" name="btnSubmit" value="btnCancelAppointment" class="button-action">Cancel Appointment</button>
-				}
-
-			}
-
-
-
-
+			<button id="btnScheduleAppointment" name="btnSubmit" value="btnCancelAppointment" class="button-action">Cancel Appointment</button>
 		</div>
-	</div>
 
-</div>
+	}
+
+}
+
+
+
+
+
+

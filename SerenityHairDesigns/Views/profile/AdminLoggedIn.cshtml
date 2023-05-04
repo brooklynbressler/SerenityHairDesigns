@@ -36,157 +36,184 @@
 
 @using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-<div class="Admin-Profile">
-	<p class="Admin-Text">To make changes to your profile enter your information below and click the Update button.</p>
-	<div id="user-profile-image">
-		@if (Model.UserImage != null)
-		{
-			if (Model.UserImage.ImageID > 0)
+	<div class="Stylist-logged-in">
+		<div class="Stylist-logged_in-1">
+			Skills: <br />
+			@if (ViewBag.skills != null)
 			{
-				<div class="user-profile-image-container">
-					<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
-										Model.UserImage.FileExtension, ";base64,",
-										Model.UserImage.BytesBase64)" />
-				</div>
+
+				foreach (var item in ViewBag.skills)
+				{
+					<ul>
+						<li> @item  </li>
+					</ul>
+				}
 			}
-		}
-	</div>
-	@Html.TextBoxFor(model => model.UserImage.ImageID, new { style = "display: none;" })
-	<div id="user-profile-data">
-		<div class="section">
 			<div class="section">
-				<div>User Profile Image</div>
 				<div>
-					<input class="profile-item" type="file" name="UserImage" id="UserImage" />
+					<label for="AddSkill">Add Skill:</label>
+					<input type="text" id="txtAddSkill" name="txtAddSkill" />
 				</div>
 			</div>
-		</div>
-		<div class="section">
+
 			<div class="section">
-				<div>@Html.LabelFor(model => model.strFirstName)</div>
-				<div>@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })</div>
+				<button class="button-action" id="btnAddSkills" name="btnSubmit" value="AddSkills"><i class='far fa-save'></i> Add Skills</button>
 			</div>
+
+			<label for="Skills">Skills:</label>
+			<select id="Skills" name="Skills">
+				@foreach (var item in ViewBag.skills)
+				{
+					<option value="@item">@item</option>
+				}
+			</select>
+
+
 			<div class="section">
-				<div>@Html.LabelFor(model => model.strLastName)</div>
-				<div>@Html.TextBoxFor(model => model.strLastName)</div>
-			</div>
-			<div class="section">
-				<div>@Html.LabelFor(model => model.strPassword)</div>
-				<div>@Html.TextBoxFor(model => model.strPassword, new { type = "password" })</div>
-			</div>
-			<div class="section">
-				<div>@Html.LabelFor(model => model.strPhoneNumber)</div>
-				<div>@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })</div>
-			</div>
-			<div class="section">
-				<div>@Html.LabelFor(model => model.strEmailAddress)</div>
-				<div>@Html.TextBoxFor(model => model.strEmailAddress)</div>
-			</div>
-			<div class="section">
-				<div>@Html.LabelFor(model => model.strGender)</div>
-				<div>@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })</div>
+				<button class="button-action" id="btnDeleteSkills" name="btnSubmit" value="DeleteSkills"><i class='far fa-save'></i> Delete Skills</button>
+
 			</div>
 		</div>
-		<div class="section">
-			<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+
+
+		<div class="Employee-Profile">
+			<p>To make changes to your profile enter your information below and click the Update button.</p>
+			<div id="user-profile-image">
+				@if (Model.UserImage != null)
+				{
+					if (Model.UserImage.ImageID > 0)
+					{
+						<div class="user-profile-image-container">
+							<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+Model.UserImage.FileExtension, ";base64,",
+Model.UserImage.BytesBase64)" />
+						</div>
+					}
+				}
+				@Html.TextBoxFor(model => model.UserImage.ImageID, new { style = "display: none;" })
+				<div id="user-profile-data">
+					<div class="section">
+						<div class="section">
+							<div>User Profile Image</div>
+							<div>
+								<input class="profile-item" type="file" name="UserImage" id="UserImage" />
+							</div>
+						</div>
+					</div>
+					<div class="section">
+						<div class="section">
+							<div>
+								<label for=" strFirstName">First Name:</label>
+								@Html.TextBoxFor(model => model.strFirstName, new { @autofocus = "autofocus" })
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strLastName">Last Name:</label>
+								@Html.TextBoxFor(model => model.strLastName)
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strPassword">Password:</label>
+								@Html.TextBoxFor(model => model.strPassword, new { type = "password" })
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strPhoneNumber">Phone Number:</label>
+								@Html.TextBoxFor(model => model.strPhoneNumber, new { type = "tel" })
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strEmailAddress">Email Address:</label>
+								@Html.TextBoxFor(model => model.strEmailAddress)
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strYearsOfExperience">Years Of Experience:</label>
+								@Html.TextBoxFor(model => model.strYearsOfExperience)
+							</div>
+						</div>
+						<div class="section">
+							<div>
+								<label for=" strGender">Gender:</label>
+								@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "Other" }, "Female"), htmlAttributes: new { @class = "form-control" })
+							</div>
+						</div>
+					</div>
+					<div class="section">
+						<button class="button-action" id="btnUpdate" name="btnSubmit" value="update"><i class='far fa-save'></i> Update</button>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</div>
+		<div class="Emp-Availability1">
+			<p class="Shift-Title">Edit Availability</p>
+			<table>
+				<tr>
+					<td>
+						<p class="Shift-Text">Shift Start Time:</p>
+					</td>
+					<td>
+						<input type="datetime-local" id="dtmStartTime" name="dtmStartTime">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<p class="Shift-Text">Shift End Time:</p>
+					</td>
+					<td>
+						<input type="datetime-local" id="dtmEndTime" name="dtmEndTime">
 
-	<div class="Emp-Availability">
-		<p class="Shift-Title">Edit Availability</p>
-		<table>
-			<tr>
-				<td>
-					<p class="Shift-Text">Shift Start Time:</p>
-				</td>
-				<td>
-					<input type="datetime-local" id="dteStartDate" name="dteStartDate">
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<p class="Shift-Text">Shift End Time:</p>
-				</td>
-				<td>
-					<input type="datetime-local" id="dteEndDate" name="dteEndDate">
-				</td>
-			</tr>
-		</table>
-		<div class="section">
-			<button class="button-action" id="btnSubmit" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
+					</td>
+				</tr>
+			</table>
+			<div class="section">
+				<button class="button-action" id="btnEditAvailability" name="btnSubmit" value="EditAvailability"><i class='far fa-save'></i> Add Availability</button>
+			</div>
 		</div>
-	</div>
 
-	<p>Schedules</p>
-	@using (Html.BeginForm(FormMethod.Post))
-	{
+		<div class="Employee-Profile">
+			<div class="Schedules">
+				<p>Schedules</p>
+				@using (Html.BeginForm(FormMethod.Post))
+				{
 
-		if (ViewBag.Schedules == null)
-		{
-			<p>You are not scheduled for any shifts coming up.</p>
-		}
-		else
-		{
-			foreach (var item in ViewBag.Schedules)
-			{
-				<input type="checkbox" name="Schedules" value="@item.intScheduleID" />
-				<label for="Schedule">
-					<pre>
-						Customer First Name: @item.dteStartTime
+					if (ViewBag.Schedules == null)
+					{
+						<p>You are not scheduled for any shifts coming up.</p>
+					}
+					else
+					{
+						foreach (var item in ViewBag.Schedules)
+						{
+							<label for="Schedule">
+								<pre>
+						Start Time : @item.dteStartTime
 
-						Customer Last Name: @item.dteEndTime
+						End Time : @item.dteEndTime
 				</pre>
-					@*<table>
-							<tr>
-								<td> Customer First Name: </td>
-								<td> @item.strCustomerFirstName </td>
-							</tr>
-							<tr>
-								<td> Customer Last Name: </td>
-								<td> @item.strCustomerLastName </td>
-							</tr>
-							<tr>
-								<td> Appointment Date: </td>
-								<td> @item.dtmAppointmentDate </td>
-							</tr>
-							<tr>
-								<td> Appointment Length: </td>
-								<td> @item.intEstTimeInMins </td>
-							</tr>
-							<tr>
-								<td> Service Type: </td>
-								<td> @item.strAppointmentName </td>
-							</tr>
-							<tr>
-								<td> Estimated Appointment Cost: </td>
-								<td> $@item.monAppointmentCost </td>
-							</tr>
-							<tr>
-								<td> Appointment Tip Amount: </td>
-								<td> $@item.monAppointmentTip </td>
-							</tr>
-							<tr>
-								<td> Customer Phone Number: </td>
-								<td> @item.strCustomerPhone </td>
-							</tr>
-							<tr>
-								<td> Customer Email: </td>
-								<td> @item.strCustomerEmail </td>
-							</tr>
-						</table>*@
-				</label>
+							</label>
 
-				<button id="btnCancelSchedule" name="btnSubmit" value="btnCancelSchedule" class="button-action">Cancel Schedule</button>
-			}
-		}
+							<input type="checkbox" name="Schedules" value="@item.intScheduleID" />
+
+							<button id="btnCancelSchedule" name="btnSubmit" value="btnCancelSchedule" class="button-action">Cancel Schedule</button>
+							<br />
+						}
+					}
 
 
 
-	}
+				}
+			</div>
 
+		</div>
+	</div>
 
-
-</div>
 }
 <script>
 

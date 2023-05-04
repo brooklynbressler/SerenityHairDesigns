@@ -58,6 +58,14 @@
 							<td align="left">Password:</td>
 							<td align="left"><div>@Html.TextBoxFor(model => model.strPassword, new { @autofocus = "autofocus" })</div></td>
 						</tr>
+						<tr>
+
+							<td align="left">Gender:</td>
+							<td align="left">
+								<div>@Html.DropDownListFor(model => model.strGender, new SelectList(new string[] { "Female", "Male", "General" }, Model.strGender), htmlAttributes: new { @class = "form-control" })</div>
+							</td>
+
+						</tr>
 
 					</table>
 				</div>

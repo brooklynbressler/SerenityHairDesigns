@@ -681,7 +681,7 @@ namespace SerenityHairDesigns.Models
 				CloseDBConnection(ref cn);
 
 			}
-			catch (Exception ex) { throw new Exception(ex.Message); }
+			catch (Exception ex)	{ throw new Exception(ex.Message); }
 		}
 
 
@@ -2165,7 +2165,7 @@ namespace SerenityHairDesigns.Models
 			{
 				SqlConnection cn = new SqlConnection();
 				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
-				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEES", cn);
+				SqlDataAdapter da = new SqlDataAdapter("SELECT_EMPLOYEE", cn);
 				DataSet ds;
 
 				da.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -2285,12 +2285,10 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intCustomerID", c.intCustomerID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@strPassword", c.strPassword, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strFirstName", c.strFirstName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
+				SetParameter(ref cm, "@intGenderID", c.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strLastName", c.strLastName, SqlDbType.NVarChar);
-				SetParameter(ref cm, "@intGenderID", c.Gender.intGenderID, SqlDbType.Int);
 				SetParameter(ref cm, "@strEmailAddress", c.strEmailAddress, SqlDbType.NVarChar);
 				SetParameter(ref cm, "@strPhoneNumber", c.strPhoneNumber, SqlDbType.NVarChar);
-
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.Int, Direction: ParameterDirection.ReturnValue);
 
 				cm.ExecuteReader();

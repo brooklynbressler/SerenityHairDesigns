@@ -3,6 +3,7 @@
 	ViewBag.Title = "Stylist";
 }
 
+
 @if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
 {
 	<div class="center-admin">
@@ -36,36 +37,40 @@
 	<script src="https://kit.fontawesome.com/d5e1912311.js" crossorigin="anonymous"></script>
 </head>
 
-<div id="user-profile-image">
-	@if (Model.UserImage != null)
-	{
-		if (Model.UserImage.ImageID > 0)
+
+<div class="Create-Login-Form3">
+
+	<div id="user-profile-image">
+		@if (Model.UserImage != null)
 		{
-			<div class="user-profile-image-container">
-				<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
+			if (Model.UserImage.ImageID > 0)
+			{
+				<div>
+					<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 										Model.UserImage.FileExtension, ";base64,",
 										Model.UserImage.BytesBase64)" />
-			</div>
+				</div>
+			}
 		}
+	</div>
+
+
+	<div class="Review-Text">
+		<p>
+
+			Skills: <br />
+
+			@foreach (var item in ViewBag.lstSkills)
+			{
+
+				@item <br />
+			}
+		</p>
+	</div>
+	@using (Html.BeginForm("Stylist", "BookNow", FormMethod.Post, new { enctype = "multipart/form-data" }))
+	{
+		<button class="center" id="btnBookNow" value="btnSubmit" name="btnBookNow">ScheduleNow</button>
 	}
+
 </div>
-
-
-<div class="Review-Text">
-	<p>
-		<br />
-		<br />
-		Skills: <br />
-
-		@foreach (var item in ViewBag.lstSkills)
-		{
-
-			@item <br />
-		}
-	</p>
-</div>
-@using (Html.BeginForm("Stylist", "BookNow", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-	<button class="center" id="btnBookNow" value="btnSubmit" name="btnBookNow">ScheduleNow</button>
-}
 

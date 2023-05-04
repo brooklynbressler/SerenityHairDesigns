@@ -1,7 +1,7 @@
 ﻿﻿@model SerenityHairDesigns.Models.Employee
 
 
-<h2>EmployeeInfo</h2>
+<h2>Employee Info</h2>
 
 <head>
 	<title>My Display Page</title>
@@ -165,50 +165,93 @@
 		@using (Html.BeginForm(FormMethod.Post))
 		{
 
-			<div class="header__item">
-				<h1>Employee Costs</h1>
-				<br />
-				@if (ViewBag.EmployeeInfo == null)
-				{
-					<label>Booth Rental: </label>
-					<output type="label"></output>
-					<br />
-				}
-				else
-				{
-					<label>Booth Rental: </label>
-					<output type="label">@ViewBag.EmployeeInfo.decBoothRental</output>
-					<br />
-				}
+	<div class="header__item">
+		<h1>Employee Costs</h1>
+		<br />
+		@if (ViewBag.EmployeeInfo == null)
+		{
+			<label>Booth Rental: </label>
+			<output type="label"></output>
+			<br />
+		}
+		else
+		{
 
-			</div>
+			<label>Booth Rental: </label>
+			<output type="label">@ViewBag.EmployeeInfo.decBoothRental</output>
+			<br />
+
+		}
+
+	</div>
 
 		}
 
 		@using (Html.BeginForm(FormMethod.Post))
 		{
-			<div class="header__item">
-				<h1>Employee Earnings</h1>
-				<br />
-				@if (ViewBag.EmployeeInfo == null)
-				{
-					<label>Appointment Pay: </label>
-					<output type="label"></output>
-					<br />
-					<label>Tip Amount: </label>
-					<output type="label"></output>
-				}
+	<div class="header__item">
+		<h1>Employee Earnings</h1>
+		<br />
 
-				else
-				{
-					<label>Appointment Pay: </label>
-					<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
-					<br />
-					<br />
-					<label>Tip Amount: </label>
-					<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
-				}
-			</div>
+		@*@foreach (var item in ViewBag.EmployeeInfo)
+		{
+			if (@item == null)
+			{
+				<label>Appointment Pay: </label>
+				<output type="label"></output>
+				<br />
+				<label>Tip Amount: </label>
+				<output type="label"></output>
+			}
+
+			else
+			{
+				<label>Appointment Pay: </label>
+				<output type="label">@item.intAppointmentPay</output>
+				<br />
+				<br />
+				<label>Tip Amount: </label>
+				<output type="label">@item.intTipPay</output>
+			}
+		}*@
+		@if (@ViewBag.EmployeeInfo == null)
+		{
+		<label>Appointment Pay: </label>
+		<output type="label"></output>
+		<br />
+		<label>Tip Amount: </label>
+		<output type="label"></output>
+		}
+
+		else
+		{
+		<label>Appointment Pay: </label>
+		<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
+		<br />
+		<br />
+		<label>Tip Amount: </label>
+		<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
+		}
+
+		@*@if (ViewBag.EmployeeInfo == null)
+		{
+			<label>Appointment Pay: </label>
+			<output type="label"></output>
+			<br />
+			<label>Tip Amount: </label>
+			<output type="label"></output>
+		}
+
+		else
+		{
+			<label>Appointment Pay: </label>
+			<output type="label">@ViewBag.EmployeeInfo.intAppointmentPay</output>
+			<br />
+			<br />
+			<label>Tip Amount: </label>
+			<output type="label">@ViewBag.EmployeeInfo.intTipPay</output>
+		}*@
+	</div>
 
 		}
 

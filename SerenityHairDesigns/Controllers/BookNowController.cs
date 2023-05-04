@@ -65,13 +65,14 @@ namespace SerenityHairDesigns.Controllers
 
             Employee e = new Employee();
             e = e.GetEmployeeSession();
+            Customer c = new Customer();
+            c = c.GetCustomerSession();
 
             if (e.intEmployeeID == 0)
             {
 
                 ViewBag.blnIsEmployee = 0;
-                Customer c = new Customer();
-                c = c.GetCustomerSession();
+
 
                 if (c.intCustomerID > 0)
                 {
@@ -96,8 +97,13 @@ namespace SerenityHairDesigns.Controllers
                     ViewBag.IsAdmin = 0;
                 }
             }
+            if (e.intEmployeeID == 0 && c.intCustomerID == 0)
+			{
+                return RedirectToAction("ScheduleLogin", "profile");
+			}
 
-            List<string> lstSkills = new List<string>();
+
+                List<string> lstSkills = new List<string>();
             Database db = new Database();
           //  Employee e = new Employee();
             long lngID = Convert.ToInt64(RouteData.Values["id"]);
@@ -107,6 +113,7 @@ namespace SerenityHairDesigns.Controllers
             ViewBag.lstSkills = lstSkills;
 
             e = e.SelectEmployee(lngID);
+
 
             return RedirectToAction("ScheduleNowLoggedIn", "profile", new { @id = lngID });
         }

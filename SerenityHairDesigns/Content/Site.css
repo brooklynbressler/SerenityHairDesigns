@@ -199,8 +199,9 @@ input[name="careerSubmit"] {
 
 .Review {
     float:left;
-    margin-left: 270px;
+    margin-left: 310px;
     text-align: center;
+    width: fit-content;
 }
 
 .Book-Now-Btn {
@@ -353,6 +354,19 @@ img {
     padding: 35px 70px 0px 40px;
     border: 3px solid #b74f13;
 }
+
+.Create-Login-Form {
+    background-color: black;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    float: left;
+    margin-left: 580px;
+    padding: 35px 70px 50px 40px;
+    border: 3px solid #b74f13;
+}
+
 .Create-Account-ScheduleLogin-Text {
     text-align: center;
     margin-left: 50%;
@@ -361,8 +375,8 @@ img {
 .Create-Account-Form-Emp {
     background-color: black;
     color: white;
-    width: 500px;
-    height: 350px;
+    width: fit-content;
+    height: fit-content;
     text-align: center;
     margin-left: 34%;
     margin-top: 4%;
@@ -370,7 +384,7 @@ img {
 }
 
 .Sign-In-Form {
-    margin: 0px 0px 0px 50px;
+    margin-right: 50px;
 }
 
 .Sign-In-Form-Emp {
@@ -606,4 +620,8 @@ img {
     width: 100px; /* Adjust the width to your preference */
     text-align: right; /* Align the text to the right for horizontal label */
     margin-right: 10px; /* Add some margin between the label and textbox */
+}
+
+#btnScheduleAppointment {
+    margin-bottom: 20px;
 }

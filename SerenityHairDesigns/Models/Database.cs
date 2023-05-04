@@ -649,6 +649,7 @@ namespace SerenityHairDesigns.Models
 				SetParameter(ref cm, "@intEmployeeID", lngEmployeeID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@dtmStartTime", dtmStartTime, SqlDbType.DateTime);
 				SetParameter(ref cm, "@dtmEndTime", dtmEndTime, SqlDbType.DateTime);
+				SetParameter(ref cm, "@blnIsAvailable", 1, SqlDbType.Bit);
 
 				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
 
@@ -914,6 +915,9 @@ namespace SerenityHairDesigns.Models
 								,
 								monAppointmentTip = reader.GetDecimal(4)
 
+                                
+								
+
 							});
 
 					}
@@ -925,6 +929,58 @@ namespace SerenityHairDesigns.Models
 			}
 			catch
 			{
+
+			}
+			return objAppointments;
+		}
+
+
+		public List<Appointments> GetEmployeeAppointments(long intEmployeeID) {
+
+			List<Appointments> objAppointments = new List<Appointments>();
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("SELECT_EMPLOYEE_APPOINTMENT_INFORMATION", cn);
+
+				SetParameter(ref cm, "@intEmployeeID", intEmployeeID, SqlDbType.BigInt);
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				using (IDataReader reader = cm.ExecuteReader()) {
+					while (reader.Read()) {
+						if (!reader.IsDBNull(0))
+							objAppointments.Add(new Appointments() {
+								intAppointmentID = reader.GetInt32(0)
+								,
+								dtmAppointmentDate = reader.GetDateTime(1)
+								,
+								intEstTimeInMins = reader.GetInt32(2)
+								,
+								strAppointmentName = reader.GetString(3)
+								,
+								monAppointmentCost = reader.GetDecimal(4)
+								,
+								monAppointmentTip = reader.GetDecimal(5)
+								,
+								strCustomerFirstName = reader.GetString(6)
+								,
+								strCustomerLastName = reader.GetString(7)
+								,
+								strCustomerPhone = reader.GetString(8)
+								,
+								strCustomerEmail = reader.GetString(9)
+
+							});
+
+					}
+					reader.Close();
+
+					CloseDBConnection(ref cn);
+
+				}
+			}
+			catch {
 
 			}
 			return objAppointments;
@@ -1095,6 +1151,28 @@ namespace SerenityHairDesigns.Models
 			catch (Exception ex) { throw new Exception(ex.Message); }
 		}
 
+		public void CancelAppointment(int intAppointmentID) 
+		{
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("CANCEL_APPOINTMENT", cn);
+
+				SetParameter(ref cm, "@intAppointmentID", intAppointmentID, SqlDbType.Int);
+
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+			
+		}
+
 		public void InsertService(Services model)
 		{
 			try
@@ -1220,7 +1298,8 @@ namespace SerenityHairDesigns.Models
 
 
 
-				CloseDBConnection(ref cn);
+				
+                CloseDBConnection(ref cn);				
 
 			}
 			catch (Exception ex) { throw new Exception(ex.Message); }
@@ -1230,7 +1309,7 @@ namespace SerenityHairDesigns.Models
 			return objEmployees;
 		}
 
-
+ 
 
 
 		public ContactUs.ActionTypes InsertReview(ContactUs model)

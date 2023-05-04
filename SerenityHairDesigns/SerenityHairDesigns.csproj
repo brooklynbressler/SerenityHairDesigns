@@ -217,11 +217,10 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Home\Careers.cshtml" />
     <Content Include="Views\Home\Services.cshtml" />
-    <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\BookNow.cshtml" />
     <Content Include="Views\profile\ScheduleLogin.cshtml" />

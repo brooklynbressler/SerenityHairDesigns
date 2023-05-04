@@ -909,8 +909,7 @@ namespace SerenityHairDesigns.Models
 								strAppointmentName = reader.GetString(2)
 								,
                                 monAppointmentCost = reader.GetDecimal(3)
-								,
-								monAppointmentTip = reader.GetDecimal(4)
+								
 
 							});
 

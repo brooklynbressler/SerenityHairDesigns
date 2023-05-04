@@ -3,8 +3,7 @@
 }
 
 
-@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
-{
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1)) {
 	<div class="center-admin">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
@@ -13,8 +12,7 @@
 		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
 	</div>
 }
-@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
-{
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1)) {
 	<div class="center-employee">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
@@ -22,8 +20,7 @@
 		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
 	</div>
 }
-@if (ViewBag.blnIsCustomer == 1)
-{
+@if (ViewBag.blnIsCustomer == 1) {
 	<div class="center-customer">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
@@ -36,8 +33,7 @@
 <div class="Create-Account-Form">
 	<div class="Sign-In-Form-Emp">
 		<div class="header__item">
-			@using (Html.BeginForm(FormMethod.Post))
-			{
+			@using (Html.BeginForm(FormMethod.Post)) {
 
 				<h1>Schedule Hair Appointment</h1>
 				<label for="AppointmentDateTime">Pick an available time/day:</label>
@@ -46,8 +42,7 @@
 				<br />
 				<label for="AppointmentService">Type of Service:</label>
 				<select id="Services" name="Services">
-					@foreach (var item in ViewBag.Services)
-					{
+					@foreach (var item in ViewBag.Services) {
 						<option value="@item.intServiceID">@item.strServiceName</option>
 					}
 				</select>
@@ -64,8 +59,7 @@
 				<br />
 				<label for="Gender">Gender:</label>
 				<select id="Gender" name="Gender">
-					@foreach (var item in ViewBag.Genders)
-					{
+					@foreach (var item in ViewBag.Genders) {
 						<option value="@item.intGenderID">@item.strGenderDesc</option>
 					}
 				</select>
@@ -83,31 +77,28 @@
 
 
 
-@using (Html.BeginForm(FormMethod.Post))
-{
-	foreach (var item in ViewBag.Appointments)
-	{
+@using (Html.BeginForm(FormMethod.Post)) {
+	foreach (var item in ViewBag.Appointments) {
 		<div class="Create-Account-Form2">
 			<h2>Appointments</h2>
-			<input class="Customer-Info" type="checkbox" name="Appointment" value="@item.intAppointmentID" />
 			<label class="Customer-Info" for="Appointment">
-					<pre class="Customer-Info">
-						Customer First Name: @item.strCustomerFirstName
+				<pre class="Customer-Info">
+								Customer First Name: @item.strCustomerFirstName
 
-						Customer Last Name: @item.strCustomerLastName
+								Customer Last Name: @item.strCustomerLastName
 
-						Appointment Date: @item.dtmAppointmentDate
+								Appointment Date: @item.dtmAppointmentDate
 
-						Appointment Length: @item.intEstTimeInMins
+								Appointment Length: @item.intEstTimeInMins
 
-						Service Type: @item.strAppointmentName
+								Service Type: @item.strAppointmentName
 
-						Estimated Appointment Cost: $@item.monAppointmentCost
+								Estimated Appointment Cost: $@item.monAppointmentCost
 
-						Customer Phone Number: @item.strCustomerPhone 
+								Customer Phone Number: @item.strCustomerPhone 
 
-						Customer Email: @item.strCustomerEmail
-					</pre>
+								Customer Email: @item.strCustomerEmail
+							</pre>
 				@*<table>
 						<tr>
 							<td> Customer First Name: </td>
@@ -147,7 +138,7 @@
 						</tr>
 					</table>*@
 			</label>
-
+			<input class="Customer-Info" type="checkbox" name="Appointment" value="@item.intAppointmentID" />
 			<button id="btnScheduleAppointment" name="btnSubmit" value="btnCancelAppointment" class="button-action">Cancel Appointment</button>
 		</div>
 

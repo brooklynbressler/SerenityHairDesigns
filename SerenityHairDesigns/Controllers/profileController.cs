@@ -294,7 +294,6 @@ namespace SerenityHairDesigns.Controllers
                 customer.strLastName = col["lastname"];
                 customer.strPhoneNumber = col["Number"];
                 int intGender = int.Parse(col["Gender"]);
-                int intTimeID = int.Parse(col["Times"]);
 
                 db.InsertCustomerManually(customer, intGender, lngEmployeeID);
 
@@ -302,11 +301,13 @@ namespace SerenityHairDesigns.Controllers
 
 
 
-                db.InsertAppointmentNoPic(appointment, customer, lngEmployeeID, intServiceID, intTimeID);
+                db.InsertAppointmentNoPic(appointment, customer, lngEmployeeID, intServiceID);
 
                 a = db.GetEmployeeAppointments(lngEmployeeID);
 
                 ViewBag.Appointments = a;
+
+                RedirectToAction("EmployeeScheduleAppointment", "Profile");
             } else if (col["btnSubmit"] == "btnCancelAppointment") 
             {
                 appointment.intAppointmentID = Convert.ToInt32(col["Appointment"]);
@@ -1776,16 +1777,8 @@ namespace SerenityHairDesigns.Controllers
                 { //sign up button pressed
                     Customer.ActionTypes at = Customer.ActionTypes.NoType;
                     at = u.SaveCustomer();
-                    switch (at)
-                    {
-                        case Customer.ActionTypes.InsertSuccessful:
                             u.SaveCustomerSession();
                             return RedirectToAction("CustomerIndex");
-                        //break;
-                        default:
-                            return View(u);
-                            //break;
-                    }
                 }
                 return View(u);
             }

@@ -974,7 +974,7 @@ namespace SerenityHairDesigns.Models
 
 				}
 			}
-			catch {
+			catch(Exception ex) {
 
 			}
 			return objAppointments;
@@ -1239,6 +1239,33 @@ namespace SerenityHairDesigns.Models
 
 				SetParameter(ref cm, "@intTimeID", intTimeID, SqlDbType.Int);
 				SetParameter(ref cm, "@intAppointmentTypeID", model.intAppointmentType, SqlDbType.Int);
+				SetParameter(ref cm, "@intCustomerID", customer.intCustomerID, SqlDbType.Int);
+				SetParameter(ref cm, "@lngEmployeeID", lngEmployeeID, SqlDbType.BigInt);
+				SetParameter(ref cm, "@intServiceID", intServiceID, SqlDbType.Int);
+
+
+
+				SetParameter(ref cm, "ReturnValue", 0, SqlDbType.TinyInt, Direction: ParameterDirection.ReturnValue);
+
+				cm.ExecuteReader();
+
+				CloseDBConnection(ref cn);
+
+
+			}
+			catch (Exception ex) { throw new Exception(ex.Message); }
+		}
+
+		public void InsertAppointmentNoPic(Appointments model, Customer customer, long lngEmployeeID, int intServiceID) {
+			try {
+				SqlConnection cn = null;
+				if (!GetDBConnection(ref cn)) throw new Exception("Database did not connect");
+				SqlCommand cm = new SqlCommand("INSERT_APPOINTMENT", cn);
+
+				string dteDate = model.dtmAppointmentDate.ToString("yyyy-MM-dd HH:mm:ss.fff");
+
+				SetParameter(ref cm, "@dtmAppointmentDate", dteDate, SqlDbType.DateTime);
+				SetParameter(ref cm, "@intAppointmentTypeID", 1, SqlDbType.Int);
 				SetParameter(ref cm, "@intCustomerID", customer.intCustomerID, SqlDbType.Int);
 				SetParameter(ref cm, "@lngEmployeeID", lngEmployeeID, SqlDbType.BigInt);
 				SetParameter(ref cm, "@intServiceID", intServiceID, SqlDbType.Int);

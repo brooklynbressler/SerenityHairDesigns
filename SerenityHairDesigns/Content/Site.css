@@ -1,11 +1,10 @@
 ﻿body {
     padding-top: 0px;
     padding-bottom: 0px;
-    margin-left:0px;
-    margin-right:0px;
-    background-size:cover;
+    margin-left: 0px;
+    margin-right: 0px;
+    background-size: cover;
     background-color: black;
-    
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,6 +19,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
 .center {
     margin-left: auto;
     margin-right: auto;
@@ -72,6 +72,7 @@ textarea {
     color: white;
     text-decoration: none;
 }
+
 .center-RegEmployee {
     margin-left: 820px;
     width: auto;
@@ -93,7 +94,7 @@ h2 {
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
-    text-decoration:none;
+    text-decoration: none;
     float: left;
     margin: 5px;
     padding: 3px;
@@ -102,7 +103,7 @@ h2 {
 }
 
 body {
-    animation:  animate ease-in-out infinite;
+    animation: animate ease-in-out infinite;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -133,7 +134,7 @@ body {
     margin-left: 23%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
-    position: relative ;
+    position: relative;
 }
 
 .Careers-H3 {
@@ -191,6 +192,7 @@ input[name="careerSubmit"] {
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
 }
+
 .Manage-Employee-Text {
     background-color: black;
     color: white;
@@ -201,6 +203,7 @@ input[name="careerSubmit"] {
     padding: 35px 70px 0px 40px;
     border: 3px solid #b74f13;
 }
+
 .Manage-Employee-Title {
     text-align: center;
 }
@@ -217,7 +220,7 @@ input[name="careerSubmit"] {
 }
 
 .Review {
-    float:left;
+    float: left;
     margin-left: 310px;
     text-align: center;
     width: fit-content;
@@ -306,17 +309,11 @@ img {
     color: white;
     text-align: center;
     width: 400px;
-    height: fit-content;
+    height: 150px;
     margin-left: 17.5%;
     padding: 10px 10px 10px 10px;
     border: 3px solid #b74f13;
     margin: 10px;
-}
-
-.Skills-text {
-    background-color: black;
-    color: white;
-    text-align: center;
 }
 
 #star-icon {
@@ -342,10 +339,10 @@ img {
     0%,100% {
         background-image: url('../serenity images/304807290_498537205610982_5716706797304772411_n.jpg');
     }
+
     25% {
         background-image: url('../Content/SerenityLayoutBackground.jpg');
     }
-
 }
 
 .Schedules {
@@ -353,20 +350,19 @@ img {
 }
 
 .CutsLabel {
-  
     position: absolute;
     left: 0px;
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
 }
-.CutsDropDown {
 
+.CutsDropDown {
     background-color: black;
     color: white;
     margin: 5px;
-
 }
+
 .StyleLabel {
     position: absolute;
     left: 35%;
@@ -381,7 +377,6 @@ img {
     background-color: black;
     color: white;
     border: 3px solid #b74f13;
-    
 }
 
 .Create-Account-Form {
@@ -539,7 +534,6 @@ img {
 .Shift-Title1 {
     text-align: center;
     color: white;
-    
 }
 
 
@@ -628,20 +622,20 @@ img {
     position: relative;
 }
 
-    .user-image-container img {
-        width: 200px;
-        max-height: 140px;
-        object-fit: scale-down;
-    }
+.user-image-container img {
+    width: 200px;
+    max-height: 140px;
+    object-fit: scale-down;
+}
 
-    .user-image-container:hover {
-        border: 1px solid black;
-        background-color: #e6ffec !important;
-    }
+.user-image-container:hover {
+    border: 1px solid black;
+    background-color: #e6ffec !important;
+}
 
-        .user-image-container:hover .image-delete-button {
-            opacity: 1;
-        }
+.user-image-container:hover .image-delete-button {
+    opacity: 1;
+}
 
 .Admin-Profile {
     background-color: black;
@@ -682,7 +676,8 @@ img {
     margin-top: 30px;
     margin-bottom: 10px;
 }
-    margin-left: 37%;
+
+margin-left: 37%;
 }
 
 .Experience-label {

@@ -6,8 +6,7 @@
 <h2>@ViewBag.Title</h2>
 
 
-@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1))
-{
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin == 1)) {
 	<div class="center-admin">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
@@ -16,8 +15,7 @@
 		<a class="center" name="Profile" href="~/Profile/AdminLoggedIn">Admin Profile</a>
 	</div>
 }
-@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1))
-{
+@if ((ViewBag.blnIsEmployee == 1) && (ViewBag.IsAdmin != 1)) {
 	<div class="center-employee">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="ScheduleAppointment" href="~/Profile/EmployeeScheduleAppointment">Schedule Appointment</a>
@@ -25,8 +23,7 @@
 		<a class="center" name="Profile" href="~/Profile/EmployeeLoggedIn">My Profile</a>
 	</div>
 }
-@if (ViewBag.blnIsCustomer == 1)
-{
+@if (ViewBag.blnIsCustomer == 1) {
 	<div class="center-customer">
 		<a class="center" name="LogOut" href="~/Profile/SignOut">Log Out</a>
 		<a class="center" name="Profile" href="~/Profile/CustomerIndex">My Profile</a>
@@ -34,16 +31,13 @@
 }
 
 
-@using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+@using (Html.BeginForm("AdminLoggedIn", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" })) {
 	<div class="Stylist-logged-in">
 		<div class="Stylist-logged_in-1">
 			Skills: <br />
-			@if (ViewBag.skills != null)
-			{
+			@if (ViewBag.skills != null) {
 
-				foreach (var item in ViewBag.skills)
-				{
+				foreach (var item in ViewBag.skills) {
 					<ul>
 						<li> @item  </li>
 					</ul>
@@ -62,8 +56,7 @@
 
 			<label for="Skills">Skills:</label>
 			<select id="Skills" name="Skills">
-				@foreach (var item in ViewBag.skills)
-				{
+				@foreach (var item in ViewBag.skills) {
 					<option value="@item">@item</option>
 				}
 			</select>
@@ -79,10 +72,8 @@
 		<div class="Employee-Profile">
 			<p>To make changes to your profile enter your information below and click the Update button.</p>
 			<div id="user-profile-image">
-				@if (Model.UserImage != null)
-				{
-					if (Model.UserImage.ImageID > 0)
-					{
+				@if (Model.UserImage != null) {
+					if (Model.UserImage.ImageID > 0) {
 						<div class="user-profile-image-container">
 							<img class="user-profile-thumbnail" src="@string.Concat("data:Image/",
 Model.UserImage.FileExtension, ";base64,",
@@ -180,35 +171,18 @@ Model.UserImage.BytesBase64)" />
 		<div class="Employee-Profile">
 			<div class="Schedules">
 				<p>Schedules</p>
-				@using (Html.BeginForm(FormMethod.Post))
-				{
+				@using (Html.BeginForm(FormMethod.Post)) {
 
-					if (ViewBag.Schedules == null)
-					{
+					if (ViewBag.Schedules == null) {
 						<p>You are not scheduled for any shifts coming up.</p>
 					}
-					else
-					{
-						foreach (var item in ViewBag.Schedules)
-						{
+					else {
+						foreach (var item in ViewBag.Schedules) {
 							<label for="Schedule">
 								<pre>
-						Start Time : @item.dteStartTime
-		if (ViewBag.Schedules == null)
-		{
-			<p>You are not scheduled for any shifts coming up.</p>
-		}
-		else
-		{
-			foreach (var item in ViewBag.Schedules)
-			{
-				<input type="checkbox" name="Schedules" value="@item.intScheduleID" />
-				<label for="Schedule">
-					<pre>
-						Shift Start Time: @item.dteStartTime
+						Start Time : @item.dteEndTime
 
-						End Time : @item.dteEndTime
-						Shift End Time: @item.dteEndTime
+						End Time : @item.dteStartTime
 				</pre>
 							</label>
 

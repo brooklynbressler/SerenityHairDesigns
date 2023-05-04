@@ -459,9 +459,9 @@ img {
     background-color: black;
     font-size: 25px;
     color: white;
-    width: 400px;
-    height: 510px;
-    padding: 10px 10px 10px 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 15px 15px 15px;
     border: 3px solid #b74f13;
     margin-right: 50px;
 }
@@ -469,20 +469,20 @@ img {
 .Employee-Profile {
     background-color: black;
     color: white;
-    height: 540px;
-    width: 615px;
+    width: fit-content;
+    height: fit-content;
     text-align: center;
-    margin-left: 10%;
     border: 3px solid #b74f13;
+    padding: 20px 20px 20px 20px;
 }
 
 .Emp-Availability1 {
     background-color: black;
-    width: 330px;
-    height: 300px;
+    width: fit-content;
+    height: fit-content;
     border: 3px solid #b74f13;
-    margin-top: 50px;
-    margin-right: 150px;
+    margin-left: 50px;
+    padding: 20px 20px 20px 20px;
 }
 
 .Shift-Title1 {
